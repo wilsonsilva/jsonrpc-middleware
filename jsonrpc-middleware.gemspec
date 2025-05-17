@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative 'lib/jsonrpc/middleware/version'
+require_relative 'lib/jsonrpc/version'
 
 Gem::Specification.new do |spec|
   spec.name = 'jsonrpc-middleware'
-  spec.version = JSONRPC::Middleware::VERSION
+  spec.version = JSONRPC::VERSION
   spec.authors = ['Wilson Silva']
   spec.email = ['wilson.dsigns@gmail.com']
 

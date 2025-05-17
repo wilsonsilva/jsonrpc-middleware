@@ -19,7 +19,7 @@ unless ENV['COVERAGE'] == 'false'
   end
 end
 
-require 'jsonrpc/middleware'
+require 'jsonrpc'
 require 'factory_bot'
 require 'rack/test'
 

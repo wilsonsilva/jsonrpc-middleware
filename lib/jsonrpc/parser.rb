@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'json'
+
 module JSONRPC
   # JSON-RPC 2.0 Parser for converting raw JSON into JSONRPC objects
   #
@@ -28,7 +30,7 @@ module JSONRPC
     def parse(json)
       begin
         data = JSON.parse(json)
-      rescue JSON::ParseError => e
+      rescue JSON::ParserError => e
         raise ParseError.new(data: { details: e.message })
       end
 
@@ -127,7 +129,11 @@ module JSONRPC
       id = data['id']
 
       raise InvalidRequestError.new(data: { details: "Missing 'method' property" }, request_id: id) if method.nil?
-      raise InvalidRequestError.new(data: { details: 'Method must be a string' }, request_id: id) unless method.is_a?(String)
+
+      unless method.is_a?(String)
+        raise InvalidRequestError.new(data: { details: 'Method must be a string' },
+                                      request_id: id)
+      end
 
       params = data['params']
 
