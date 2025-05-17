@@ -30,5 +30,6 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
+  spec.add_dependency 'dry-validation', '~> 1.11'
   spec.add_dependency 'zeitwerk', '~> 2.7'
 end

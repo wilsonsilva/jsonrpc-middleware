@@ -21,9 +21,14 @@ end
 
 require 'jsonrpc/middleware'
 require 'factory_bot'
+require 'rack/test'
+
+# Require support files
+Dir[File.join(File.dirname(__FILE__), 'support', '**', '*.rb')].each { |f| require f }
 
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
+  config.include Rack::Test::Methods
 
   config.before(:suite) do
     FactoryBot.find_definitions
@@ -37,5 +42,10 @@ RSpec.configure do |config|
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
+  end
+
+  # Define a default app
+  def app
+    TestApp.new
   end
 end
