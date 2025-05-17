@@ -1,0 +1,7 @@
+module JSONRPC
+  class Parser
+    private
+
+    def parse_batch: (Array[Request | Notification] data) -> BatchRequest
+  end
+end

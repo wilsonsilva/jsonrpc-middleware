@@ -1,0 +1,159 @@
+module JSONRPC
+  VERSION: String
+
+  # Method definitions that should be available
+  interface _ToJson
+    def to_json: (*untyped) -> String
+  end
+
+  interface _HashLike
+    def []: (Symbol) -> untyped
+    def []=: (Symbol, untyped) -> untyped
+  end
+
+  # Representing JSON-compatible types
+  type json_scalar = String | Integer | Float | bool | nil
+  type json_object = Hash[String, json_value]
+  type json_array = Array[json_value]
+  type json_value = json_scalar | json_object | json_array
+
+  # Common types used across the library
+  type params_type = Hash[untyped, untyped] | Array[untyped] | nil
+  type id_type = String | Integer | nil
+  type data_type = Hash[untyped, untyped] | Array[untyped] | String | Numeric | bool | nil
+
+  # Hash with Symbol keys
+  type symbol_hash = Hash[Symbol, untyped] & _ToJson
+
+  class Error < StandardError
+    attr_reader code: Integer
+    attr_reader message: String
+    attr_reader data: data_type
+    attr_reader request_id: Integer | String | nil
+
+    def initialize: (code: Integer, message: String, ?data: data_type, ?request_id: id_type) -> void
+    def to_h: -> symbol_hash
+    def to_json: (*untyped) -> String
+
+    private
+    def validate_code: (Integer) -> void
+    def validate_message: (String) -> void
+  end
+
+  class ParseError < Error
+    def initialize: (?data: data_type, ?request_id: id_type) -> void
+  end
+
+  class InvalidRequestError < Error
+    def initialize: (?data: data_type, ?request_id: id_type) -> void
+  end
+
+  class MethodNotFoundError < Error
+    def initialize: (?data: data_type, ?request_id: id_type) -> void
+  end
+
+  class InvalidParamsError < Error
+    def initialize: (?data: data_type, ?request_id: id_type) -> void
+  end
+
+  class InternalError < Error
+    def initialize: (?data: data_type, ?request_id: id_type) -> void
+  end
+
+  class Request
+    attr_reader jsonrpc: String
+    attr_reader method: String
+    attr_reader params: params_type
+    attr_reader id: id_type
+
+    def initialize: (method: String, ?params: params_type, id: id_type) -> void
+    def to_h: -> symbol_hash
+    def to_json: (*untyped) -> String
+
+    private
+    def validate_method: (String) -> void
+    def validate_params: (params_type) -> void
+    def validate_id: (id_type) -> void
+  end
+
+  class Response
+    attr_reader jsonrpc: String
+    attr_reader result: untyped
+    attr_reader error: Error?
+    attr_reader id: id_type
+
+    def initialize: (?result: untyped, ?error: Error?, id: id_type) -> void
+    def success?: -> bool
+    def error?: -> bool
+    def to_h: -> symbol_hash
+    def to_json: (*untyped) -> String
+
+    private
+    def validate_result_and_error: (untyped, Error?) -> void
+    def validate_id: (id_type) -> void
+  end
+
+  class Notification
+    attr_reader jsonrpc: String
+    attr_reader method: String
+    attr_reader params: params_type
+
+    def initialize: (method: String, ?params: params_type) -> void
+    def to_h: -> symbol_hash
+    def to_json: (*untyped) -> String
+
+    private
+    def validate_method: (String) -> void
+    def validate_params: (params_type) -> void
+  end
+
+  class BatchRequest
+    include Enumerable[Request | Notification]
+
+    attr_reader requests: Array[Request | Notification]
+
+    def initialize: (Array[Request | Notification]) -> void
+    def to_h: -> Array[symbol_hash]
+    def to_json: (*untyped) -> String
+    def each: () { (Request | Notification) -> void } -> self
+      | () -> Enumerator[Request | Notification, self]
+
+    private
+    def validate_requests: (Array[untyped]) -> void
+  end
+
+  class BatchResponse
+    include Enumerable[Response]
+
+    attr_reader responses: Array[Response]
+
+    def initialize: (Array[Response]) -> void
+    def to_h: -> Array[symbol_hash]
+    def to_json: (*untyped) -> String
+    def each: () { (Response) -> void } -> self
+      | () -> Enumerator[Response, self]
+
+    private
+    def validate_responses: (Array[untyped]) -> void
+  end
+
+  module Errors
+    class Error = JSONRPC::Error
+  end
+end
+
+# External library signatures
+module Zeitwerk
+  class Loader
+    def self.for_gem: () -> Loader
+    def enable_reloading: () -> void
+    def collapse: (String) -> void
+    def setup: () -> void
+    def eager_load: () -> void
+  end
+end
+
+module JSON
+  def self.parse: (String, ?untyped) -> untyped
+  def self.generate: (untyped, ?untyped) -> String
+end

@@ -1,0 +1,60 @@
+# frozen_string_literal: true
+
+module JSONRPC
+  # Framework-agnostic helpers for JSON-RPC
+  module Helpers
+    # Get the current JSON-RPC request object
+    def jsonrpc_request
+      request.env['jsonrpc.request']
+    end
+
+    # Create a JSON-RPC response
+    def jsonrpc_response(result)
+      content_type :json
+
+      Response.new(id: jsonrpc_request.id, result: result).to_json
+    end
+
+    # Create a JSON-RPC error response
+    def jsonrpc_error(error)
+      content_type :json
+
+      Response.new(id: jsonrpc_request.id, error: error).to_json
+    end
+
+    # Get the current JSON-RPC request params object
+    def jsonrpc_params
+      jsonrpc_request.params
+    end
+
+    # Create a Parse error (-32700)
+    # Used when invalid JSON was received by the server
+    def jsonrpc_parse_error(data: nil)
+      jsonrpc_error(ParseError.new(data: data))
+    end
+
+    # Create an Invalid Request error (-32600)
+    # Used when the JSON sent is not a valid Request object
+    def jsonrpc_invalid_request_error(data: nil)
+      jsonrpc_error(InvalidRequestError.new(data: data))
+    end
+
+    # Create a Method not found error (-32601)
+    # Used when the method does not exist / is not available
+    def jsonrpc_method_not_found_error(data: nil)
+      jsonrpc_error(MethodNotFoundError.new(data: data))
+    end
+
+    # Create an Invalid params error (-32602)
+    # Used when invalid method parameter(s) were received
+    def jsonrpc_invalid_params_error(data: nil)
+      jsonrpc_error(InvalidParamsError.new(data: data))
+    end
+
+    # Create an Internal error (-32603)
+    # Used for implementation-defined server errors
+    def jsonrpc_internal_error(data: nil)
+      jsonrpc_error(InternalError.new(data: data))
+    end
+  end
+end
