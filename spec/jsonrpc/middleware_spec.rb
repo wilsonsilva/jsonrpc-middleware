@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-RSpec.describe Jsonrpc::Middleware do
+RSpec.describe JSONRPC::Middleware do
   it "has a version number" do
-    expect(Jsonrpc::Middleware::VERSION).not_to be nil
+    expect(JSONRPC::Middleware::VERSION).not_to be nil
   end
 
   it "does something useful" do

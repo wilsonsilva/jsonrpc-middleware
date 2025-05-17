@@ -2,7 +2,7 @@
 
 require_relative "middleware/version"
 
-module Jsonrpc
+module JSONRPC
   module Middleware
     class Error < StandardError; end
     # Your code goes here...

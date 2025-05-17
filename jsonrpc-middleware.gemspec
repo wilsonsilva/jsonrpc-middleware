@@ -4,7 +4,7 @@ require_relative "lib/jsonrpc/middleware/version"
 
 Gem::Specification.new do |spec|
   spec.name = "jsonrpc-middleware"
-  spec.version = Jsonrpc::Middleware::VERSION
+  spec.version = JSONRPC::Middleware::VERSION
   spec.authors = ["Wilson Silva"]
   spec.email = ["wilson.dsigns@gmail.com"]
 
