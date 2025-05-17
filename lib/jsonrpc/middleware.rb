@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "middleware/version"
-
+# Encapsulates all the gem's JSON-RPC implementation
 module JSONRPC
+  # Rack middleware for JSON-RPC
   module Middleware
-    class Error < StandardError; end
-    # Your code goes here...
   end
 end
