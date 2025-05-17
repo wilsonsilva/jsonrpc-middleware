@@ -107,10 +107,6 @@ module JSONRPC
       return if id.nil?
 
       raise ArgumentError, 'ID must be a String, Integer, or nil' unless id.is_a?(String) || id.is_a?(Integer)
-
-      return unless id.is_a?(Integer)
-
-      raise ArgumentError, 'ID should not contain fractional parts'
     end
   end
 end

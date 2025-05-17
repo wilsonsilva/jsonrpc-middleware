@@ -4,37 +4,91 @@ require 'rack'
 require 'jsonrpc'
 
 class TestApp
-  def self.methods_list
-    [
-      {
-        name: 'divide',
-        block: proc { |params|
-          raise JSONRPC::InvalidParamsError unless params.is_a?(Hash)
-          raise JSONRPC::InvalidParamsError if !params['dividend'].is_a?(Numeric) || !params['divisor'].is_a?(Numeric)
-
-          params['dividend'] / params['divisor']
-        }
-      },
-      {
-        name: 'sum',
-        block: proc { |params|
-          raise JSONRPC::InvalidParamsError unless params.is_a?(Array)
-
-          params.sum
-        }
-      }
-    ]
-  end
-
-  def initialize
-    @app = JSONRPC::Middleware.new(
-      ->(env) { [404, { 'content-type' => 'text/plain' }, ['Not Found']] },
-      methods: self.class.methods_list,
-      path: '/jsonrpc'
-    )
-  end
+  include JSONRPC::Helpers
 
   def call(env)
-    @app.call(env)
+    @env = env # Set the @env instance variable to use the JSONRPC helpers below
+
+    if jsonrpc_request?
+      result = handle_single(jsonrpc_request)
+      jsonrpc_response(result)
+    elsif jsonrpc_notification?
+      handle_single(jsonrpc_notification)
+      jsonrpc_notification_response
+    else
+      responses = handle_batch(jsonrpc_batch)
+      jsonrpc_batch_response(responses)
+    end
+  end
+
+  private
+
+  def handle_single(request_or_notification)
+    params = request_or_notification.params
+
+    case request_or_notification.method
+    when 'add'
+      addends = params.is_a?(Array) ? params : { addends: params } # Handle positional and named arguments
+      addends.sum
+    when 'subtract'
+      params['minuend'] - params['subtrahend']
+    when 'multiply'
+      params['multiplicand'] * params['multiplier']
+    when 'divide'
+      params['dividend'] / params['divisor']
+    end
+  end
+
+  def handle_batch(batch)
+    batch.flat_map do |request_or_notification|
+      result = handle_single(request_or_notification)
+      JSONRPC::Response.new(id: request_or_notification.id, result:) if request_or_notification.is_a?(JSONRPC::Request)
+    end
+  end
+end
+
+JSONRPC.configure do
+  procedure(:add, allow_positional_arguments: true) do
+    params do
+      required(:addends).filled(:array)
+      required(:addends).value(:array).each(type?: Numeric)
+    end
+
+    rule(:addends) do
+      key.failure('must contain at least one addend') if value.empty?
+    end
+  end
+
+  procedure(:subtract) do
+    params do
+      required(:minuend).filled(:integer)
+      required(:subtrahend).filled(:integer)
+    end
+  end
+
+  procedure(:multiply) do
+    params do
+      required(:multiplicand).filled
+      required(:multiplier).filled
+    end
+
+    rule(:multiplicand) do
+      key.failure('must be a number') unless value.is_a?(Numeric)
+    end
+
+    rule(:multiplier) do
+      key.failure('must be a number') unless value.is_a?(Numeric)
+    end
+  end
+
+  procedure(:divide) do
+    params do
+      required(:dividend).filled(:integer)
+      required(:divisor).filled(:integer)
+    end
+
+    rule(:divisor) do
+      key.failure("can't be 0") if value.zero?
+    end
   end
 end
