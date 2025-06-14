@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
-require 'rack'
-require 'jsonrpc'
-
-class TestApp
+# Complex example usage of json-middleware in a Rack application with helpers
+class App
   include JSONRPC::Helpers
 
   def call(env)
@@ -37,7 +35,7 @@ class TestApp
     when 'divide'
       params['dividend'] / params['divisor']
     when 'explode'
-      raise 'Internal JSON-RPC error.'
+      raise 'An internal error has occurred.'
     end
   end
 
@@ -46,58 +44,5 @@ class TestApp
       result = handle_single(request_or_notification)
       JSONRPC::Response.new(id: request_or_notification.id, result:) if request_or_notification.is_a?(JSONRPC::Request)
     end.compact
-  end
-end
-
-JSONRPC.configure do
-  procedure(:add, allow_positional_arguments: true) do
-    params do
-      required(:addends).filled(:array)
-      required(:addends).value(:array).each(type?: Numeric)
-    end
-
-    rule(:addends) do
-      key.failure('must contain at least one addend') if value.empty?
-    end
-  end
-
-  procedure(:subtract) do
-    params do
-      required(:minuend).filled(:integer)
-      required(:subtrahend).filled(:integer)
-    end
-  end
-
-  procedure(:multiply) do
-    params do
-      required(:multiplicand).filled
-      required(:multiplier).filled
-    end
-
-    rule(:multiplicand) do
-      key.failure('must be a number') unless value.is_a?(Numeric)
-    end
-
-    rule(:multiplier) do
-      key.failure('must be a number') unless value.is_a?(Numeric)
-    end
-  end
-
-  procedure(:divide) do
-    params do
-      required(:dividend).filled(:integer)
-      required(:divisor).filled(:integer)
-    end
-
-    rule(:divisor) do
-      key.failure("can't be 0") if value.zero?
-    end
-  end
-
-  # Used only to test internal server errors
-  procedure(:explode) do
-    params do
-      # No params
-    end
   end
 end

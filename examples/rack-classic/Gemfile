@@ -1,7 +1,0 @@
-source 'https://rubygems.org'
-
-gem 'jason', path: '../..'
-gem 'puma'
-gem 'rack'
-gem 'rack-contrib'
-gem 'rackup'

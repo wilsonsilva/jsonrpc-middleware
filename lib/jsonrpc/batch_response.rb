@@ -60,6 +60,10 @@ module JSONRPC
       self
     end
 
+    def to_response
+      responses.map(&:to_response)
+    end
+
     private
 
     # Validates that the responses is a valid array of Response objects

@@ -19,9 +19,12 @@ unless ENV['COVERAGE'] == 'false'
   end
 end
 
+require 'awesome_print'
 require 'jsonrpc'
 require 'factory_bot'
 require 'rack/test'
+
+ENV['DEBUG_RACK'] = 'false'
 
 # Require support files
 Dir[File.join(File.dirname(__FILE__), 'support', '**', '*.rb')].each { |f| require f }
@@ -46,6 +49,9 @@ RSpec.configure do |config|
 
   # Define a default app
   def app
-    TestApp.new
+    Rack::Builder.new do
+      use JSONRPC::Middleware, path: '/jsonrpc'
+      run TestApp.new
+    end
   end
 end

@@ -3,22 +3,45 @@
 module JSONRPC
   # Framework-agnostic helpers for JSON-RPC
   module Helpers
-    # Get the current JSON-RPC request object
-    def jsonrpc_request
-      request.env['jsonrpc.request']
+    def self.included(base)
+      base.extend(ClassMethods)
     end
+
+    # Class methods for registering JSON-RPC procedure handlers
+    module ClassMethods
+      def jsonrpc_method(method_name, &)
+        Configuration.instance.procedure(method_name, &)
+      end
+    end
+
+    def jsonrpc_batch? = @env.key?('jsonrpc.batch')
+    def jsonrpc_notification? = @env.key?('jsonrpc.notification')
+    def jsonrpc_request? = @env.key?('jsonrpc.request')
+
+    # Get the current JSON-RPC request object
+    def jsonrpc_batch = @env['jsonrpc.batch']
+    def jsonrpc_request = @env['jsonrpc.request']
+    def jsonrpc_notification = @env['jsonrpc.notification']
 
     # Create a JSON-RPC response
     def jsonrpc_response(result)
-      content_type :json
+      [200, { 'content-type' => 'application/json' }, [Response.new(id: jsonrpc_request.id, result: result).to_json]]
+    end
 
-      Response.new(id: jsonrpc_request.id, result: result).to_json
+    # Create a JSON-RPC response
+    def jsonrpc_batch_response(responses)
+      # If batch contained only notifications, responses will be empty or contain only nils
+      return [204, {}, []] if responses.compact.empty?
+
+      [200, { 'content-type' => 'application/json' }, [responses.to_json]]
+    end
+
+    def jsonrpc_notification_response
+      [204, {}, []]
     end
 
     # Create a JSON-RPC error response
     def jsonrpc_error(error)
-      content_type :json
-
       Response.new(id: jsonrpc_request.id, error: error).to_json
     end
 

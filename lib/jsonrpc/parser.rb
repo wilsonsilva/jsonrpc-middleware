@@ -46,8 +46,7 @@ module JSONRPC
     # Parse a single JSON-RPC 2.0 message
     #
     # @param data [Hash] the parsed JSON data
-    # @return [Request, Notification] the parsed request or notification
-    # @raise [InvalidRequestError] if the request structure is invalid
+    # @return [Request, Notification, Error] the parsed request, notification, or error
     #
     def parse_single(data)
       validate_jsonrpc_version(data)
@@ -55,46 +54,65 @@ module JSONRPC
 
       method = data['method']
       params = data['params']
-      id = data['id']
 
-      if id.nil?
-        Notification.new(method: method, params: params)
+      if data.key?('id')
+        Request.new(method: method, params: params, id: data['id'])
       else
-        Request.new(method: method, params: params, id: id)
+        Notification.new(method: method, params: params)
       end
     rescue ArgumentError => e
       request_id = data.is_a?(Hash) ? data['id'] : nil
-
-      raise InvalidRequestError.new(data: { details: e.message }, request_id:)
+      raise InvalidRequestError.new(data: { details: e.message }, request_id: request_id)
     end
 
     # Parse a batch JSON-RPC 2.0 message
     #
     # @param data [Array] the array of request data
     # @return [BatchRequest] the batch request
-    # @raise [InvalidRequestError] if any request in the batch is invalid
+    # @raise [InvalidRequestError] if the batch is empty
     #
     def parse_batch(data)
       raise InvalidRequestError.new(data: { details: 'Batch request cannot be empty' }) if data.empty?
 
-      requests = []
+      items = []
 
       data.each_with_index do |item, index|
-        requests << parse_single(item)
+        parsed_item = parse_single_for_batch(item)
+        items << parsed_item
       rescue InvalidRequestError => e
-        # Re-raise with index information for better error reporting
-        details = e.data&.fetch(:details, nil)
-
-        # Get request ID from the item if it's a hash
-        request_id = item.is_a?(Hash) ? item['id'] : nil
-        raise InvalidRequestError.new(data: { index: index, details: details }, request_id:)
+        # For batch processing, we want to include the error in the results
+        # rather than stopping the entire batch processing
+        error_with_index = InvalidRequestError.new(
+          data: { index: index, details: e.data&.fetch(:details, nil) },
+          request_id: e.request_id
+        )
+        items << error_with_index
       end
 
-      BatchRequest.new(requests)
+      BatchRequest.new(items)
+    end
+
+    # Parse a single item within a batch, allowing errors to be captured
+    #
+    # @param data [Hash] the parsed JSON data for a single item
+    # @return [Request, Notification] the parsed request or notification
+    # @raise [InvalidRequestError] if the request structure is invalid
+    #
+    def parse_single_for_batch(data)
+      validate_jsonrpc_version(data)
+      validate_request_structure(data)
+
+      method = data['method']
+      params = data['params']
+
+      if data.key?('id')
+        Request.new(method: method, params: params, id: data['id'])
+      else
+        Notification.new(method: method, params: params)
+      end
     rescue ArgumentError => e
       request_id = data.is_a?(Hash) ? data['id'] : nil
-
-      raise InvalidRequestError.new(data: { details: e.message }, request_id:)
+      raise InvalidRequestError.new(data: { details: e.message }, request_id: request_id)
     end
 
     # Validate the JSON-RPC 2.0 version
@@ -110,11 +128,15 @@ module JSONRPC
       # Get request ID from the data
       request_id = data['id']
 
-      raise InvalidRequestError.new(data: { details: "Missing 'jsonrpc' property" }, request_id:) if jsonrpc.nil?
+      if jsonrpc.nil?
+        raise InvalidRequestError.new(data: { details: "Missing 'jsonrpc' property" },
+                                      request_id: request_id)
+      end
 
       return if jsonrpc == '2.0'
 
-      raise InvalidRequestError.new(data: { details: "Invalid JSON-RPC version, must be '2.0'" }, request_id:)
+      raise InvalidRequestError.new(data: { details: "Invalid JSON-RPC version, must be '2.0'" },
+                                    request_id: request_id)
     end
 
     # Validate the request structure according to JSON-RPC 2.0 specification
@@ -131,8 +153,7 @@ module JSONRPC
       raise InvalidRequestError.new(data: { details: "Missing 'method' property" }, request_id: id) if method.nil?
 
       unless method.is_a?(String)
-        raise InvalidRequestError.new(data: { details: 'Method must be a string' },
-                                      request_id: id)
+        raise InvalidRequestError.new(data: { details: 'Method must be a string' }, request_id: id)
       end
 
       params = data['params']
@@ -149,9 +170,7 @@ module JSONRPC
         )
       end
 
-      return unless id.is_a?(Integer)
-
-      raise InvalidRequestError.new(data: { details: 'ID should not contain fractional parts' }, request_id: id)
+      nil unless id.is_a?(Integer)
     end
   end
 end

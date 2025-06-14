@@ -6,7 +6,7 @@ RSpec.describe JSONRPC::Middleware do
     it 'returns HTTP 200 OK with the correct JSON-RPC response' do
       post_jsonrpc_request(
         jsonrpc: '2.0',
-        method: 'sum',
+        method: 'add',
         params: [1, 2, 3, 4],
         id: 'req-valid-positional-arguments'
       )
@@ -29,12 +29,12 @@ RSpec.describe JSONRPC::Middleware do
         id: 'req-valid-named-parameters'
       )
 
-      expect_status(200)
       expect_json(
         jsonrpc: '2.0',
         result: 5,
         id: 'req-valid-named-parameters'
       )
+      expect_status(200)
     end
   end
 
@@ -42,17 +42,17 @@ RSpec.describe JSONRPC::Middleware do
     it 'returns HTTP 200 OK and preserves the null id' do
       post_jsonrpc_request(
         jsonrpc: '2.0',
-        method: 'sum',
+        method: 'add',
         params: [1, 2, 3, 4],
         id: nil
       )
 
-      expect_status(200)
       expect_json(
         jsonrpc: '2.0',
         result: 10,
         id: nil
       )
+      expect_status(200)
     end
   end
 
@@ -61,7 +61,7 @@ RSpec.describe JSONRPC::Middleware do
     it 'returns HTTP 204 No Content with no response body' do
       post_jsonrpc_request(
         jsonrpc: '2.0',
-        method: 'sum',
+        method: 'add',
         params: [1, 2, 3, 4]
       )
 
@@ -75,7 +75,7 @@ RSpec.describe JSONRPC::Middleware do
     it 'returns HTTP 200 OK with a JSON-RPC invalid params error' do
       post_jsonrpc_request(
         jsonrpc: '2.0',
-        method: 'sum',
+        method: 'add',
         params: { a: 1, b: 2, c: 3, d: 4 }, # Named params for a method that normally takes positional params
         id: 'req-named-for-positioned'
       )
@@ -85,7 +85,13 @@ RSpec.describe JSONRPC::Middleware do
         jsonrpc: '2.0',
         error: {
           code: -32_602,
-          message: 'Invalid params'
+          message: 'Invalid method parameter(s).',
+          data: {
+            method: 'add',
+            params: {
+              addends: ['is missing']
+            }
+          }
         },
         id: 'req-named-for-positioned'
       )
@@ -106,7 +112,8 @@ RSpec.describe JSONRPC::Middleware do
         jsonrpc: '2.0',
         error: {
           code: -32_602,
-          message: 'Invalid params'
+          message: 'Invalid method parameter(s).',
+          data: { method: 'divide' }
         },
         id: 'req-positional-for-named'
       )
@@ -127,7 +134,13 @@ RSpec.describe JSONRPC::Middleware do
         jsonrpc: '2.0',
         error: {
           code: -32_602,
-          message: 'Invalid params'
+          message: 'Invalid method parameter(s).',
+          data: {
+            method: 'divide',
+            params: {
+              dividend: ['must be an integer']
+            }
+          }
         },
         id: 'req-invalid-params-type'
       )
@@ -135,7 +148,7 @@ RSpec.describe JSONRPC::Middleware do
   end
 
   context 'when processing a JSON-RPC request with an invalid parameter structure' do
-    it 'returns HTTP 200 OK with a JSON-RPC invalid params error' do
+    it 'returns HTTP 200 OK with a JSON-RPC invalid request error' do
       post_jsonrpc_request(
         jsonrpc: '2.0',
         method: 'divide',
@@ -147,8 +160,9 @@ RSpec.describe JSONRPC::Middleware do
       expect_json(
         jsonrpc: '2.0',
         error: {
-          code: -32_602,
-          message: 'Invalid params'
+          code: -32_600,
+          data: { details: 'Params must be an object, array, or omitted' },
+          message: 'The JSON payload was valid JSON, but not a valid JSON-RPC Request object.'
         },
         id: 'req-invalid-params-structure'
       )
@@ -169,7 +183,14 @@ RSpec.describe JSONRPC::Middleware do
         jsonrpc: '2.0',
         error: {
           code: -32_602,
-          message: 'Invalid params'
+          message: 'Invalid method parameter(s).',
+          data: {
+            method: 'divide',
+            params: {
+              dividend: ['is missing'],
+              divisor: ['is missing']
+            }
+          }
         },
         id: 'req-missing-params'
       )
@@ -185,8 +206,13 @@ RSpec.describe JSONRPC::Middleware do
         jsonrpc: '2.0',
         error: {
           code: -32_700,
-          message: 'Parse error'
-        }
+          data: {
+            details: 'unexpected end of input at line 1 column 1'
+          },
+          message: 'Invalid JSON was received by the server. ' \
+                   'An error occurred on the server while parsing the JSON text.'
+        },
+        id: nil
       )
       expect_status(200)
     end
@@ -201,8 +227,13 @@ RSpec.describe JSONRPC::Middleware do
         jsonrpc: '2.0',
         error: {
           code: -32_700,
-          message: 'Parse error'
-        }
+          data: {
+            details: "unexpected character: 'Taxation is theft.' at line 1 column 1"
+          },
+          message: 'Invalid JSON was received by the server. ' \
+                   'An error occurred on the server while parsing the JSON text.'
+        },
+        id: nil
       )
     end
   end
@@ -221,7 +252,10 @@ RSpec.describe JSONRPC::Middleware do
         jsonrpc: '2.0',
         error: {
           code: -32_600,
-          message: 'Invalid request'
+          data: {
+            details: 'Method must be a string'
+          },
+          message: 'The JSON payload was valid JSON, but not a valid JSON-RPC Request object.'
         },
         id: 'req-valid-parse-error'
       )
@@ -241,7 +275,10 @@ RSpec.describe JSONRPC::Middleware do
         jsonrpc: '2.0',
         error: {
           code: -32_600,
-          message: 'Invalid request'
+          data: {
+            details: "Missing 'jsonrpc' property"
+          },
+          message: 'The JSON payload was valid JSON, but not a valid JSON-RPC Request object.'
         },
         id: 'req-missing-jsonrpc-attribute'
       )
@@ -262,7 +299,10 @@ RSpec.describe JSONRPC::Middleware do
         jsonrpc: '2.0',
         error: {
           code: -32_600,
-          message: 'Invalid request'
+          data: {
+            details: "Missing 'jsonrpc' property"
+          },
+          message: 'The JSON payload was valid JSON, but not a valid JSON-RPC Request object.'
         },
         id: 'req-invalid-jsonrpc-attribute'
       )
@@ -282,7 +322,10 @@ RSpec.describe JSONRPC::Middleware do
         jsonrpc: '2.0',
         error: {
           code: -32_600,
-          message: 'Invalid request'
+          data: {
+            details: "Missing 'method' property"
+          },
+          message: 'The JSON payload was valid JSON, but not a valid JSON-RPC Request object.'
         },
         id: 'req-missing-method-attribute'
       )
@@ -303,7 +346,10 @@ RSpec.describe JSONRPC::Middleware do
         jsonrpc: '2.0',
         error: {
           code: -32_601,
-          message: 'Method not found'
+          data: {
+            method: 'spoon'
+          },
+          message: 'The requested RPC method does not exist or is not supported.'
         },
         id: 'req-method-not-found'
       )
@@ -324,8 +370,14 @@ RSpec.describe JSONRPC::Middleware do
       expect_json(
         jsonrpc: '2.0',
         error: {
-          code: -32_000, # Application-defined error code
-          message: "Can't divide by 0"
+          code: -32_602,
+          message: 'Invalid method parameter(s).',
+          data: {
+            method: 'divide',
+            params: {
+              divisor: ["can't be 0"]
+            }
+          }
         },
         id: 'req-division-by-zero'
       )
@@ -336,8 +388,7 @@ RSpec.describe JSONRPC::Middleware do
     it 'returns HTTP 200 OK with a JSON-RPC internal error' do
       post_jsonrpc_request(
         jsonrpc: '2.0',
-        method: 'sum',
-        params: [1, 2, 3, 'NaN'], # This trigger an error
+        method: 'explode',
         id: 'req-internal-error'
       )
 
@@ -346,7 +397,7 @@ RSpec.describe JSONRPC::Middleware do
         jsonrpc: '2.0',
         error: {
           code: -32_603,
-          message: 'Internal error'
+          message: 'Internal JSON-RPC error.'
         },
         id: 'req-internal-error'
       )
@@ -360,7 +411,7 @@ RSpec.describe JSONRPC::Middleware do
         [
           {
             jsonrpc: '2.0',
-            method: 'sum',
+            method: 'add',
             params: [1, 2, 3, 4],
             id: 'batch-req-1'
           },
@@ -397,7 +448,7 @@ RSpec.describe JSONRPC::Middleware do
         [
           {
             jsonrpc: '2.0',
-            method: 'sum',
+            method: 'add',
             params: [1, 2, 3, 4],
             id: 'batch-mixed-1'
           },
@@ -427,8 +478,14 @@ RSpec.describe JSONRPC::Middleware do
           {
             jsonrpc: '2.0',
             error: {
-              code: -32_000,
-              message: "Can't divide by 0"
+              code: -32_602,
+              message: 'Invalid method parameter(s).',
+              data: {
+                method: 'divide',
+                params: {
+                  divisor: ["can't be 0"]
+                }
+              }
             },
             id: 'batch-mixed-2'
           },
@@ -436,7 +493,10 @@ RSpec.describe JSONRPC::Middleware do
             jsonrpc: '2.0',
             error: {
               code: -32_601,
-              message: 'Method not found'
+              message: 'The requested RPC method does not exist or is not supported.',
+              data: {
+                method: 'unknown_method'
+              }
             },
             id: 'batch-mixed-3'
           }
@@ -451,7 +511,7 @@ RSpec.describe JSONRPC::Middleware do
         [
           {
             jsonrpc: '2.0',
-            method: 'sum',
+            method: 'add',
             params: [1, 2, 3, 4]
             # No id - notification
           },
@@ -478,7 +538,10 @@ RSpec.describe JSONRPC::Middleware do
         jsonrpc: '2.0',
         error: {
           code: -32_600,
-          message: 'Invalid request'
+          data: {
+            details: 'Batch request cannot be empty'
+          },
+          message: 'The JSON payload was valid JSON, but not a valid JSON-RPC Request object.'
         },
         id: nil
       )
@@ -492,9 +555,42 @@ RSpec.describe JSONRPC::Middleware do
       expect_status(200)
       expect_json(
         [
-          { jsonrpc: '2.0', error: { code: -32_600, message: 'Invalid request' }, id: nil },
-          { jsonrpc: '2.0', error: { code: -32_600, message: 'Invalid request' }, id: nil },
-          { jsonrpc: '2.0', error: { code: -32_600, message: 'Invalid request' }, id: nil }
+          {
+            jsonrpc: '2.0',
+            id: nil,
+            error: {
+              code: -32_600,
+              message: 'The JSON payload was valid JSON, but not a valid JSON-RPC Request object.',
+              data: {
+                index: 0,
+                details: 'Request must be an object'
+              }
+            }
+          },
+          {
+            jsonrpc: '2.0',
+            id: nil,
+            error: {
+              code: -32_600,
+              message: 'The JSON payload was valid JSON, but not a valid JSON-RPC Request object.',
+              data: {
+                index: 1,
+                details: 'Request must be an object'
+              }
+            }
+          },
+          {
+            jsonrpc: '2.0',
+            id: nil,
+            error: {
+              code: -32_600,
+              message: 'The JSON payload was valid JSON, but not a valid JSON-RPC Request object.',
+              data: {
+                index: 2,
+                details: 'Request must be an object'
+              }
+            }
+          }
         ]
       )
     end
@@ -506,7 +602,7 @@ RSpec.describe JSONRPC::Middleware do
         [
           {
             jsonrpc: '2.0',
-            method: 'sum',
+            method: 'add',
             params: [1, 2, 3, 4],
             id: 'batch-partial-1'
           },
@@ -524,16 +620,20 @@ RSpec.describe JSONRPC::Middleware do
         [
           {
             jsonrpc: '2.0',
-            result: 10,
-            id: 'batch-partial-1'
+            error: {
+              code: -32_600,
+              data: {
+                details: "Missing 'jsonrpc' property",
+                index: 1
+              },
+              message: 'The JSON payload was valid JSON, but not a valid JSON-RPC Request object.'
+            },
+            id: 'batch-partial-2'
           },
           {
             jsonrpc: '2.0',
-            error: {
-              code: -32_600,
-              message: 'Invalid request'
-            },
-            id: 'batch-partial-2'
+            result: 10,
+            id: 'batch-partial-1'
           }
         ]
       )

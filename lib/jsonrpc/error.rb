@@ -69,6 +69,10 @@ module JSONRPC
       to_h.to_json(*)
     end
 
+    def to_response
+      Response.new(id: request_id, error: self).to_h
+    end
+
     private
 
     # Validates that the code is a valid Integer

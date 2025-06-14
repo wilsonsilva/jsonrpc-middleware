@@ -29,13 +29,14 @@ module JSONRPC
     attr_reader code: Integer
     attr_reader message: String
     attr_reader data: data_type
-    attr_reader request_id: Integer | String | nil
+    attr_accessor request_id: Integer | String | nil
 
     def initialize: (code: Integer, message: String, ?data: data_type, ?request_id: id_type) -> void
     def to_h: -> symbol_hash
     def to_json: (*untyped) -> String
 
     private
+
     def validate_code: (Integer) -> void
     def validate_message: (String) -> void
   end
@@ -71,6 +72,7 @@ module JSONRPC
     def to_json: (*untyped) -> String
 
     private
+
     def validate_method: (String) -> void
     def validate_params: (params_type) -> void
     def validate_id: (id_type) -> void
@@ -89,6 +91,7 @@ module JSONRPC
     def to_json: (*untyped) -> String
 
     private
+
     def validate_result_and_error: (untyped, Error?) -> void
     def validate_id: (id_type) -> void
   end
@@ -119,6 +122,7 @@ module JSONRPC
       | () -> Enumerator[Request | Notification, self]
 
     private
+
     def validate_requests: (Array[untyped]) -> void
   end
 
@@ -134,6 +138,7 @@ module JSONRPC
       | () -> Enumerator[Response, self]
 
     private
+
     def validate_responses: (Array[untyped]) -> void
   end
 

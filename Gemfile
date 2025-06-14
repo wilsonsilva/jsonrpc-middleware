@@ -6,6 +6,7 @@ source 'https://rubygems.org'
 gemspec
 
 group :development do
+  gem 'awesome_print', '~> 1.9'
   gem 'bundler-audit', '~> 0.9'
   gem 'factory_bot', '~> 6.5'
   gem 'guard', '~> 2.19'
