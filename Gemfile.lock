@@ -80,6 +80,7 @@ GEM
       activesupport (>= 6.1.0)
     ffi (1.17.2)
     ffi (1.17.2-arm64-darwin)
+    ffi (1.17.2-x86_64-linux-gnu)
     fileutils (1.7.3)
     formatador (1.1.0)
     guard (2.19.1)
@@ -267,6 +268,7 @@ GEM
 
 PLATFORMS
   arm64-darwin
+  x86_64-linux
 
 DEPENDENCIES
   awesome_print (~> 1.9)
