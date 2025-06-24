@@ -28,7 +28,7 @@ class TestApp
 
     case request_or_notification.method
     when 'add'
-      addends = params.is_a?(Array) ? params : { addends: params } # Handle positional and named arguments
+      addends = params.is_a?(Array) ? params : params['addends'] # Handle positional and named arguments
       addends.sum
     when 'subtract'
       params['minuend'] - params['subtrahend']

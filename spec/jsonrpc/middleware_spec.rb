@@ -228,7 +228,7 @@ RSpec.describe JSONRPC::Middleware do
         error: {
           code: -32_700,
           data: {
-            details: "unexpected character: 'Taxation is theft.' at line 1 column 1"
+            details: "unexpected character: 'Taxation' at line 1 column 1"
           },
           message: 'Invalid JSON was received by the server. ' \
                    'An error occurred on the server while parsing the JSON text.'
