@@ -17,16 +17,34 @@ module JSONRPC
     include Enumerable
 
     # The collection of request objects in this batch (may include errors)
+    #
+    # @api public
+    #
+    # @example Accessing requests in a batch
+    #   batch = JSONRPC::BatchRequest.new([request1, request2])
+    #   batch.requests # => [#<JSONRPC::Request...>, #<JSONRPC::Request...>]
+    #
     # @return [Array<JSONRPC::Request, JSONRPC::Notification, JSONRPC::Error>]
     #
     attr_reader :requests
 
     # Creates a new JSON-RPC 2.0 Batch Request object
     #
+    # @api public
+    #
+    # @example Create a batch request
+    #   requests = [
+    #     JSONRPC::Request.new(method: 'add', params: [1, 2], id: 1),
+    #     JSONRPC::Notification.new(method: 'notify', params: ['hello'])
+    #   ]
+    #   batch = JSONRPC::BatchRequest.new(requests)
+    #
     # @param requests [Array<JSONRPC::Request, JSONRPC::Notification, JSONRPC::Error>] an array of request objects
     #   or errors
     # @raise [ArgumentError] if requests is not an Array
+    #
     # @raise [ArgumentError] if requests is empty
+    #
     # @raise [ArgumentError] if any request is not a valid Request, Notification, or Error
     #
     def initialize(requests)
@@ -36,21 +54,43 @@ module JSONRPC
 
     # Converts the batch request to a JSON-compatible Array
     #
+    # @api public
+    #
+    # @example Convert batch to hash
+    #   batch.to_h # => [{"jsonrpc":"2.0","method":"add","params":[1,2],"id":1}]
+    #
     # @return [Array<Hash>] the batch request as a JSON-compatible Array
     #
     def to_h
       requests.map { |item| item.respond_to?(:to_h) ? item.to_h : item }
     end
 
+    # Converts the batch to JSON format
+    #
+    # @api public
+    #
+    # @example Convert batch to JSON
+    #   batch.to_json # => '[{"id":"1","method":"sum","params":[1,2,4]}]'
+    #
+    # @return [String] the JSON-formatted batch
+    #
     def to_json(*)
       to_h.to_json(*)
     end
 
     # Implements the Enumerable contract by yielding each request in the batch
     #
+    # @api public
+    #
+    # @example Iterate over requests
+    #   batch.each { |request| puts request.method }
+    #
     # @yield [request] Yields each request in the batch to the block
+    #
     # @yieldparam request [JSONRPC::Request, JSONRPC::Notification, JSONRPC::Error] a request in the batch
+    #
     # @return [Enumerator] if no block is given
+    #
     # @return [BatchRequest] self if a block is given
     #
     def each(&)
@@ -62,16 +102,34 @@ module JSONRPC
 
     # Returns the number of requests in the batch
     #
+    # @api public
+    #
+    # @example Get batch size
+    #   batch.size # => 3
+    #
     # @return [Integer] the number of requests in the batch
     #
     def size
       requests.size
     end
 
-    # Alias for size for Array-like interface
+    # Alias for size method providing Array-like interface
+    #
+    # @api public
+    #
+    # @example Get batch length
+    #   batch.length # => 3
+    #
+    # @return [Integer] the number of requests in the batch
+    #
     alias length size
 
     # Returns true if the batch contains no requests
+    #
+    # @api public
+    #
+    # @example Check if batch is empty
+    #   batch.empty? # => false
     #
     # @return [Boolean] true if the batch is empty, false otherwise
     #
@@ -81,12 +139,19 @@ module JSONRPC
 
     private
 
-    # Validates that the requests is a valid array of Request/Notification/Error objects
+    # Validates the requests array
+    #
+    # @api private
     #
     # @param requests [Array] the array of requests
+    #
     # @raise [ArgumentError] if requests is not an Array
+    #
     # @raise [ArgumentError] if requests is empty
+    #
     # @raise [ArgumentError] if any request is not a valid Request, Notification, or Error
+    #
+    # @return [void]
     #
     def validate_requests(requests)
       raise ArgumentError, 'Requests must be an Array' unless requests.is_a?(Array)

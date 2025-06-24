@@ -12,6 +12,14 @@ module JSONRPC
   class ParseError < Error
     # Creates a new Parse Error with code -32700
     #
+    # @api public
+    #
+    # @example Create a parse error with default message
+    #   error = JSONRPC::ParseError.new
+    #
+    # @example Create a parse error with custom data
+    #   error = JSONRPC::ParseError.new(data: { detail: "Unexpected end of input" })
+    #
     # @param message [String] short description of the error
     # @param data [Hash, Array, String, Number, Boolean, nil] additional error information
     #

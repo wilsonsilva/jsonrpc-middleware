@@ -1,11 +1,21 @@
 # frozen_string_literal: true
 
 module JSONRPC
-  # Validates JSON-RPC 2.0 requests and notifications.
+  # Validates JSON-RPC 2.0 requests, notifications and batches
+  #
+  # @api public
+  #
+  # The Validator handles parameter validation for JSON-RPC requests by checking
+  # method signatures against registered procedure definitions using Dry::Validation contracts.
+  #
+  # @example Validate a single request
+  #   validator = JSONRPC::Validator.new
+  #   error = validator.validate(request)
+  #
   class Validator
-    # Validates a single request, notification or a batch of requests and/or notifications.
+    # Validates a single request, notification or a batch
     #
-    # @param [JSONRPC::BatchRequest, JSONRPC::Request, JSONRPC::Notification] batch_or_request
+    # @api public
     #
     # @example Validate a single request
     #   validator = JSONRPC::Validator.new
@@ -15,7 +25,9 @@ module JSONRPC
     #   validator = JSONRPC::Validator.new
     #   errors = validator.validate(batch)
     #
-    # @return [JSONRPC::Error, Array<JSONRPC::Error>, nil]
+    # @param batch_or_request [JSONRPC::BatchRequest, JSONRPC::Request, JSONRPC::Notification] the object to validate
+    #
+    # @return [JSONRPC::Error, Array<JSONRPC::Error>, nil] error(s) if validation fails, nil if successful
     #
     def validate(batch_or_request)
       case batch_or_request
@@ -28,6 +40,14 @@ module JSONRPC
 
     private
 
+    # Validates a batch of requests/notifications
+    #
+    # @api private
+    #
+    # @param batch [BatchRequest] the batch to validate
+    #
+    # @return [Array<Error>, nil] array of errors or nil if all valid
+    #
     def validate_batch_params(batch)
       errors = batch.map { |req| validate_request_params(req) }
 
@@ -36,7 +56,14 @@ module JSONRPC
       errors.any? ? errors : nil
     end
 
-    # @param [Request, Notification] request_or_notification
+    # Validates a single request or notification
+    #
+    # @api private
+    #
+    # @param request_or_notification [Request, Notification] the request to validate
+    #
+    # @return [Error, nil] error if validation fails, nil if successful
+    #
     def validate_request_params(request_or_notification)
       config = JSONRPC.configuration
 
@@ -80,6 +107,15 @@ module JSONRPC
       InternalError.new(request_id: extract_request_id(request_or_notification))
     end
 
+    # Prepares parameters for validation based on procedure configuration
+    #
+    # @api private
+    #
+    # @param request [Request, Notification] the request
+    # @param procedure [Configuration::Procedure] the procedure configuration
+    #
+    # @return [Hash, InvalidParamsError] prepared params or error
+    #
     def prepare_params_for_validation(request, procedure)
       if procedure.allow_positional_arguments
         handle_positional_arguments(request, procedure)
@@ -88,6 +124,15 @@ module JSONRPC
       end
     end
 
+    # Handles validation for procedures that allow positional arguments
+    #
+    # @api private
+    #
+    # @param request_or_notification [Request, Notification] the request
+    # @param procedure [Configuration::Procedure] the procedure configuration
+    #
+    # @return [Hash, InvalidParamsError] prepared params or error
+    #
     def handle_positional_arguments(request_or_notification, procedure)
       case request_or_notification.params
       when Array
@@ -112,6 +157,14 @@ module JSONRPC
       end
     end
 
+    # Handles validation for procedures that only accept named arguments
+    #
+    # @api private
+    #
+    # @param request_or_notification [Request, Notification] the request
+    #
+    # @return [Hash, InvalidParamsError] prepared params or error
+    #
     def handle_named_arguments(request_or_notification)
       case request_or_notification.params
       when Hash
@@ -128,6 +181,14 @@ module JSONRPC
       end
     end
 
+    # Extracts the request ID from a request or notification
+    #
+    # @api private
+    #
+    # @param request_or_notification [Request, Notification] the request
+    #
+    # @return [String, Integer, nil] the request ID or nil for notifications
+    #
     def extract_request_id(request_or_notification)
       case request_or_notification
       when Request

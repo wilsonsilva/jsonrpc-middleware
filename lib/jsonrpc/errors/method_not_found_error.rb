@@ -11,6 +11,14 @@ module JSONRPC
   class MethodNotFoundError < Error
     # Creates a new Method Not Found Error with code -32601
     #
+    # @api public
+    #
+    # @example Create a method not found error
+    #   error = JSONRPC::MethodNotFoundError.new
+    #
+    # @example Create a method not found error with method name
+    #   error = JSONRPC::MethodNotFoundError.new(data: { method: "unknown_method" })
+    #
     # @param message [String] short description of the error
     # @param data [Hash, Array, String, Number, Boolean, nil] additional error information
     # @param request_id [String, Integer, nil] the request identifier

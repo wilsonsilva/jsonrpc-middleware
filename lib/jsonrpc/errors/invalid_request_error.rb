@@ -11,6 +11,14 @@ module JSONRPC
   class InvalidRequestError < Error
     # Creates a new Invalid Request Error with code -32600
     #
+    # @api public
+    #
+    # @example Create an invalid request error
+    #   error = JSONRPC::InvalidRequestError.new
+    #
+    # @example Create an invalid request error with custom data
+    #   error = JSONRPC::InvalidRequestError.new(data: { field: "missing jsonrpc" })
+    #
     # @param message [String] short description of the error
     # @param data [Hash, Array, String, Number, Boolean, nil] additional error information
     # @param request_id [String, Integer, nil] the request identifier

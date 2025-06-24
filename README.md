@@ -139,7 +139,7 @@ Rake tasks to test, lint and audit the gem for security vulnerabilities and docu
 
 ```
 rake build                    # Build jsonrpc-middleware.gem into the pkg directory
-rake build:checksum           # Generate SHA512 checksum if jsonrpc-middleware.gem into the checksums directory
+rake build:checksum           # Generate SHA512 checksum of jsonrpc-middleware.gem into the checksums directory
 rake bundle:audit:check       # Checks the Gemfile.lock for insecure dependencies
 rake bundle:audit:update      # Updates the bundler-audit vulnerability database
 rake clean                    # Remove any temporary products
@@ -148,13 +148,14 @@ rake coverage                 # Run spec with coverage
 rake install                  # Build and install jsonrpc-middleware.gem into system gems
 rake install:local            # Build and install jsonrpc-middleware.gem into system gems without network access
 rake qa                       # Test, lint and perform security and documentation audits
-rake release[remote]          # Create a tag, build and push jsonrpc-middleware.gem to rubygems.org
+rake release[remote]          # Create tag v0.1.0 and build and push jsonrpc-middleware-0.1.0.gem to rubygems.org
 rake rubocop                  # Run RuboCop
 rake rubocop:autocorrect      # Autocorrect RuboCop offenses (only when it's safe)
 rake rubocop:autocorrect_all  # Autocorrect RuboCop offenses (safe and unsafe)
 rake spec                     # Run RSpec code examples
 rake verify_measurements      # Verify that yardstick coverage is at least 100%
 rake yard                     # Generate YARD Documentation
+rake yard:format              # Format YARD documentation
 rake yard:junk                # Check the junk in your YARD Documentation
 rake yardstick_measure        # Measure docs in lib/**/*.rb with yardstick
 ```

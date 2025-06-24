@@ -20,11 +20,20 @@ module JSONRPC
   class Parser
     # Parse a JSON-RPC 2.0 message
     #
+    # @api public
+    #
+    # @example Parse a single request
+    #   parser.parse('{"jsonrpc":"2.0","method":"subtract","params":[42,23],"id":1}')
+    #
+    # @example Parse a batch request
+    #   parser.parse('[{"jsonrpc":"2.0","method":"sum","params":[1,2],"id":"1"}]')
+    #
     # @param json [String] the JSON-RPC 2.0 message
     #
     # @return [Request, Notification, BatchRequest] the parsed object
     #
     # @raise [ParseError] if the JSON is invalid
+    #
     # @raise [InvalidRequestError] if the request structure is invalid
     #
     def parse(json)
@@ -45,7 +54,10 @@ module JSONRPC
 
     # Parse a single JSON-RPC 2.0 message
     #
+    # @api private
+    #
     # @param data [Hash] the parsed JSON data
+    #
     # @return [Request, Notification, Error] the parsed request, notification, or error
     #
     def parse_single(data)
@@ -67,8 +79,12 @@ module JSONRPC
 
     # Parse a batch JSON-RPC 2.0 message
     #
+    # @api private
+    #
     # @param data [Array] the array of request data
+    #
     # @return [BatchRequest] the batch request
+    #
     # @raise [InvalidRequestError] if the batch is empty
     #
     def parse_batch(data)
@@ -94,8 +110,12 @@ module JSONRPC
 
     # Parse a single item within a batch, allowing errors to be captured
     #
+    # @api private
+    #
     # @param data [Hash] the parsed JSON data for a single item
+    #
     # @return [Request, Notification] the parsed request or notification
+    #
     # @raise [InvalidRequestError] if the request structure is invalid
     #
     def parse_single_for_batch(data)
@@ -117,8 +137,13 @@ module JSONRPC
 
     # Validate the JSON-RPC 2.0 version
     #
+    # @api private
+    #
     # @param data [Hash] the request data
+    #
     # @raise [InvalidRequestError] if the version is missing or invalid
+    #
+    # @return [void]
     #
     def validate_jsonrpc_version(data)
       raise InvalidRequestError.new(data: { details: 'Request must be an object' }) unless data.is_a?(Hash)
@@ -141,8 +166,13 @@ module JSONRPC
 
     # Validate the request structure according to JSON-RPC 2.0 specification
     #
+    # @api private
+    #
     # @param data [Hash] the request data
+    #
     # @raise [InvalidRequestError] if the request structure is invalid
+    #
+    # @return [void]
     #
     def validate_request_structure(data)
       method = data['method']

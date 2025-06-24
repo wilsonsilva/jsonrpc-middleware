@@ -2,7 +2,11 @@
 
 module JSONRPC
   # Configuration class for JSON-RPC procedure management and validation.
+  #
+  # @api public
+  #
   # This class provides functionality to register, retrieve, and validate JSON-RPC procedures.
+  # It acts as a central registry for method definitions and their parameter constraints.
   #
   # @example Registering a procedure
   #   JSONRPC::Configuration.instance.procedure('sum') do
@@ -12,41 +16,93 @@ module JSONRPC
   #   end
   #
   class Configuration
-    # Represents a registered JSON-RPC procedure with its validation contract and configuration.
+    # Represents a registered JSON-RPC procedure with its validation contract and configuration
     #
-    # @!attribute [r] allow_positional_arguments
+    # @api public
+    #
+    # @!method allow_positional_arguments
+    #   Indicates if the procedure accepts positional arguments
+    #   @api public
+    #
+    #   @example
+    #     procedure.allow_positional_arguments # => true
     #   @return [Boolean] whether the procedure accepts positional arguments
-    # @!attribute [r] contract
+    #
+    # @!method contract
+    #   The validation contract for procedure parameters
+    #   @api public
+    #
+    #   @example
+    #     procedure.contract # => #<Dry::Validation::Contract...>
     #   @return [Dry::Validation::Contract] the validation contract for procedure parameters
-    # @!attribute [r] parameter_name
+    #
+    # @!method parameter_name
+    #   The name of the first parameter in the contract schema
+    #   @api public
+    #
+    #   @example
+    #     procedure.parameter_name # => :numbers
     #   @return [Symbol, nil] the name of the first parameter in the contract schema
+    #
     Procedure = Data.define(:allow_positional_arguments, :contract, :parameter_name)
 
-    # @!attribute [r] validate_procedure_signatures
-    #   @return [Boolean] whether procedure signatures are validated
+    # Whether procedure signatures are validated
+    #
+    # @api public
+    #
+    # @example
+    #   config.validate_procedure_signatures # => true
+    #
+    # @return [Boolean] whether procedure signatures are validated
+    #
     attr_reader :validate_procedure_signatures
 
-    # Initializes a new Configuration instance.
+    # Initializes a new Configuration instance
+    #
+    # @api public
+    #
+    # @example
+    #   config = JSONRPC::Configuration.new
     #
     # @return [Configuration] a new configuration instance
+    #
     def initialize
       @procedures = {}
       @validate_procedure_signatures = true
     end
 
-    # Returns the singleton instance of the Configuration class.
+    # Returns the singleton instance of the Configuration class
+    #
+    # @api public
+    #
+    # @example
+    #   config = JSONRPC::Configuration.instance
     #
     # @return [Configuration] the singleton instance
+    #
     def self.instance
       @instance ||= new
     end
 
-    # Registers a new procedure with the given method name and validation contract.
+    # Registers a new procedure with the given method name and validation contract
+    #
+    # @api public
+    #
+    # @example Register a simple procedure
+    #   config.procedure('add') do
+    #     params do
+    #       required(:a).value(:integer)
+    #       required(:b).value(:integer)
+    #     end
+    #   end
     #
     # @param method_name [String, Symbol] the name of the procedure
     # @param allow_positional_arguments [Boolean] whether the procedure accepts positional arguments
+    #
     # @yield A block that defines the validation contract using Dry::Validation DSL
+    #
     # @return [Procedure] the registered procedure
+    #
     def procedure(method_name, allow_positional_arguments: false, &)
       contract_class = Class.new(Dry::Validation::Contract, &)
       contract_class.class_eval { import_predicates_as_macros }
@@ -59,25 +115,45 @@ module JSONRPC
       )
     end
 
-    # Retrieves a procedure by its method name.
+    # Retrieves a procedure by its method name
+    #
+    # @api public
+    #
+    # @example
+    #   procedure = config.get_procedure('add')
     #
     # @param method_name [String, Symbol] the name of the procedure to retrieve
+    #
     # @return [Procedure, nil] the procedure if found, nil otherwise
+    #
     def get_procedure(method_name)
       @procedures[method_name.to_s]
     end
 
-    # Checks if a procedure with the given method name exists.
+    # Checks if a procedure with the given method name exists
+    #
+    # @api public
+    #
+    # @example
+    #   config.procedure?('add') # => true
     #
     # @param method_name [String, Symbol] the name of the procedure to check
+    #
     # @return [Boolean] true if the procedure exists, false otherwise
+    #
     def procedure?(method_name)
       @procedures.key?(method_name.to_s)
     end
 
-    # Clears all registered procedures.
+    # Clears all registered procedures
+    #
+    # @api public
+    #
+    # @example
+    #   config.reset!
     #
     # @return [void]
+    #
     def reset!
       @procedures.clear
     end
