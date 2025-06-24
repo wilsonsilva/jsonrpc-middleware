@@ -52,13 +52,11 @@ require 'bundler/inline'
 gemfile do
   source 'https://rubygems.org'
 
-  gem 'jsonrpc-middleware'
+  gem 'jsonrpc-middleware', require: 'jsonrpc'
   gem 'puma'
   gem 'rack'
   gem 'rackup'
 end
-
-require 'jsonrpc'
 
 JSONRPC.configure do
   procedure(:add, allow_positional_arguments: true) do
