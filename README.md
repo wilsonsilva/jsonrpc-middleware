@@ -1,9 +1,9 @@
-# JSONRPC::Middleware - Ruby JSON-RPC Implementation
+# JSONRPC::Middleware
 
 [![Gem Version](https://badge.fury.io/rb/jsonrpc-middleware.svg)](https://badge.fury.io/rb/jsonrpc-middleware)
 ![Build](https://github.com/wilsonsilva/jsonrpc-middleware/actions/workflows/main.yml/badge.svg)
-[![Maintainability](https://qlty.sh/badges/73ebc4bb-d1db-4b5b-9a7c-a4acd59dfe69/maintainability.svg)](https://qlty.sh/gh/wilsonsilva/projects/jsonrpc-middleware)
-[![Code Coverage](https://qlty.sh/badges/73ebc4bb-d1db-4b5b-9a7c-a4acd59dfe69/test_coverage.svg)](https://qlty.sh/gh/wilsonsilva/projects/jsonrpc-middleware)
+[![Maintainability](https://qlty.sh/badges/a275de81-94e3-45af-9469-523aa5345871/maintainability.svg)](https://qlty.sh/gh/wilsonsilva/projects/jsonrpc-middleware)
+[![Code Coverage](https://qlty.sh/badges/a275de81-94e3-45af-9469-523aa5345871/test_coverage.svg)](https://qlty.sh/gh/wilsonsilva/projects/jsonrpc-middleware)
 
 A Ruby implementation of the JSON-RPC protocol, enabling standardized communication between systems via remote procedure
 calls encoded in JSON.
@@ -13,63 +13,54 @@ calls encoded in JSON.
 - [Key features](#-key-features)
 - [Installation](#-installation)
 - [Quickstart](#-quickstart)
+- [Examples](#-examples)
 - [Documentation](#-documentation)
 - [Development](#-development)
-  * [Type checking](#type-checking)
+  * [Type checking](#-type-checking)
 - [Contributing](#-contributing)
 - [License](#-license)
 - [Code of Conduct](#-code-of-conduct)
 
 ## 🔑 Key features
 
-- **Complete JSON-RPC 2.0 Implementation**: Fully implements the [JSON-RPC 2.0 specification](https://www.jsonrpc.org/specification)
-- **Rack Middleware integration**: Seamlessly integrates with Rack applications
-- **Advanced request validation**: Define request parameter specifications and validations using `Dry::Validation`
+- **Spec-compliant**: Fully implements the [JSON-RPC 2.0 specification](https://www.jsonrpc.org/specification)
+- **Rack middleware integration**: Seamlessly integrates with Rack applications
 - **Support for all request types**: Handles single requests, notifications, and batch requests
-- **Parameter validation**: Supports both positional and named arguments with customizable validation rules
 - **Error handling**: Comprehensive error handling with standard JSON-RPC error responses
-- **Helper methods**: Convenient helper methods to simplify request and response processing
-- **Type checking**: Ruby type checking support via RBS definitions
+- **Request validation**: Define request parameter specifications and validations
+- **Helpers**: Convenient helper methods to simplify request and response processing
 
 ## 📦 Installation
 
-Install the gem by executing:
+Install the gem and add to the application's Gemfile by executing:
+
+    $ bundle add jsonrpc-middleware
+
+If bundler is not being used to manage dependencies, install the gem by executing:
 
     $ gem install jsonrpc-middleware
 
 ## ⚡️ Quickstart
 
-### Basic Setup with Rack
+Create a file called `config.ru` and run `bundle exec rackup`:
 
 ```ruby
-# Gemfile
-source 'https://rubygems.org'
-gem 'jsonrpc-middleware'
-gem 'rack'
-```
+# frozen_string_literal: true
 
-```ruby
-# config.ru
-require 'jsonrpc'
-require_relative 'app'
+require 'bundler/inline'
 
-# Use the middleware
-use JSONRPC::Middleware
+gemfile do
+  source 'https://rubygems.org'
 
-# Your application
-run App.new
-```
+  gem 'jsonrpc-middleware', path: '../..'
+  gem 'puma'
+  gem 'rack'
+  gem 'rackup'
+end
 
-### Define Your JSON-RPC Procedures
-
-Define your available procedures with validation rules:
-
-```ruby
-# procedures.rb
 require 'jsonrpc'
 
 JSONRPC.configure do
-  # Define a procedure that accepts both positional and named arguments
   procedure(:add, allow_positional_arguments: true) do
     params do
       required(:addends).filled(:array)
@@ -80,37 +71,21 @@ JSONRPC.configure do
       key.failure('must contain at least one addend') if value.empty?
     end
   end
-
-  # Define a procedure with named arguments only
-  procedure(:subtract) do
-    params do
-      required(:minuend).filled(:integer)
-      required(:subtrahend).filled(:integer)
-    end
-  end
 end
-```
 
-### Create Your Application
-
-```ruby
-# app.rb
 class App
   include JSONRPC::Helpers
 
   def call(env)
-    @env = env # Set the env instance variable to use JSONRPC helpers
+    @env = env
 
     if jsonrpc_request?
-      # Handle a standard JSON-RPC request
       result = handle_single(jsonrpc_request)
       jsonrpc_response(result)
     elsif jsonrpc_notification?
-      # Handle a notification (no response needed)
       handle_single(jsonrpc_notification)
       jsonrpc_notification_response
     else
-      # Handle batch requests
       responses = handle_batch(jsonrpc_batch)
       jsonrpc_batch_response(responses)
     end
@@ -121,67 +96,33 @@ class App
   def handle_single(request_or_notification)
     params = request_or_notification.params
 
-    case request_or_notification.method
-    when 'add'
-      # Handle both positional and named arguments
-      addends = params.is_a?(Array) ? params : params['addends']
-      addends.sum
-    when 'subtract'
-      params['minuend'] - params['subtrahend']
-    end
+    addends = params.is_a?(Array) ? params : params['addends'] # Handle positional and named arguments
+    addends.sum
   end
 
   def handle_batch(batch)
     batch.flat_map do |request_or_notification|
       result = handle_single(request_or_notification)
-      # Only create responses for requests, not notifications
-      JSONRPC::Response.new(id: request_or_notification.id, result: result) if request_or_notification.is_a?(JSONRPC::Request)
+      JSONRPC::Response.new(id: request_or_notification.id, result:) if request_or_notification.is_a?(JSONRPC::Request)
     end.compact
   end
 end
+
+use JSONRPC::Middleware
+run App.new
 ```
 
-### Example Requests
+This will give you a fully-featured JSON-RPC server.
 
-Here are example JSON-RPC requests you can make to your application:
-
-```json
-// Standard request with named params
-{
-  "jsonrpc": "2.0",
-  "method": "subtract",
-  "params": {
-    "minuend": 42,
-    "subtrahend": 23
-  },
-  "id": 1
-}
-
-// Request with positional params (if allowed)
-{
-  "jsonrpc": "2.0",
-  "method": "add",
-  "params": [1, 2, 3, 4, 5],
-  "id": 2
-}
-
-// Notification (no response)
-{
-  "jsonrpc": "2.0",
-  "method": "add",
-  "params": {"addends": [1, 2, 3]}
-}
-
-// Batch request
-[
-  {"jsonrpc": "2.0", "method": "add", "params": {"addends": [1, 2]}, "id": 1},
-  {"jsonrpc": "2.0", "method": "subtract", "params": {"minuend": 10, "subtrahend": 5}, "id": 2}
-]
-```
+For more advanced setups, check the [examples](https://github.com/wilsonsilva/jsonrpc-middleware/blob/main/examples/README.md).
 
 ## 📚 Documentation
 
 - [YARD documentation](https://rubydoc.info/gems/jsonrpc-middleware)
+
+## 📜 Examples
+
+Examples for the most common Rack-based applications, including Rails and Sinatra can be found [here](https://github.com/wilsonsilva/jsonrpc-middleware/blob/main/examples/README.md)
 
 ## 🔨 Development
 
@@ -220,7 +161,7 @@ rake yard:junk                # Check the junk in your YARD Documentation
 rake yardstick_measure        # Measure docs in lib/**/*.rb with yardstick
 ```
 
-### Type checking
+### 🧪 Type checking
 
 This gem leverages [RBS](https://github.com/ruby/rbs), a language to describe the structure of Ruby programs. It is
 used to provide type checking and autocompletion in your editor. Run `bundle exec typeprof FILENAME` to generate

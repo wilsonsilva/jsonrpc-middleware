@@ -1,6 +1,6 @@
-# Rack Calculator
+# Sinatra Classic Calculator
 
-A JSON-RPC calculator server using pure Rack with JSONRPC helpers.
+A JSON-RPC calculator server using classic Sinatra style.
 
 ## Running
 
@@ -28,5 +28,5 @@ curl -X POST http://localhost:9292 \
 
 curl -X POST http://localhost:9292 \
   -H "Content-Type: application/json" \
-  -d '{"jsonrpc": "2.0", "method": "divide", "params": {"dividend": 20, "divisor": 4}, "id": 4}'
+  -d '{"jsonrpc": "2.0", "method": "subtract", "params": {"minuend": 10, "subtrahend": 3}, "id": 2}'
 ```
