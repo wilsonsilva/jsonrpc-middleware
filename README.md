@@ -52,7 +52,7 @@ require 'bundler/inline'
 gemfile do
   source 'https://rubygems.org'
 
-  gem 'jsonrpc-middleware', path: '../..'
+  gem 'jsonrpc-middleware'
   gem 'puma'
   gem 'rack'
   gem 'rackup'
