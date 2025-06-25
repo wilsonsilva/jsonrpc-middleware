@@ -20,7 +20,7 @@ end
 YARD::Rake::YardocTask.new
 YardJunk::Rake.define_task
 Yardstick::Rake::Measurement.new(:yardstick_measure, yardstick_options)
-Yardstick::Rake::Verify.new
+Yardstick::Rake::Verify.new(:verify_measurements, yardstick_options)
 
 task default: %i[spec rubocop]
 
