@@ -20,7 +20,7 @@ jobs:
         run: bundle exec rspec
       - uses: qltysh/qlty-action/coverage@main
         with:
-          token: ${{secrets.QLTY_COVERAGE_TOKEN}}
+          coverage-token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
           files: coverage/.resultset.json
 
   rubocop:
