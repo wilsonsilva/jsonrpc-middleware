@@ -18,7 +18,7 @@ jobs:
           bundler-cache: true
       - name: Run RSpec
         run: bundle exec rspec
-      - uses: qltysh/qlty-action/coverage@v1
+      - uses: qltysh/qlty-action/coverage@main
         with:
           token: ${{secrets.QLTY_COVERAGE_TOKEN}}
           files: coverage/.resultset.json
