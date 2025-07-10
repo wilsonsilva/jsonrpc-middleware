@@ -7,6 +7,7 @@ This directory contains example implementations of JSON-RPC servers using the js
 - [**rack-echo**](./rack-echo/) - Echo server using Rack with helpers
 - [**rack-single-file**](./rack-single-file/) - Minimal single-file example with bundler/inline
 - [**rack**](./rack/) - Calculator server using pure Rack
+- [**rails-single-file**](./rails-single-file/) - Echo server using Rails with bundler/inline
 - [**sinatra-classic**](./sinatra-classic/) - Calculator server using classic Sinatra
 - [**sinatra-modular**](./sinatra-modular/) - Calculator server using modular Sinatra
 

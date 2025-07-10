@@ -15,3 +15,9 @@
 
 # yardstick report
 measurements/report.txt
+
+# log files
+*.log
+
+# Rails secrets
+local_secret.txt

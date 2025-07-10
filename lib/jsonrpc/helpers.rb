@@ -54,7 +54,7 @@ module JSONRPC
     #
     # @return [Boolean] true if current request is a batch
     #
-    def jsonrpc_batch? = @env.key?('jsonrpc.batch')
+    def jsonrpc_batch? = env.key?('jsonrpc.batch')
 
     # Checks if the current request is a notification
     #
@@ -65,7 +65,7 @@ module JSONRPC
     #
     # @return [Boolean] true if current request is a notification
     #
-    def jsonrpc_notification? = @env.key?('jsonrpc.notification')
+    def jsonrpc_notification? = env.key?('jsonrpc.notification')
 
     # Checks if the current request is a regular request
     #
@@ -76,7 +76,7 @@ module JSONRPC
     #
     # @return [Boolean] true if current request is a regular request
     #
-    def jsonrpc_request? = @env.key?('jsonrpc.request')
+    def jsonrpc_request? = env.key?('jsonrpc.request')
 
     # Gets the current JSON-RPC batch request object
     #
@@ -87,7 +87,7 @@ module JSONRPC
     #
     # @return [BatchRequest, nil] the current batch request or nil
     #
-    def jsonrpc_batch = @env['jsonrpc.batch']
+    def jsonrpc_batch = env['jsonrpc.batch']
 
     # Gets the current JSON-RPC request object
     #
@@ -98,7 +98,7 @@ module JSONRPC
     #
     # @return [Request, nil] the current request or nil
     #
-    def jsonrpc_request = @env['jsonrpc.request']
+    def jsonrpc_request = env['jsonrpc.request']
 
     # Gets the current JSON-RPC notification object
     #
@@ -109,7 +109,7 @@ module JSONRPC
     #
     # @return [Notification, nil] the current notification or nil
     #
-    def jsonrpc_notification = @env['jsonrpc.notification']
+    def jsonrpc_notification = env['jsonrpc.notification']
 
     # Creates a JSON-RPC response
     #
@@ -259,6 +259,16 @@ module JSONRPC
     #
     def jsonrpc_internal_error(data: nil)
       jsonrpc_error(InternalError.new(data: data))
+    end
+
+    # Gets the Rack environment hash from @env or the Rails Request
+    #
+    # @api private
+    #
+    # @return [Hash] the Rack environment hash
+    #
+    def env
+      @env ||= request.env
     end
   end
 end
