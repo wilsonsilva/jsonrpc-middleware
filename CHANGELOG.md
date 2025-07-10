@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2025-07-10
+
+### Added
+- Rails support via Railtie for automatic middleware registration
+- Configuration options for logging, internal error handling, and error rendering
+- Complete YARD documentation for all public APIs
+- Rails application examples (single-file and full application)
+- Sinatra application examples (classic and modular styles)
+- Pure Rack application examples
+- AI development guidelines for Claude Code, Copilot, and Cursor
+
+### Changed
+- Enhanced helper methods with improved framework-agnostic support
+- Improved error handling with configurable logging capabilities
+- Updated development dependencies for better compatibility
+
+### Fixed
+- Method parameter handling in Rack examples
+
 ## [0.1.0] - 2025-06-14
 
 ### Added
@@ -33,5 +52,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Helper methods for request and response processing
 - Examples for basic and advanced usage scenarios
 
-[Unreleased]: https://github.com/wilsonsilva/jsonrpc-middleware/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/wilsonsilva/jsonrpc-middleware/releases/tag/v0.1.0
+[Unreleased]: https://github.com/wilsonsilva/jsonrpc-middleware/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/wilsonsilva/jsonrpc-middleware/compare/v0.1.0...v0.2.0
+[0.1.0]: https://github.com/wilsonsilva/jsonrpc-middleware/compare/745b5a...v0.1.0
