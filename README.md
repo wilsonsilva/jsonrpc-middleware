@@ -24,7 +24,7 @@ calls encoded in JSON.
 ## 🔑 Key features
 
 - **Spec-compliant**: Fully implements the [JSON-RPC 2.0 specification](https://www.jsonrpc.org/specification)
-- **Rack middleware integration**: Seamlessly integrates with Rack applications
+- **Rack middleware integration**: Seamlessly integrates with Rack applications (Rails, Sinatra, Hanami, Roda, etc)
 - **Support for all request types**: Handles single requests, notifications, and batch requests
 - **Error handling**: Comprehensive error handling with standard JSON-RPC error responses
 - **Request validation**: Define request parameter specifications and validations
