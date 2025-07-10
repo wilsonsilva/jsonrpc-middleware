@@ -1,0 +1,280 @@
+---
+type: auto_attached
+patterns: ["**/*_spec.rb", "**/spec/**/*.rb", "**/test/**/*.rb"]
+description: Ruby testing best practices and conventions following Better Specs guidelines
+---
+
+# Ruby Testing Rules
+
+You are an expert Ruby developer focused on writing high-quality, maintainable tests following Better Specs best practices.
+
+## Test Structure & Organization
+
+### Describe Blocks
+- Use Ruby documentation conventions: `.` or `::` for class methods, `#` for instance methods
+- Keep descriptions under 40 characters; use `context` for longer scenarios
+- Be specific about what you're testing
+
+```ruby
+# Good
+describe User do
+  describe '.authenticate' do
+    context 'when credentials are valid' do
+      it { is_expected.to be_truthy }
+    end
+  end
+  
+  describe '#admin?' do
+    it { is_expected.to be_falsey }
+  end
+end
+
+# Bad
+describe 'the authenticate method for User' do
+  it 'has 422 status code if an unexpected params will be added' do
+```
+
+### Context Usage
+- Use `context` to group related test scenarios
+- Start context descriptions with "when" or "with"
+- Test all edge cases and error conditions
+
+```ruby
+describe '#destroy' do
+  context 'when resource is found' do
+    it 'responds with 200'
+    it 'removes the resource'
+  end
+  
+  context 'when resource is not found' do
+    it 'responds with 404'
+  end
+  
+  context 'when resource is not owned' do
+    it 'responds with 403'
+  end
+end
+```
+
+## Test Content Guidelines
+
+### Single Expectation Principle
+- Each test should make only one assertion
+- In isolated unit tests: one behavior per example
+- In integration tests: multiple related expectations are acceptable for performance
+
+```ruby
+# Good (isolated unit test)
+it 'sets the status to active' do
+  expect(user.status).to eq('active')
+end
+
+# Good (integration test)
+it 'creates a resource' do
+  expect(response).to respond_with_content_type(:json)
+  expect(response).to assign_to(:resource)
+end
+```
+
+### Variable Assignment
+
+#### Use `let` for Lazy Loading
+```ruby
+# Good
+describe '#type_id' do
+  let(:resource) { FactoryBot.create(:device) }
+  let(:type) { Type.find(resource.type_id) }
+  
+  it 'sets the type_id field' do
+    expect(resource.type_id).to eq(type.id)
+  end
+end
+
+# Bad - using instance variables
+before { @resource = FactoryBot.create(:device) }
+```
+
+#### Use `let!` for Eager Loading
+```ruby
+# Use when you need the variable defined immediately
+let!(:existing_user) { FactoryBot.create(:user) }
+```
+
+#### Use `let` for Actions
+```ruby
+context 'when updating non-existing property' do
+  let(:properties) { { id: Settings.resource_id, value: 'on' } }
+  let(:update) { resource.properties = properties }
+  
+  it 'raises a not found error' do
+    expect { update }.to raise_error(Mongoid::Errors::DocumentNotFound)
+  end
+end
+```
+
+## Data Management
+
+### Factories Over Fixtures
+- Always use FactoryBot instead of fixtures
+- Keep test data minimal - only create what you need
+- Use `build` instead of `create` when you don't need database persistence
+
+```ruby
+# Good
+let(:user) { FactoryBot.build(:user) }
+let(:persisted_user) { FactoryBot.create(:user) }
+
+# Use traits for variations
+let(:admin_user) { FactoryBot.create(:user, :admin) }
+```
+
+### Shared Examples
+- Use shared examples to DRY up repetitive test patterns
+- Define them in `spec/support/shared_examples/`
+
+```ruby
+# spec/support/shared_examples/api_resource.rb
+RSpec.shared_examples 'an API resource' do |status_code|
+  it 'returns the correct status' do
+    expect(response).to have_http_status(status_code)
+  end
+  
+  it 'returns JSON content type' do
+    expect(response.content_type).to eq('application/json')
+  end
+end
+
+# Usage
+describe 'GET /users' do
+  before { get '/users' }
+  it_behaves_like 'an API resource', 200
+end
+```
+
+## Test Types & Focus
+
+### Model Tests
+- Focus heavily on model testing
+- Test validations, associations, scopes, and business logic
+- Test all edge cases and error conditions
+
+```ruby
+describe User do
+  describe 'validations' do
+    it { is_expected.to validate_presence_of(:email) }
+    it { is_expected.to validate_uniqueness_of(:email) }
+  end
+  
+  describe 'associations' do
+    it { is_expected.to have_many(:posts) }
+  end
+  
+  describe '#full_name' do
+    let(:user) { FactoryBot.build(:user, first_name: 'John', last_name: 'Doe') }
+    
+    it 'returns the full name' do
+      expect(user.full_name).to eq('John Doe')
+    end
+  end
+end
+```
+
+### Integration Tests
+- Prefer integration tests over controller tests
+- Use Capybara for feature tests
+- Test complete user workflows
+
+```ruby
+describe 'User authentication', type: :feature do
+  let(:user) { FactoryBot.create(:user) }
+  
+  context 'with valid credentials' do
+    it 'allows user to sign in' do
+      visit new_user_session_path
+      fill_in 'Email', with: user.email
+      fill_in 'Password', with: user.password
+      click_button 'Sign in'
+      
+      expect(page).to have_content('Signed in successfully')
+    end
+  end
+end
+```
+
+### External Service Testing
+- Stub external API calls using WebMock
+- Test both success and failure scenarios
+
+```ruby
+describe 'external API integration' do
+  let(:api_url) { 'https://api.example.com/users' }
+  
+  context 'when API is available' do
+    before do
+      stub_request(:get, api_url)
+        .to_return(status: 200, body: { users: [] }.to_json)
+    end
+    
+    it 'fetches users successfully' do
+      result = ApiService.fetch_users
+      expect(result).to be_successful
+    end
+  end
+  
+  context 'when API returns error' do
+    before do
+      stub_request(:get, api_url)
+        .to_return(status: 500, body: 'Internal Server Error')
+    end
+    
+    it 'handles error gracefully' do
+      expect { ApiService.fetch_users }.to raise_error(ApiService::ServerError)
+    end
+  end
+end
+```
+
+## Testing Best Practices
+
+### Performance
+- Use database cleaner strategies appropriately
+- Consider using `build_stubbed` for fast unit tests
+- Group database operations in shared setup when possible
+
+### Readability
+- Use descriptive variable names
+- Keep test methods short and focused
+- Use custom matchers for complex assertions
+
+```ruby
+# Custom matcher example
+RSpec::Matchers.define :be_a_valid_email do
+  match do |actual|
+    actual.match?(/\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i)
+  end
+end
+
+# Usage
+it 'has a valid email format' do
+  expect(user.email).to be_a_valid_email
+end
+```
+
+### Error Testing
+- Test both happy path and error conditions
+- Use specific error classes when possible
+- Test error messages when they matter to users
+
+```ruby
+context 'when invalid data provided' do
+  let(:invalid_params) { { email: 'invalid' } }
+  
+  it 'raises validation error' do
+    expect { User.create!(invalid_params) }
+      .to raise_error(ActiveRecord::RecordInvalid)
+      .with_message(/Email is invalid/)
+  end
+end
+```
+
+Remember: Write tests that are clear, focused, and maintainable. Each test should tell a story about your application's behavior.
