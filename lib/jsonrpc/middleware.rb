@@ -39,12 +39,17 @@ module JSONRPC
     # @param app [#call] The Rack application to wrap
     # @param options [Hash] Configuration options
     # @option options [String] :path ('/') The path to handle JSON-RPC requests on
+    # @option options [Boolean] :rescue_internal_errors (nil) Override config rescue_internal_errors
+    # @option options [Boolean] :log_internal_errors (true) Override config log_internal_errors
     #
     def initialize(app, options = {})
       @app = app
       @parser = Parser.new
       @validator = Validator.new
       @path = options.fetch(:path, DEFAULT_PATH)
+      @config = JSONRPC.configuration
+      @log_internal_errors = options.fetch(:log_internal_errors, @config.log_internal_errors)
+      @rescue_internal_errors = options.fetch(:rescue_internal_errors, @config.rescue_internal_errors)
     end
 
     # Rack application call method
@@ -92,15 +97,24 @@ module JSONRPC
       parsed_request = parse_request
       return parsed_request if parsed_request.is_a?(Array) # Early return for parse errors
 
-      validation_result = validate_request(parsed_request)
-      return validation_result if validation_result.is_a?(Array) # Early return for validation errors
+      if @config.validate_procedure_signatures
+        validation_result = validate_request(parsed_request)
+        return validation_result if validation_result.is_a?(Array) # Early return for validation errors
+      end
 
       # Set parsed request in environment and call app
       store_request_in_env(parsed_request)
       @app.call(@req.env)
-    rescue StandardError
-      error = InternalError.new(request_id: parsed_request.is_a?(Request) ? parsed_request.id : nil)
+    rescue StandardError => e
+      log_internal_error(e) if @log_internal_errors
+
+      data = {}
+      data = { class: e.class.name, message: e.message, backtrace: e.backtrace } if @config.render_internal_errors
+      error = InternalError.new(request_id: parsed_request.is_a?(Request) ? parsed_request.id : nil, data:)
       @req.env['jsonrpc.error'] = error
+
+      raise e unless @rescue_internal_errors
+
       json_response(200, error.to_response)
     end
 
@@ -361,6 +375,22 @@ module JSONRPC
       body_content = body.read
       body.rewind if body.respond_to?(:rewind)
       body_content
+    end
+
+    # Logs internal errors to stdout with full backtrace
+    #
+    # @api private
+    #
+    # @example Log an internal error
+    #   log_internal_error(StandardError.new("Something went wrong"))
+    #
+    # @param error [Exception] The error to log
+    #
+    # @return [void]
+    #
+    def log_internal_error(error)
+      puts "Internal error: #{error.message}"
+      puts error.backtrace.join("\n")
     end
   end
 end

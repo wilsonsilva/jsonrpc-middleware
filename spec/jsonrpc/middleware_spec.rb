@@ -397,6 +397,7 @@ RSpec.describe JSONRPC::Middleware do
         jsonrpc: '2.0',
         error: {
           code: -32_603,
+          data: {},
           message: 'Internal JSON-RPC error.'
         },
         id: 'req-internal-error'

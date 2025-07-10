@@ -24,8 +24,6 @@ require 'jsonrpc'
 require 'factory_bot'
 require 'rack/test'
 
-ENV['DEBUG_RACK'] = 'false'
-
 # Require support files
 Dir[File.join(File.dirname(__FILE__), 'support', '**', '*.rb')].each { |f| require f }
 

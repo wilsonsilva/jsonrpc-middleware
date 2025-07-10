@@ -99,7 +99,7 @@ module JSONRPC
 
       nil
     rescue StandardError => e
-      if ENV['DEBUG_RACK'] == 'true'
+      if JSONRPC.configuration.log_request_validation_errors
         puts "Validation error: #{e.message}"
         puts e.backtrace.join("\n")
       end

@@ -46,6 +46,50 @@ module JSONRPC
     #
     Procedure = Data.define(:allow_positional_arguments, :contract, :parameter_name)
 
+    # Whether to log detailed internal error information in the terminal
+    #
+    # @api public
+    #
+    # @example
+    #   config.log_internal_errors # => true
+    #
+    # @return [Boolean] whether to log internal error details
+    #
+    attr_accessor :log_internal_errors
+
+    # Whether to log validation errors during JSON-RPC request processing
+    #
+    # @api public
+    #
+    # @example
+    #   config.log_request_validation_errors # => false
+    #
+    # @return [Boolean] whether to log JSON-RPC request validation errors
+    #
+    attr_accessor :log_request_validation_errors
+
+    # Whether to render detailed internal error information in responses
+    #
+    # @api public
+    #
+    # @example
+    #   config.render_internal_errors # => true
+    #
+    # @return [Boolean] whether to log internal error details
+    #
+    attr_accessor :render_internal_errors
+
+    # Whether internal errors should be rescued and converted to JSON-RPC errors
+    #
+    # @api public
+    #
+    # @example
+    #   config.rescue_internal_errors # => true
+    #
+    # @return [Boolean] whether internal errors are rescued
+    #
+    attr_accessor :rescue_internal_errors
+
     # Whether procedure signatures are validated
     #
     # @api public
@@ -64,11 +108,33 @@ module JSONRPC
     # @example
     #   config = JSONRPC::Configuration.new
     #
+    # @example With custom options
+    #   config = JSONRPC::Configuration.new(
+    #     log_request_validation_errors: true,
+    #     render_internal_errors: true
+    #   )
+    #
+    # @param log_internal_errors [Boolean] whether to log detailed internal error information in the terminal
+    # @param log_request_validation_errors [Boolean] whether to log validation errors during JSON-RPC request processing
+    # @param rescue_internal_errors [Boolean] whether internal errors should be rescued and converted to JSON-RPC errors
+    # @param render_internal_errors [Boolean] whether to render detailed internal error information in responses
+    # @param validate_procedure_signatures [Boolean] whether procedure signatures are validated
+    #
     # @return [Configuration] a new configuration instance
     #
-    def initialize
+    def initialize(
+      log_internal_errors: true,
+      log_request_validation_errors: false,
+      rescue_internal_errors: true,
+      render_internal_errors: false,
+      validate_procedure_signatures: true
+    )
       @procedures = {}
-      @validate_procedure_signatures = true
+      @log_internal_errors = log_internal_errors
+      @log_request_validation_errors = log_request_validation_errors
+      @rescue_internal_errors = rescue_internal_errors
+      @render_internal_errors = render_internal_errors
+      @validate_procedure_signatures = validate_procedure_signatures
     end
 
     # Returns the singleton instance of the Configuration class
