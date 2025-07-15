@@ -21,3 +21,6 @@ measurements/report.txt
 
 # Rails secrets
 local_secret.txt
+
+# Kiro AI steering
+.kiro
