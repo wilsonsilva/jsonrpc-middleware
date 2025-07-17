@@ -40,6 +40,31 @@ end
 desc 'Test, lint and perform security and documentation audits'
 task qa: %w[spec rubocop yard:junk verify_measurements bundle:audit]
 
+desc 'Run bundle update on all example folders'
+task :update_examples do
+  example_dirs = Dir.glob('examples/*/').select { |dir| File.exist?(File.join(dir, 'Gemfile')) }
+  
+  if example_dirs.empty?
+    puts 'No example directories with Gemfiles found'
+    exit 0
+  end
+  
+  puts "Found #{example_dirs.length} example directories with Gemfiles:"
+  example_dirs.each { |dir| puts "  - #{dir}" }
+  puts
+  
+  example_dirs.each do |dir|
+    puts "Updating #{dir}..."
+    Dir.chdir(dir) do
+      system('bundle update') || abort("Failed to update #{dir}")
+    end
+    puts "✓ Updated #{dir}"
+    puts
+  end
+  
+  puts 'All examples updated successfully!'
+end
+
 namespace :yard do
   desc 'Format YARD documentation'
   task :format do

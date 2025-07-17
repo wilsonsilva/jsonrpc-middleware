@@ -1,4 +1,4 @@
-# JSONRPC::Middleware
+# JSON-RPC Middleware
 
 [![Gem Version](https://badge.fury.io/rb/jsonrpc-middleware.svg)](https://badge.fury.io/rb/jsonrpc-middleware)
 ![Build](https://github.com/wilsonsilva/jsonrpc-middleware/actions/workflows/main.yml/badge.svg)
