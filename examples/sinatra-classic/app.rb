@@ -26,8 +26,6 @@ post '/' do
   end
 end
 
-private
-
 def handle_single(request_or_notification)
   params = request_or_notification.params
 
