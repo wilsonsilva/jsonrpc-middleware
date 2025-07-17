@@ -141,9 +141,10 @@ use JSONRPC::Middleware
 run App.new
 ```
 
-This will give you a fully-featured JSON-RPC server.
+This will give you a fully-featured Rack JSON-RPC server, capable of handling requests, notifications and batches,
+validate the methods and parameter schema, and respond successfully or erroneously.
 
-For more advanced setups, check the [examples](https://github.com/wilsonsilva/jsonrpc-middleware/blob/main/examples/README.md).
+For more advanced setups, or other frameworks such as Rails or Sinatra, check the [examples](https://github.com/wilsonsilva/jsonrpc-middleware/blob/main/examples/README.md).
 
 ## 📚 Documentation
 
