@@ -3,6 +3,7 @@
 module JSONRPC
   # @api private
   class Railtie < ::Rails::Railtie
+    # Rails routing constraint for matching JSON-RPC method names
     initializer 'jsonrpc.middleware' do |app|
       app.middleware.use JSONRPC::Middleware
     end

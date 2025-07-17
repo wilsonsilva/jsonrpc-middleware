@@ -68,10 +68,13 @@ loader = Zeitwerk::Loader.for_gem
 loader.log! if ENV['DEBUG_ZEITWERK'] == 'true'
 loader.enable_reloading
 loader.collapse("#{__dir__}/jsonrpc/errors")
-loader.ignore("#{__dir__}/jsonrpc/railtie.rb")
+loader.collapse("#{__dir__}/jsonrpc/railtie")
+
+unless defined?(Rails)
+  loader.ignore("#{__dir__}/jsonrpc/railtie.rb")
+  loader.ignore("#{__dir__}/jsonrpc/railtie/method_constraint.rb")
+end
+
 loader.inflector.inflect('jsonrpc' => 'JSONRPC')
 loader.setup
 loader.eager_load
-
-# Only load Rails integration if Rails is available
-require_relative 'jsonrpc/railtie' if defined?(Rails)

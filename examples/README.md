@@ -9,6 +9,7 @@ This directory contains example implementations of JSON-RPC servers using the js
 - [**rack**](./rack/) - Calculator server using pure Rack
 - [**rails**](./rails/) - Calculator server using Rails
 - [**rails-single-file**](./rails-single-file/) - Echo server using Rails with bundler/inline
+- [**rails-single-file-routing**](./rails-single-file-routing/) - Echo server using Rails with method-specific routing
 - [**sinatra-classic**](./sinatra-classic/) - Calculator server using classic Sinatra
 - [**sinatra-modular**](./sinatra-modular/) - Calculator server using modular Sinatra
 
