@@ -19,8 +19,7 @@
 
 </div>
 
-A Ruby implementation of the JSON-RPC protocol, enabling standardized communication between systems via remote procedure
-calls encoded in JSON.
+A Rack middleware implementing the JSON-RPC 2.0 protocol that integrates easily with all Rack-based applications (Rails, Sinatra, Hanami, etc).
 
 ## Table of contents
 

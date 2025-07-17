@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors = ['Wilson Silva']
   spec.email = ['wilson.dsigns@gmail.com']
 
-  spec.summary = 'Implementation of the JSON-RPC protocol.'
-  spec.description = 'Implements the JSON-RPC 2.0 protocol, enabling standardized remote procedure calls encoded in JSON.'
+  spec.summary = 'Rack middleware implementing the JSON-RPC 2.0 protocol.'
+  spec.description = 'A Rack middleware implementing the JSON-RPC 2.0 protocol that integrates easily with all Rack-based applications (Rails, Sinatra, Hanami, etc).'
   spec.homepage = 'https://github.com/wilsonsilva/jsonrpc-middleware'
   spec.license = 'MIT'
   spec.required_ruby_version = '>= 3.4.0'
