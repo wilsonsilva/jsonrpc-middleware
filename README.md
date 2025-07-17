@@ -30,6 +30,27 @@ calls encoded in JSON.
 - **Request validation**: Define request parameter specifications and validations
 - **Helpers**: Convenient helper methods to simplify request and response processing
 
+## 🏗️ Architecture
+
+The gem integrates seamlessly into your Rack-based application:
+
+```mermaid
+block-beta
+  columns 4
+
+  block:AppFrameworks:4
+    columns 4
+    Rails["Rails App"] Sinatra["Sinatra App"] Hanami["Hanami App"] RackApp["Your Rack-compatible App"]
+  end
+
+  Middleware["JSON-RPC Middleware"]:4
+  Rack["Rack"]:4
+  HTTP["HTTP"]:4
+
+  classDef middlewareStyle fill:#ff6b6b,stroke:#d63031,stroke-width:2px,color:#fff
+  class Middleware middlewareStyle
+```
+
 ## 📦 Installation
 
 Install the gem and add to the application's Gemfile by executing:
