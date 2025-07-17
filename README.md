@@ -1,9 +1,23 @@
-# JSONRPC::Middleware
+<p align="center">
+  <a href="https://jsonrpc-middleware.com" target="_blank">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="./.github/images/logo-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="./.github/images/logo-light.svg">
+      <img alt="JSON-RPC Middleware Logo" src="./.github/images/logo-light.svg" width="600" height="120" style="max-width: 100%;">
+    </picture>
+  </a>
+</p>
+
+<hr />
+
+<div align="center">
 
 [![Gem Version](https://badge.fury.io/rb/jsonrpc-middleware.svg)](https://badge.fury.io/rb/jsonrpc-middleware)
 ![Build](https://github.com/wilsonsilva/jsonrpc-middleware/actions/workflows/main.yml/badge.svg)
 [![Maintainability](https://qlty.sh/badges/a275de81-94e3-45af-9469-523aa5345871/maintainability.svg)](https://qlty.sh/gh/wilsonsilva/projects/jsonrpc-middleware)
 [![Code Coverage](https://qlty.sh/badges/a275de81-94e3-45af-9469-523aa5345871/test_coverage.svg)](https://qlty.sh/gh/wilsonsilva/projects/jsonrpc-middleware)
+
+</div>
 
 A Ruby implementation of the JSON-RPC protocol, enabling standardized communication between systems via remote procedure
 calls encoded in JSON.
