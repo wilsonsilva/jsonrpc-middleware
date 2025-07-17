@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2025-07-17
+
+### Added
+- Rails routing support with method constraints for JSON-RPC procedures
+- Rails single-file routing example application
+- Method constraint helper for Rails routing integration
+
+### Changed
+- Updated Ruby to v3.4.5 across all environments
+- Updated development dependencies (bundler, overcommit, rubocop, rubocop-yard)
+- Updated examples dependencies to use latest versions
+- Improved documentation for Rails single-file applications
+
+### Fixed
+- Standardized Ruby version usage across the project
+
 ## [0.2.0] - 2025-07-10
 
 ### Added
