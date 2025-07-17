@@ -51,11 +51,8 @@ The gem integrates seamlessly into your Rack-based application:
 block-beta
   columns 4
 
-  block:AppFrameworks:4
-    columns 4
-    Rails["Rails App"] Sinatra["Sinatra App"] Hanami["Hanami App"] RackApp["Your Rack-compatible App"]
-  end
-
+  App["Your app"]:4
+  Rails:1 Sinatra:1 RackApp["Other Rack-compatible framework"]:2
   Middleware["JSON-RPC Middleware"]:4
   Rack["Rack"]:4
   HTTP["HTTP"]:4
