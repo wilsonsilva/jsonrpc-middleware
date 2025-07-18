@@ -17,7 +17,7 @@ end
 
 class JsonrpcController < ActionController::Base
   # POST /
-  def echoc
+  def echo
     render jsonrpc: jsonrpc_request.params
   end
 
