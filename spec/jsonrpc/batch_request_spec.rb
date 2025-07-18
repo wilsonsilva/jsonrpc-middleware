@@ -164,24 +164,20 @@ RSpec.describe JSONRPC::BatchRequest do
   end
 
   describe '#length' do
-    context 'when batch contains requests' do
-      it 'returns the number of requests in the batch' do
-        batch = described_class.new([add_request, notify_notification, subtract_request])
+    it 'returns the number of requests in the batch' do
+      batch = described_class.new([add_request, notify_notification, subtract_request])
 
-        expect(batch.length).to eq(3)
-      end
+      expect(batch.length).to eq(3)
     end
   end
 
   describe '#map' do
     let(:batch) { described_class.new([add_request, notify_notification, subtract_request]) }
 
-    context 'when transforming each request' do
-      it 'returns array of transformed values' do
-        methods = batch.map(&:method)
+    it 'returns array of transformed values' do
+      methods = batch.map(&:method)
 
-        expect(methods).to eq(%w[add notify subtract])
-      end
+      expect(methods).to eq(%w[add notify subtract])
     end
   end
 
@@ -315,14 +311,12 @@ RSpec.describe JSONRPC::BatchRequest do
   end
 
   describe '#requests' do
-    context 'when accessing the requests attribute' do
-      it 'returns the array of requests' do
-        requests = [add_request, notify_notification]
-        batch = described_class.new(requests)
+    it 'returns the array of requests' do
+      requests = [add_request, notify_notification]
+      batch = described_class.new(requests)
 
-        expect(batch.requests).to eq(requests)
-        expect(batch.requests).to be_a(Array)
-      end
+      expect(batch.requests).to eq(requests)
+      expect(batch.requests).to be_a(Array)
     end
   end
 
