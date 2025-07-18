@@ -347,12 +347,10 @@ RSpec.describe JSONRPC::BatchRequest do
   end
 
   describe '#size' do
-    context 'when batch contains requests' do
-      it 'returns the number of requests in the batch' do
-        batch = described_class.new([add_request, notify_notification, subtract_request])
+    it 'returns the number of requests in the batch' do
+      batch = described_class.new([add_request, notify_notification, subtract_request])
 
-        expect(batch.size).to eq(3)
-      end
+      expect(batch.size).to eq(3)
     end
   end
 
