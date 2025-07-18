@@ -124,19 +124,6 @@ module JSONRPC
     #
     alias length size
 
-    # Returns true if the batch contains no requests
-    #
-    # @api public
-    #
-    # @example Check if batch is empty
-    #   batch.empty? # => false
-    #
-    # @return [Boolean] true if the batch is empty, false otherwise
-    #
-    def empty?
-      requests.empty?
-    end
-
     # Handles each request/notification in the batch and returns responses
     #
     # @api public

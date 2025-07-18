@@ -89,18 +89,6 @@ RSpec.describe JSONRPC::BatchRequest do
     end
   end
 
-  describe '#empty?' do
-    context 'when batch is non-empty' do
-      it 'returns false' do
-        batch = described_class.new([add_request])
-
-        expect(batch.empty?).to be false
-      end
-    end
-
-    # NOTE: The batch will never be empty due to a validation on initialization
-  end
-
   describe '#find' do
     let(:batch) { described_class.new([add_request, notify_notification, subtract_request]) }
 
