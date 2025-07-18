@@ -137,6 +137,38 @@ module JSONRPC
       requests.empty?
     end
 
+    # Handles each request/notification in the batch and returns responses
+    #
+    # @api public
+    #
+    # @example Handle batch with a block
+    #   batch.process_each do |request_or_notification|
+    #     # Process the request/notification
+    #     result = some_processing(request_or_notification.params)
+    #     result
+    #   end
+    #
+    # @yield [request_or_notification] Yields each request/notification in the batch
+    #
+    # @yieldparam request_or_notification [JSONRPC::Request, JSONRPC::Notification] a request or notification
+    #   in the batch
+    #
+    # @yieldreturn [Object] the result of processing the request. Notifications yield no results.
+    #
+    # @return [Array<JSONRPC::Response>] responses for requests only (notifications return no response)
+    #
+    def process_each
+      raise ArgumentError, 'Block required' unless block_given?
+
+      flat_map do |request_or_notification|
+        result = yield(request_or_notification)
+
+        if request_or_notification.is_a?(JSONRPC::Request)
+          JSONRPC::Response.new(id: request_or_notification.id, result:)
+        end
+      end.compact
+    end
+
     private
 
     # Validates the requests array

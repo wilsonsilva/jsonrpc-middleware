@@ -8,7 +8,6 @@
   </a>
 </p>
 
-
 <div align="center">
 
 [![Gem Version](https://badge.fury.io/rb/jsonrpc-middleware.svg)](https://badge.fury.io/rb/jsonrpc-middleware)
@@ -108,31 +107,26 @@ class App
     @env = env
 
     if jsonrpc_request?
-      result = handle_single(jsonrpc_request)
-      jsonrpc_response(result)
+      sum = add(jsonrpc_request.params)
+      jsonrpc_response(sum)
     elsif jsonrpc_notification?
-      handle_single(jsonrpc_notification)
+      add(jsonrpc_notification.params)
       jsonrpc_notification_response
     else
-      responses = handle_batch(jsonrpc_batch)
-      jsonrpc_batch_response(responses)
+      results = add_in_batches(jsonrpc_batch)
+      jsonrpc_batch_response(results)
     end
   end
 
   private
 
-  def handle_single(request_or_notification)
-    params = request_or_notification.params
-
+  def add(params)
     addends = params.is_a?(Array) ? params : params['addends'] # Handle positional and named arguments
     addends.sum
   end
 
-  def handle_batch(batch)
-    batch.flat_map do |request_or_notification|
-      result = handle_single(request_or_notification)
-      JSONRPC::Response.new(id: request_or_notification.id, result:) if request_or_notification.is_a?(JSONRPC::Request)
-    end.compact
+  def add_in_batches(batch)
+    batch.process_each { |request_or_notification| add(request_or_notification.params) }
   end
 end
 
@@ -140,8 +134,12 @@ use JSONRPC::Middleware
 run App.new
 ```
 
-This will give you a fully-featured Rack JSON-RPC server, capable of handling requests, notifications and batches,
-validate the methods and parameter schema, and respond successfully or erroneously.
+This will give you a fully-featured JSON-RPC server, capable of:
+- Handling JSON-RPC requests, notifications __and batches__
+- Validating the allowed JSON-RPC methods (e.g. allow only `add`)
+- Validating the JSON-RPC method parameters (e.g. allow only non-empty arrays of numbers)
+- Accept positional and named parameters (`params: [5, 5]`, `params: { addends: [5, 5] }`)
+- Respond successfully or erroneously, according to the specification
 
 For more advanced setups, or other frameworks such as Rails or Sinatra, check the [examples](https://github.com/wilsonsilva/jsonrpc-middleware/blob/main/examples/README.md).
 

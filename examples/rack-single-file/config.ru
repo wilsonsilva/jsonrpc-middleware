@@ -43,10 +43,7 @@ class App
   def handle_single(request_or_notification) = request_or_notification.params
 
   def handle_batch(batch)
-    batch.flat_map do |request_or_notification|
-      result = handle_single(request_or_notification)
-      JSONRPC::Response.new(id: request_or_notification.id, result:) if request_or_notification.is_a?(JSONRPC::Request)
-    end.compact
+    batch.process_each { |request_or_notification| handle_single(request_or_notification) }
   end
 end
 
