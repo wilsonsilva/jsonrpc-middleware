@@ -10,6 +10,7 @@ This directory contains example implementations of JSON-RPC servers using the js
 - [**rails**](./rails/) - Calculator server using Rails
 - [**rails-single-file**](./rails-single-file/) - Echo server using Rails with bundler/inline
 - [**rails-single-file-routing**](./rails-single-file-routing/) - Echo server using Rails with method-specific routing
+- [**rails-routing-dsl**](./rails-routing-dsl/) - Smart home control server showcasing Rails JSON-RPC routing DSL
 - [**sinatra-classic**](./sinatra-classic/) - Calculator server using classic Sinatra
 - [**sinatra-modular**](./sinatra-modular/) - Calculator server using modular Sinatra
 
@@ -26,6 +27,14 @@ Most examples implement a calculator API with these procedures:
 The echo examples implement:
 
 - `echo` - Returns the input message
+
+The rails-routing-dsl example implements a smart home control API:
+
+- `on` / `off` - Control main home automation system
+- `lights.on` / `lights.off` - Control lights
+- `climate.on` / `climate.off` - Control climate system
+- `climate.fan.on` / `climate.fan.off` - Control climate fan
+- Batch request support for multiple operations
 
 ## Running Examples
 
