@@ -22,11 +22,7 @@ JSONRPC.configure do |config|
     end
   end
 
-  procedure(:ping) do
-    params do
-      # no params
-    end
-  end
+  procedure(:ping)
 end
 
 # Define the application

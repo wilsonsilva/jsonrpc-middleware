@@ -54,9 +54,5 @@ require_relative '../../../procedures'
 #   end
 #
 #   # Used only to test internal server errors
-#   procedure(:explode) do
-#     params do
-#       # No params
-#     end
-#   end
+#   procedure(:explode)
 # end

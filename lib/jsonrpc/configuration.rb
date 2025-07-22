@@ -162,15 +162,24 @@ module JSONRPC
     #     end
     #   end
     #
+    # @example Register a procedure without validation
+    #   config.procedure('ping')
+    #
     # @param method_name [String, Symbol] the name of the procedure
     # @param allow_positional_arguments [Boolean] whether the procedure accepts positional arguments
     #
-    # @yield A block that defines the validation contract using Dry::Validation DSL
+    # @yield [optional] A block that defines the validation contract using Dry::Validation DSL
     #
     # @return [Procedure] the registered procedure
     #
-    def procedure(method_name, allow_positional_arguments: false, &)
-      contract_class = Class.new(Dry::Validation::Contract, &)
+    def procedure(method_name, allow_positional_arguments: false, &block)
+      contract_class = if block
+                         Class.new(Dry::Validation::Contract, &block)
+                       else
+                         Class.new(Dry::Validation::Contract) do
+                           params {} # rubocop:disable Lint/EmptyBlock
+                         end
+                       end
       contract_class.class_eval { import_predicates_as_macros }
       contract = contract_class.new
 
