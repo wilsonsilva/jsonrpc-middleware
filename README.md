@@ -175,6 +175,7 @@ rake bundle:audit:update      # Updates the bundler-audit vulnerability database
 rake clean                    # Remove any temporary products
 rake clobber                  # Remove any generated files
 rake coverage                 # Run spec with coverage
+rake examples:bundle_install  # Run bundle install on all example folders (useful after updating the gem version)
 rake install                  # Build and install jsonrpc-middleware.gem into system gems
 rake install:local            # Build and install jsonrpc-middleware.gem into system gems without network access
 rake qa                       # Test, lint and perform security and documentation audits
