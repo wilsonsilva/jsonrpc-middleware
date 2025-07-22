@@ -37,6 +37,10 @@ class App < Rails::Application
   config.hosts.clear
 
   routes.append do
+    # Handle batch requests
+    post '/', to: 'jsonrpc#ping_or_echo', constraints: JSONRPC::BatchConstraint.new
+
+    # Handle individual method requests
     post '/', to: 'jsonrpc#echo', constraints: JSONRPC::MethodConstraint.new('echo')
     post '/', to: 'jsonrpc#ping', constraints: JSONRPC::MethodConstraint.new('ping')
   end
@@ -50,6 +54,19 @@ class JsonrpcController < ActionController::Base
 
   def ping
     render jsonrpc: 'pong'
+  end
+
+  def ping_or_echo
+    results = jsonrpc_batch.process_each do |request_or_notification|
+      case request_or_notification.method
+      when 'echo'
+        request_or_notification.params
+      when 'ping'
+        'pong'
+      end
+    end
+
+    render jsonrpc: results
   end
 end
 
