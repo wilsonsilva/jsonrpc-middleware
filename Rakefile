@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'English' # For $CHILD_STATUS
 require 'bundler/audit/task'
 require 'bundler/gem_tasks'
 require 'rspec/core/rake_task'
