@@ -8,6 +8,13 @@ module JSONRPC
       app.middleware.use JSONRPC::Middleware
     end
 
+    # Register the JSON-RPC routes DSL extension
+    initializer 'jsonrpc.routes_dsl' do
+      ActiveSupport.on_load(:action_controller) do
+        ActionDispatch::Routing::Mapper.include(JSONRPC::MapperExtension)
+      end
+    end
+
     initializer 'jsonrpc.renderer' do
       ActiveSupport.on_load(:action_controller) do
         Mime::Type.register 'application/json', :jsonrpc

@@ -16,7 +16,7 @@ module JSONRPC
     # @param jsonrpc_method_name [String] The JSON-RPC method name to match against
     #
     def initialize(jsonrpc_method_name)
-      @jsonrpc_method_name = jsonrpc_method_name
+      @jsonrpc_method_name = jsonrpc_method_name.to_s
     end
 
     # Check if the request matches the configured method name
