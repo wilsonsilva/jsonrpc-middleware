@@ -100,53 +100,53 @@ namespace :examples do
   desc 'Run bundle install on all example folders'
   task :bundle_install do
     examples_dir = File.join(Dir.pwd, 'examples')
-    
+
     unless Dir.exist?(examples_dir)
       puts 'Examples directory not found'
       exit 1
     end
-    
+
     example_folders = Dir.glob(File.join(examples_dir, '*')).select { |path| Dir.exist?(path) }
-    
+
     if example_folders.empty?
       puts 'No example folders found'
       return
     end
-    
+
     puts "Found #{example_folders.length} example folders:"
     example_folders.each { |folder| puts "  - #{File.basename(folder)}" }
     puts
-    
+
     failed_folders = []
-    
+
     example_folders.each do |folder|
       gemfile_path = File.join(folder, 'Gemfile')
-      
+
       unless File.exist?(gemfile_path)
         puts "Skipping #{File.basename(folder)} - no Gemfile found"
         next
       end
-      
+
       puts "Running bundle install in #{File.basename(folder)}..."
-      
+
       Dir.chdir(folder) do
         system('bundle install')
-        
-        unless $?.success?
+
+        if $CHILD_STATUS.success?
+          puts "  ✓ Successfully installed gems in #{File.basename(folder)}"
+        else
           failed_folders << File.basename(folder)
           puts "  ✗ Failed to bundle install in #{File.basename(folder)}"
-        else
-          puts "  ✓ Successfully installed gems in #{File.basename(folder)}"
         end
       end
-      
+
       puts
     end
-    
+
     if failed_folders.empty?
       puts 'All example folders processed successfully!'
     else
-      puts "Failed to process #{failed_folders.length} folders: #{failed_folders.join(', ')}"
+      puts "Failed to process #{failed_folders.length} folders: #{failed_folders.join(", ")}"
       exit 1
     end
   end
