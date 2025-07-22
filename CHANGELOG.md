@@ -5,10 +5,74 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - 2025-07-22
+
+### Added
+- Rails routing DSL for elegant JSON-RPC method mapping with support for namespaces and batch handling:
+  ```ruby
+  # In routes.rb
+  jsonrpc '/' do
+    # Handle batch requests
+    batch to: 'batch#handle'
+
+    method 'on', to: 'main#on'
+    method 'off', to: 'main#off'
+
+    namespace 'lights' do
+      method 'on', to: 'lights#on'    # becomes lights.on
+      method 'off', to: 'lights#off'  # becomes lights.off
+    end
+
+    namespace 'climate' do
+      method 'on', to: 'climate#on'   # becomes climate.on
+      method 'off', to: 'climate#off' # becomes climate.off
+
+      namespace 'fan' do
+        method 'on', to: 'fan#on'     # becomes climate.fan.on
+        method 'off', to: 'fan#off'   # becomes climate.fan.off
+      end
+    end
+  end
+  ```
+- `JSONRPC::BatchConstraint` for routing JSON-RPC batch requests to dedicated controllers:
+  ```ruby
+  # Handle batch requests with custom constraint
+  post '/api', to: 'api#handle_batch', constraints: JSONRPC::BatchConstraint.new
+
+  # Or use the DSL (recommended)
+  jsonrpc '/api' do
+    batch to: 'api#handle_batch'
+  end
+  ```
+
+### Changed
+- Procedure registration now supports optional validation blocks (defaults to empty contract):
+  ```ruby
+  # Before: Always required validation block (even if empty)
+  procedure('ping') do
+    params do
+      # No params needed
+    end
+  end
+
+  # After: Optional validation block
+  procedure('ping')  # Uses empty contract by default
+
+  # Still works with validation when needed
+  procedure('add') do
+    params do
+      required(:a).value(:integer)
+      required(:b).value(:integer)
+    end
+  end
+  ```
+- Simplified example configurations by removing unnecessary empty validation blocks
+- Enhanced Rails integration with automatic DSL registration via Railtie
+
 ## [0.4.0] - 2025-07-18
 
 ### Added
-- JSONRPC::BatchRequest#process_each method for simplified batch processing
+- `JSONRPC::BatchRequest#process_each` method for simplified batch processing
 
 ## [0.3.0] - 2025-07-17
 
@@ -71,6 +135,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Helper methods for request and response processing
 - Examples for basic and advanced usage scenarios
 
+[0.5.0]: https://github.com/wilsonsilva/jsonrpc-middleware/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/wilsonsilva/jsonrpc-middleware/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/wilsonsilva/jsonrpc-middleware/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/wilsonsilva/jsonrpc-middleware/compare/v0.1.0...v0.2.0
