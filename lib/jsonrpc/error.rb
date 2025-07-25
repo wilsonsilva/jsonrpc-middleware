@@ -128,7 +128,7 @@ module JSONRPC
     # @return [String] the error as a JSON string
     #
     def to_json(*)
-      to_h.to_json(*)
+      MultiJson.dump(to_h, *)
     end
 
     # Converts the error to a complete JSON-RPC response

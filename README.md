@@ -41,6 +41,7 @@ A Rack middleware implementing the JSON-RPC 2.0 protocol that integrates easily 
 - **Error handling**: Comprehensive error handling with standard JSON-RPC error responses
 - **Request validation**: Define request parameter specifications and validations
 - **Helpers**: Convenient helper methods to simplify request and response processing
+- **Optimized JSON handling**: Uses MultiJSON to automatically select the fastest available JSON library
 
 ## 🏗️ Architecture
 

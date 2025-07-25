@@ -207,7 +207,9 @@ RSpec.describe JSONRPC::Middleware do
         error: {
           code: -32_700,
           data: {
-            details: 'unexpected end of input at line 1 column 1'
+            adapter: 'MultiJson::Adapters::JsonGem',
+            details: 'JSON::ParserError',
+            input_preview: ''
           },
           message: 'Invalid JSON was received by the server. ' \
                    'An error occurred on the server while parsing the JSON text.'
@@ -228,7 +230,9 @@ RSpec.describe JSONRPC::Middleware do
         error: {
           code: -32_700,
           data: {
-            details: "unexpected character: 'Taxation' at line 1 column 1"
+            adapter: 'MultiJson::Adapters::JsonGem',
+            details: "unexpected character: 'Taxation' at line 1 column 1",
+            input_preview: 'Taxation is theft.'
           },
           message: 'Invalid JSON was received by the server. ' \
                    'An error occurred on the server while parsing the JSON text.'

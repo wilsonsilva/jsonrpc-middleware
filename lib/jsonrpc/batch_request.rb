@@ -75,7 +75,7 @@ module JSONRPC
     # @return [String] the JSON-formatted batch
     #
     def to_json(*)
-      to_h.to_json(*)
+      MultiJson.dump(to_h, *)
     end
 
     # Implements the Enumerable contract by yielding each request in the batch

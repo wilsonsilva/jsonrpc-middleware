@@ -324,7 +324,7 @@ module JSONRPC
 
       return [] unless status == 200 && !body.empty?
 
-      app_responses = JSON.parse(body.join)
+      app_responses = MultiJson.load(body.join)
       app_responses.map do |resp|
         Response.new(id: resp['id'], result: resp['result'], error: resp['error'])
       end
@@ -359,7 +359,8 @@ module JSONRPC
     # @return [Array] Rack response tuple [status, headers, body]
     #
     def json_response(status, body)
-      [status, { 'content-type' => 'application/json' }, [body.is_a?(String) ? body : JSON.generate(body)]]
+      json_body = body.is_a?(String) ? body : MultiJson.dump(body)
+      [status, { 'content-type' => 'application/json' }, [json_body]]
     end
 
     # Reads and returns the request body from the Rack environment

@@ -31,5 +31,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'dry-validation', '~> 1.11'
+  spec.add_dependency 'multi_json', '~> 1.17'
   spec.add_dependency 'zeitwerk', '~> 2.7'
 end

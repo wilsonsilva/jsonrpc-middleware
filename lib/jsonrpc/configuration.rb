@@ -101,6 +101,19 @@ module JSONRPC
     #
     attr_reader :validate_procedure_signatures
 
+    # JSON adapter to use (optional)
+    #
+    # @api public
+    #
+    # @example
+    #   config.json_adapter = :oj
+    #
+    # @return [Symbol, nil] the JSON adapter to use
+    #
+    def json_adapter=(adapter)
+      MultiJson.use(adapter)
+    end
+
     # Initializes a new Configuration instance
     #
     # @api public

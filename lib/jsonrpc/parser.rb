@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'json'
-
 module JSONRPC
   # JSON-RPC 2.0 Parser for converting raw JSON into JSONRPC objects
   #
@@ -37,17 +35,21 @@ module JSONRPC
     # @raise [InvalidRequestError] if the request structure is invalid
     #
     def parse(json)
-      begin
-        data = JSON.parse(json)
-      rescue JSON::ParserError => e
-        raise ParseError.new(data: { details: e.message })
-      end
+      data = MultiJson.load(json)
 
       if data.is_a?(Array)
         parse_batch(data)
       else
         parse_single(data)
       end
+    rescue MultiJson::ParseError => e
+      raise ParseError.new(
+        data: {
+          details: e.message,
+          adapter: MultiJson.adapter.name,
+          input_preview: json[0..100]
+        }
+      )
     end
 
     private

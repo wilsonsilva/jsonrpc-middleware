@@ -119,7 +119,7 @@ module JSONRPC
     # @return [String] the request as a JSON string
     #
     def to_json(*)
-      to_h.to_json(*)
+      MultiJson.dump(to_h, *)
     end
 
     private

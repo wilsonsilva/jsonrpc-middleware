@@ -35,7 +35,7 @@ module JSONRPC
               self.response_body = ''
               ''
             else
-              result_data.to_json
+              MultiJson.dump(result_data)
             end
           elsif jsonrpc_notification?
             # Notification - no response body
@@ -44,7 +44,7 @@ module JSONRPC
             ''
           else
             # Fallback - treat as regular JSON-RPC response
-            result_data.to_json
+            MultiJson.dump(result_data)
           end
         end
       end

@@ -2,6 +2,7 @@
 
 require 'zeitwerk'
 require 'dry-validation'
+require 'multi_json'
 
 Dry::Validation.load_extensions(:predicates_as_macros)
 
