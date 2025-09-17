@@ -6,7 +6,9 @@
       "Bash(bundle exec rake:*)",
       "Bash(mkdir:*)",
       "Bash(bin/console:*)",
-      "Bash(bundle exec ruby:*)"
+      "Bash(bundle exec ruby:*)",
+      "Bash(git:*)",
+      "Bash(grep:*)"
     ]
   },
   "enableAllProjectMcpServers": false

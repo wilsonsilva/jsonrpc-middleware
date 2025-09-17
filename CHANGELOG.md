@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.0] - 2025-09-17
+
+### Added
+- MultiJson support for improved JSON performance and flexibility
+  - Configuration option to select JSON adapter (`JSONRPC.configuration.json_adapter`)
+  - Enhanced error handling with adapter and input preview details
+  - Better performance through optimized JSON parsing
+- Enhanced examples
+  - Batch JSON-RPC request handling in Rails single-file routing example
+  - Smart home control API example using Rails routing DSL
+  - Updated documentation with batch request usage examples
+
+### Changed
+- Replaced JSON gem with MultiJson throughout the codebase
+  - All JSON parsing now uses MultiJson for better adapter support
+  - Updated documentation to mention optimized JSON handling
+- Refactored Request and Response classes to use dry-struct
+  - Simplified class definitions with automatic type checking
+  - Reduced code complexity while maintaining functionality
+- Enhanced Rails integration
+  - Improved example applications with better error handling
+  - Updated Gemfile.lock files across all examples
+
 ## [0.5.0] - 2025-07-22
 
 ### Added
@@ -135,6 +158,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Helper methods for request and response processing
 - Examples for basic and advanced usage scenarios
 
+[0.6.0]: https://github.com/wilsonsilva/jsonrpc-middleware/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/wilsonsilva/jsonrpc-middleware/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/wilsonsilva/jsonrpc-middleware/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/wilsonsilva/jsonrpc-middleware/compare/v0.2.0...v0.3.0
