@@ -4,7 +4,9 @@
       "Bash(bundle exec rspec:*)",
       "Bash(bundle exec rubocop:*)",
       "Bash(bundle exec rake:*)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(bin/console:*)",
+      "Bash(bundle exec ruby:*)"
     ]
   },
   "enableAllProjectMcpServers": false
