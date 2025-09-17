@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'zeitwerk'
+require 'dry-struct'
 require 'dry-validation'
 require 'multi_json'
 

@@ -30,6 +30,7 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
+  spec.add_dependency 'dry-struct', '~> 1.8'
   spec.add_dependency 'dry-validation', '~> 1.11'
   spec.add_dependency 'multi_json', '~> 1.17'
   spec.add_dependency 'zeitwerk', '~> 2.7'

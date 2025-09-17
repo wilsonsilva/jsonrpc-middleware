@@ -13,7 +13,7 @@ module JSONRPC
   # @example Create a request with named parameters
   #   request = JSONRPC::Request.new(method: "subtract", params: { minuend: 42, subtrahend: 23 }, id: 3)
   #
-  class Request
+  class Request < Dry::Struct
     # JSON-RPC protocol version
     #
     # @api public
@@ -23,7 +23,7 @@ module JSONRPC
     #
     # @return [String]
     #
-    attr_reader :jsonrpc
+    attribute :jsonrpc, Types::String.default('2.0')
 
     # The method name to invoke
     #
@@ -34,7 +34,7 @@ module JSONRPC
     #
     # @return [String]
     #
-    attr_reader :method
+    attribute :method, Types::String.constrained(format: /\A(?!rpc\.)/)
 
     # Parameters to pass to the method
     #
@@ -45,7 +45,7 @@ module JSONRPC
     #
     # @return [Hash, Array, nil]
     #
-    attr_reader :params
+    attribute? :params, (Types::Hash | Types::Array).optional
 
     # The request identifier
     #
@@ -56,36 +56,7 @@ module JSONRPC
     #
     # @return [String, Integer, nil]
     #
-    attr_reader :id
-
-    # Creates a new JSON-RPC 2.0 Request object
-    #
-    # @api public
-    #
-    # @example Create a request with positional parameters
-    #   JSONRPC::Request.new(method: "subtract", params: [42, 23], id: 1)
-    #
-    # @param method [String] the name of the method to be invoked
-    # @param params [Hash, Array, nil] the parameters to be used during method invocation
-    # @param id [String, Integer, nil] the request identifier
-    #
-    # @raise [ArgumentError] if method is not a String or is reserved
-    #
-    # @raise [ArgumentError] if params is not a Hash, Array, or nil
-    #
-    # @raise [ArgumentError] if id is not a String, Integer, or nil
-    #
-    def initialize(method:, id:, params: nil)
-      @jsonrpc = '2.0'
-
-      validate_method(method)
-      validate_params(params)
-      validate_id(id)
-
-      @method = method
-      @params = params
-      @id = id
-    end
+    attribute? :id, Types::String | Types::Integer | Types::Nil
 
     # Converts the request to a JSON-compatible Hash
     #
@@ -122,58 +93,15 @@ module JSONRPC
       MultiJson.dump(to_h, *)
     end
 
-    private
-
-    # Validates that the method name meets JSON-RPC 2.0 requirements
+    # The method name to invoke
     #
-    # @api private
+    # @api public
     #
-    # @param method [String] the method name
+    # @example
+    #   request.method # => "subtract"
     #
-    # @raise [ArgumentError] if method is not a String or is reserved
+    # @return [String]
     #
-    # @return [void]
-    #
-    def validate_method(method)
-      raise ArgumentError, 'Method must be a String' unless method.is_a?(String)
-
-      return unless method.start_with?('rpc.')
-
-      raise ArgumentError, "Method names starting with 'rpc.' are reserved"
-    end
-
-    # Validates that the params is a valid structure according to JSON-RPC 2.0
-    #
-    # @api private
-    #
-    # @param params [Hash, Array, nil] the parameters
-    #
-    # @raise [ArgumentError] if params is not a Hash, Array, or nil
-    #
-    # @return [void]
-    #
-    def validate_params(params)
-      return if params.nil?
-
-      return if params.is_a?(Hash) || params.is_a?(Array)
-
-      raise ArgumentError, 'Params must be an Object, Array, or omitted'
-    end
-
-    # Validates that the id meets JSON-RPC 2.0 requirements
-    #
-    # @api private
-    #
-    # @param id [String, Integer, nil] the request identifier
-    #
-    # @raise [ArgumentError] if id is not a String, Integer, or nil
-    #
-    # @return [void]
-    #
-    def validate_id(id)
-      return if id.nil?
-
-      raise ArgumentError, 'ID must be a String, Integer, or nil' unless id.is_a?(String) || id.is_a?(Integer)
-    end
+    def method = attributes[:method]
   end
 end
