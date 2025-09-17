@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    jsonrpc-middleware (0.5.0)
+    jsonrpc-middleware (0.6.0)
       dry-struct (~> 1.8)
       dry-validation (~> 1.11)
       multi_json (~> 1.17)
