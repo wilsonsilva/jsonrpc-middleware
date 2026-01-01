@@ -111,7 +111,7 @@ module JSONRPC
     #
     # @api private
     #
-    # @param request [Request, Notification] the request
+    # @param request [Request, Notification] A request or notification to be validated
     # @param procedure [Configuration::Procedure] the procedure configuration
     #
     # @return [Hash, InvalidParamsError] prepared params or error
