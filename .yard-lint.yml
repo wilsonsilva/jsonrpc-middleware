@@ -63,7 +63,7 @@ Documentation/EmptyCommentLine:
   Severity: convention
   EnabledPatterns:
     Leading: true
-    Trailing: true
+    Trailing: false
 
 Documentation/BlankLineBeforeDefinition:
   Description: 'Detects blank lines between YARD documentation and method definition.'
