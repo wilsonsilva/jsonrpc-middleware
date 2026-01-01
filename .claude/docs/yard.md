@@ -29,32 +29,7 @@ Every piece of public and private code must be documented. Documentation serves 
 
 ## YARD Configuration
 
-Create a `.yardstick.yml` file in your project root with 100% coverage requirements:
-
-```yaml
-threshold: 100
-rules:
-  ApiTag::Presence:
-    enabled: true
-  ApiTag::Inclusion:
-    enabled: true
-  ApiTag::ProtectedMethod:
-    enabled: true
-  ApiTag::PrivateMethod:
-    enabled: true
-  ExampleTag:
-    enabled: true
-  ReturnTag:
-    enabled: true
-  Summary::Presence:
-    enabled: true
-  Summary::Length:
-    enabled: false
-  Summary::Delimiter:
-    enabled: true
-  Summary::SingleLine:
-    enabled: false
-```
+The configuration file is located at `.yard-lint.yml` in the root of the project.
 
 ## Basic Documentation Structure
 
@@ -460,64 +435,26 @@ end
 
 ## Quality Enforcement
 
-Our project enforces 100% documentation coverage using the `yardstick` gem and maintains documentation quality with the `yard:junk` task. This ensures that all code is thoroughly documented, maintainable, and easy for developers to use.
+This project uses `yard-lint` to enforce documentation standards and coverage.
 
 ### How it Works
 
-1.  **Configuration**: A `.yardstick.yml` file in the project root sets the documentation coverage threshold to 100% and defines specific documentation rules.
-
-2.  **Measurement**: The `yardstick_measure` Rake task measures the current documentation coverage against the configured rules. Run it using:
-
-    ```bash
-    bundle exec rake yardstick_measure
-    ```
-
-    This task generates a detailed report in `measurements/report.txt` that lists all documentation issues that need to be addressed.
-
-3.  **Verification**: The `verify_measurements` Rake task checks if the coverage meets the 100% threshold. Run it using:
+1.  **Configuration**: A `.yard-lint.yml` file in the project root defines the rules, severity, and coverage requirements.
+2.  **Linting**: Run `yard-lint` to check for documentation issues.
 
     ```bash
-    bundle exec rake verify_measurements
+    bundle exec yard-lint lib/
     ```
 
-    This task will fail if coverage is below 100%, displaying the current coverage percentage and indicating that documentation improvements are needed.
+    This command will output any documentation issues found.
 
-4.  **Review Report**: Always check the contents of `measurements/report.txt` after running measurement tasks. This file contains specific details about:
-    - Missing method documentation
-    - Incomplete parameter descriptions
-    - Missing return value documentation
-    - Missing examples
-    - Incorrect API tags
+3.  **Rake Integration**: A Rake task is provided for convenience.
 
-    Each line in the report shows the file, line number, method, and specific issue that needs to be addressed to achieve 100% documentation compliance.
+    ```bash
+    bundle exec rake yard:lint
+    ```
 
-### Rake Integration
-
-The `Rakefile` integrates `yardstick` into our development workflow. The `qa` task, which runs a full suite of tests and checks, includes the documentation verification step.
-
-```ruby
-# Rakefile
-require 'yardstick/rake/measurement'
-require 'yardstick/rake/verify'
-
-yardstick_options = YAML.load_file('.yardstick.yml')
-
-Yardstick::Rake::Measurement.new(:yardstick_measure, yardstick_options)
-Yardstick::Rake::Verify.new
-
-desc 'Test, lint and perform security and documentation audits'
-task qa: %w[spec rubocop yard:junk verify_measurements bundle:audit]
-```
-
-### CI Integration
-
-Continuous Integration (CI) automatically enforces our documentation standard on every commit by running:
-
-```bash
-bundle exec rake verify_measurements
-```
-
-This prevents any code with incomplete documentation from being merged.
+4.  **CI Integration**: The CI pipeline runs `yard-lint` on every commit to ensure that all code is well-documented.
 
 ## Best Practices
 
@@ -600,3 +537,4 @@ For complex examples, use proper formatting:
 ```
 
 This documentation standard ensures that your Ruby projects maintain professional-quality documentation that supports both development and maintenance activities while providing excellent IDE integration and user experience.
+

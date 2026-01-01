@@ -185,11 +185,9 @@ rake rubocop                  # Run RuboCop
 rake rubocop:autocorrect      # Autocorrect RuboCop offenses (only when it's safe)
 rake rubocop:autocorrect_all  # Autocorrect RuboCop offenses (safe and unsafe)
 rake spec                     # Run RSpec code examples
-rake verify_measurements      # Verify that yardstick coverage is at least 100%
 rake yard                     # Generate YARD Documentation
 rake yard:format              # Format YARD documentation
-rake yard:junk                # Check the junk in your YARD Documentation
-rake yardstick_measure        # Measure docs in lib/**/*.rb with yardstick
+rake yard:lint                # Lint YARD documentation
 ```
 
 ### 🧪 Type checking

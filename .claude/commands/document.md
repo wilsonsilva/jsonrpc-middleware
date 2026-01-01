@@ -14,45 +14,10 @@ Format YARD comments:
 bundle exec rake yard:format
 ```
 
-Verify 100% documentation coverage:
-```bash
-bundle exec rake verify_measurements
-```
-
 Check for documentation quality issues:
 ```bash
-bundle exec rake yard:junk
+bundle exec yard-lint lib/
 ```
-
-Generate coverage report:
-```bash
-bundle exec rake yardstick_measure
-```
-
-## Configuration
-
-Requires `.yardstick.yml` in project root with 100% threshold:
-```yaml
-threshold: 100
-rules:
-  ApiTag::Presence: { enabled: true }
-  ApiTag::Inclusion: { enabled: true }
-  ApiTag::ProtectedMethod: { enabled: true }
-  ApiTag::PrivateMethod: { enabled: true }
-  ExampleTag: { enabled: true }
-  ReturnTag: { enabled: true }
-  Summary::Presence: { enabled: true }
-  Summary::Delimiter: { enabled: true }
-```
-
-## Coverage Report
-
-After running measurement, check detailed line-by-line issues:
-```bash
-cat measurements/report.txt
-```
-
-Report shows specific file, line number, method, and documentation issues that need fixing.
 
 ## Documentation Standards
 
@@ -87,7 +52,7 @@ Report shows specific file, line number, method, and documentation issues that n
 #   result # => expected_output
 #
 # @param name [Type] Description
-# @param other [Type] Other description  
+# @param other [Type] Other description
 #
 # @return [Type] Description
 #

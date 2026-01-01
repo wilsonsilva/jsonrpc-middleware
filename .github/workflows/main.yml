@@ -35,7 +35,7 @@ jobs:
       - name: Run RuboCop
         run: bundle exec rake rubocop
 
-  yard_junk:
+  yard_lint:
     runs-on: ubuntu-latest
     name: Validate YARD documentation
     steps:
@@ -44,20 +44,8 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
-      - name: Run yard:junk
-        run: bundle exec rake yard:junk
-
-  yardstick:
-    runs-on: ubuntu-latest
-    name: Measure YARD documentation
-    steps:
-      - uses: actions/checkout@v4
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
-      - name: Run verify_measurements
-        run: bundle exec rake verify_measurements
+      - name: Run yard-lint
+        run: bundle exec yard-lint lib/
 
   bundle_audit:
     runs-on: ubuntu-latest

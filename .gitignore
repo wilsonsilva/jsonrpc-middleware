@@ -13,9 +13,6 @@
 # secret environment variables
 .env
 
-# yardstick report
-measurements/report.txt
-
 # log files
 *.log
 
