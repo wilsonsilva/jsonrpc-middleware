@@ -5,6 +5,8 @@ module JSONRPC
   #
   # Raised when invalid method parameter(s) were provided.
   #
+  # @api public
+  #
   # @example Create an invalid params error
   #   error = JSONRPC::InvalidParamsError.new(data: { details: "Expected array of integers" })
   #

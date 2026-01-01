@@ -7,6 +7,8 @@ module JSONRPC
   # a Batch Request. The Server should respond with one Response for each Request
   # (except for Notifications which don't receive responses).
   #
+  # @api public
+  #
   # @example Create a batch response
   #   batch = JSONRPC::BatchResponse.new([
   #     JSONRPC::Response.new(result: 7, id: "1"),

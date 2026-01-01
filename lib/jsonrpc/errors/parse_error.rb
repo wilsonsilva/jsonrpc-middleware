@@ -6,6 +6,8 @@ module JSONRPC
   # Raised when invalid JSON was received by the server.
   # An error occurred on the server while parsing the JSON text.
   #
+  # @api public
+  #
   # @example Create a parse error
   #   error = JSONRPC::ParseError.new(data: { details: "Unexpected end of input" })
   #

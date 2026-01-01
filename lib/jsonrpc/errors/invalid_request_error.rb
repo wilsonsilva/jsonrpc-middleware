@@ -5,6 +5,8 @@ module JSONRPC
   #
   # Raised when the JSON sent is not a valid Request object.
   #
+  # @api public
+  #
   # @example Create an invalid request error
   #   error = JSONRPC::InvalidRequestError.new(data: { details: "Method must be a string" })
   #

@@ -6,6 +6,8 @@ module JSONRPC
   # A batch request is an Array filled with Request objects to send several requests at once.
   # The Server should respond with an Array containing the corresponding Response objects.
   #
+  # @api public
+  #
   # @example Create a batch request with multiple requests
   #   batch = JSONRPC::BatchRequest.new([
   #     JSONRPC::Request.new(method: "sum", params: [1, 2, 4], id: "1"),

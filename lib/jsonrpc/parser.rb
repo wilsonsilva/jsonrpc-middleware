@@ -6,6 +6,8 @@ module JSONRPC
   # The Parser handles converting raw JSON strings into appropriate JSONRPC objects
   # based on the JSON-RPC 2.0 protocol specification.
   #
+  # @api public
+  #
   # @example Parse a request
   #   parser = JSONRPC::Parser.new
   #   request = parser.parse('{"jsonrpc":"2.0","method":"subtract","params":[42,23],"id":1}')

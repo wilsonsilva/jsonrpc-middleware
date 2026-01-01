@@ -2,6 +2,9 @@
 
 module JSONRPC
   # Framework-agnostic helpers for JSON-RPC
+  #
+  # @api public
+  #
   module Helpers
     # Extends the including class with ClassMethods when module is included
     #
@@ -21,6 +24,9 @@ module JSONRPC
     end
 
     # Class methods for registering JSON-RPC procedure handlers
+    #
+    # @api public
+    #
     module ClassMethods
       # Registers a JSON-RPC procedure with the given method name
       #

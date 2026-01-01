@@ -151,7 +151,7 @@ Tags/TagTypePosition:
 
 Tags/ApiTags:
   Description: 'Enforces @api tags on public objects.'
-  Enabled: false  # Opt-in validator
+  Enabled: true  # Opt-in validator
   Severity: error
   AllowedApis:
     - public

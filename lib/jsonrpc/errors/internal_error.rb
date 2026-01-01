@@ -5,6 +5,8 @@ module JSONRPC
   #
   # Raised when there was an internal JSON-RPC error.
   #
+  # @api public
+  #
   # @example Create an internal error
   #   error = JSONRPC::Errors::InternalError.new(data: { details: 'Unexpected server error' })
   #

@@ -5,6 +5,8 @@ module JSONRPC
   #
   # Raised when the method does not exist / is not available.
   #
+  # @api public
+  #
   # @example Create a method not found error
   #   error = JSONRPC::MethodNotFound.new(data: { requested_method: "unknown_method" })
   #
