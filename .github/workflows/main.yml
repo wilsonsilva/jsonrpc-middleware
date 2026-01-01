@@ -37,7 +37,7 @@ jobs:
 
   yard_lint:
     runs-on: ubuntu-latest
-    name: Validate YARD documentation
+    name: Lint YARD documentation
     steps:
       - uses: actions/checkout@v4
       - name: Set up Ruby
