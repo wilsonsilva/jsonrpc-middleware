@@ -39,13 +39,11 @@ module JSONRPC
     #   ]
     #   batch = JSONRPC::BatchResponse.new(responses)
     #
-    # @param responses [Array<JSONRPC::Response>] an array of response objects
-    #
     # @raise [ArgumentError] if responses is not an Array
-    #
     # @raise [ArgumentError] if responses is empty
-    #
     # @raise [ArgumentError] if any response is not a valid Response
+    #
+    # @param responses [Array<JSONRPC::Response>] an array of response objects
     #
     def initialize(responses)
       validate_responses(responses)
@@ -119,13 +117,11 @@ module JSONRPC
     #
     # @api private
     #
-    # @param responses [Array] the array of responses
-    #
     # @raise [ArgumentError] if responses is not an Array
-    #
     # @raise [ArgumentError] if responses is empty
-    #
     # @raise [ArgumentError] if any response is not a valid Response
+    #
+    # @param responses [Array] the array of responses
     #
     # @return [void]
     #

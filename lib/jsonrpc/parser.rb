@@ -26,13 +26,12 @@ module JSONRPC
     # @example Parse a batch request
     #   parser.parse('[{"jsonrpc":"2.0","method":"sum","params":[1,2],"id":"1"}]')
     #
+    # @raise [ParseError] if the JSON is invalid
+    # @raise [InvalidRequestError] if the request structure is invalid
+    #
     # @param json [String] the JSON-RPC 2.0 message
     #
     # @return [Request, Notification, BatchRequest] the parsed object
-    #
-    # @raise [ParseError] if the JSON is invalid
-    #
-    # @raise [InvalidRequestError] if the request structure is invalid
     #
     def parse(json)
       data = MultiJson.load(json)
@@ -83,11 +82,11 @@ module JSONRPC
     #
     # @api private
     #
+    # @raise [InvalidRequestError] if the batch is empty
+    #
     # @param data [Array] the array of request data
     #
     # @return [BatchRequest] the batch request
-    #
-    # @raise [InvalidRequestError] if the batch is empty
     #
     def parse_batch(data)
       raise InvalidRequestError.new(data: { details: 'Batch request cannot be empty' }) if data.empty?
@@ -114,11 +113,11 @@ module JSONRPC
     #
     # @api private
     #
+    # @raise [InvalidRequestError] if the request structure is invalid
+    #
     # @param data [Hash] the parsed JSON data for a single item
     #
     # @return [Request, Notification] the parsed request or notification
-    #
-    # @raise [InvalidRequestError] if the request structure is invalid
     #
     def parse_single_for_batch(data)
       validate_jsonrpc_version(data)
@@ -141,9 +140,9 @@ module JSONRPC
     #
     # @api private
     #
-    # @param data [Hash] the request data
-    #
     # @raise [InvalidRequestError] if the version is missing or invalid
+    #
+    # @param data [Hash] the request data
     #
     # @return [void]
     #
@@ -170,9 +169,9 @@ module JSONRPC
     #
     # @api private
     #
-    # @param data [Hash] the request data
-    #
     # @raise [InvalidRequestError] if the request structure is invalid
+    #
+    # @param data [Hash] the request data
     #
     # @return [void]
     #

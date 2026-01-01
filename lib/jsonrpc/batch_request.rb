@@ -39,13 +39,12 @@ module JSONRPC
     #   ]
     #   batch = JSONRPC::BatchRequest.new(requests)
     #
+    # @raise [ArgumentError] if requests is not an Array
+    # @raise [ArgumentError] if requests is empty
+    # @raise [ArgumentError] if any request is not a valid Request, Notification, or Error
+    #
     # @param requests [Array<JSONRPC::Request, JSONRPC::Notification, JSONRPC::Error>] an array of request objects
     #   or errors
-    # @raise [ArgumentError] if requests is not an Array
-    #
-    # @raise [ArgumentError] if requests is empty
-    #
-    # @raise [ArgumentError] if any request is not a valid Request, Notification, or Error
     #
     def initialize(requests)
       validate_requests(requests)
@@ -162,13 +161,11 @@ module JSONRPC
     #
     # @api private
     #
-    # @param requests [Array] the array of requests
-    #
     # @raise [ArgumentError] if requests is not an Array
-    #
     # @raise [ArgumentError] if requests is empty
-    #
     # @raise [ArgumentError] if any request is not a valid Request, Notification, or Error
+    #
+    # @param requests [Array] the array of requests
     #
     # @return [void]
     #

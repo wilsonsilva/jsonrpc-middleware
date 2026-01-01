@@ -57,9 +57,6 @@ module JSONRPC
 
     # Define a JSON-RPC method route
     #
-    # @param jsonrpc_method [String] the JSON-RPC method name
-    # @param to [String] the Rails controller action (e.g., 'users#create')
-    #
     # @example Map a JSON-RPC method to controller action
     #   method 'user.create', to: 'users#create'
     #
@@ -67,6 +64,9 @@ module JSONRPC
     #   namespace 'posts' do
     #     method 'create', to: 'posts#create'  # becomes posts.create
     #   end
+    #
+    # @param jsonrpc_method [String] the JSON-RPC method name
+    # @param to [String] the Rails controller action (e.g., 'users#create')
     #
     # @return [void]
     #
@@ -82,10 +82,10 @@ module JSONRPC
 
     # Define a route for handling JSON-RPC batch requests
     #
-    # @param to [String] the Rails controller action (e.g., 'batches#handle')
-    #
     # @example Map batch requests to a controller action
     #   batch to: 'batches#handle'
+    #
+    # @param to [String] the Rails controller action (e.g., 'batches#handle')
     #
     # @return [void]
     def batch(to:)
@@ -101,8 +101,6 @@ module JSONRPC
     #
     # Namespaces can be nested to create hierarchical method names.
     # Each level of nesting adds a dot-separated prefix to the method names.
-    #
-    # @param name [String] the namespace name
     #
     # @example Single-level namespace
     #   namespace 'posts' do
@@ -120,6 +118,8 @@ module JSONRPC
     #       method 'off', to: 'fan#off'   # becomes climate.fan.off
     #     end
     #   end
+    #
+    # @param name [String] the namespace name
     #
     # @return [void]
     #

@@ -82,14 +82,13 @@ module JSONRPC
     # @example Create an error with additional data
     #   error = JSONRPC::Error.new("Invalid params", code: -32602, data: { "field" => "missing" })
     #
+    # @raise [ArgumentError] if code is not an Integer
+    # @raise [ArgumentError] if message is not a String
+    #
     # @param message [String] short description of the error
     # @param code [Integer] a number indicating the error type
     # @param data [Hash, Array, String, Number, Boolean, nil] additional error information
     # @param request_id [String, Integer, nil] the request identifier
-    #
-    # @raise [ArgumentError] if code is not an Integer
-    #
-    # @raise [ArgumentError] if message is not a String
     #
     def initialize(message, code:, data: nil, request_id: nil)
       super(message)
@@ -150,9 +149,9 @@ module JSONRPC
     #
     # @api private
     #
-    # @param code [Integer] the error code
-    #
     # @raise [ArgumentError] if code is not an Integer
+    #
+    # @param code [Integer] the error code
     #
     # @return [void]
     #
@@ -164,9 +163,9 @@ module JSONRPC
     #
     # @api private
     #
-    # @param message [String] the error message
-    #
     # @raise [ArgumentError] if message is not a String
+    #
+    # @param message [String] the error message
     #
     # @return [void]
     #

@@ -62,12 +62,11 @@ module JSONRPC
     # @example Create a notification with named parameters
     #   JSONRPC::Notification.new(method: "log", params: { level: "info", message: "Hello" })
     #
+    # @raise [ArgumentError] if method is not a String or is reserved
+    # @raise [ArgumentError] if params is not a Hash, Array, or nil
+    #
     # @param method [String] the name of the method to be invoked
     # @param params [Hash, Array, nil] the parameters to be used during method invocation
-    #
-    # @raise [ArgumentError] if method is not a String or is reserved
-    #
-    # @raise [ArgumentError] if params is not a Hash, Array, or nil
     #
     def initialize(method:, params: nil)
       @jsonrpc = '2.0'
@@ -117,9 +116,9 @@ module JSONRPC
     #
     # @api private
     #
-    # @param method [String] the method name
-    #
     # @raise [ArgumentError] if method is not a String or is reserved
+    #
+    # @param method [String] the method name
     #
     # @return [void]
     #
@@ -135,9 +134,9 @@ module JSONRPC
     #
     # @api private
     #
-    # @param params [Hash, Array, nil] the parameters
-    #
     # @raise [ArgumentError] if params is not a Hash, Array, or nil
+    #
+    # @param params [Hash, Array, nil] the parameters
     #
     # @return [void]
     #

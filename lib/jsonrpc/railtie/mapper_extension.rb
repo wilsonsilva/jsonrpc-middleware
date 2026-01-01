@@ -8,8 +8,6 @@ module JSONRPC
   module MapperExtension
     # Define JSON-RPC routes with a DSL
     #
-    # @param path [String] the path to handle JSON-RPC requests on
-    #
     # @example Define JSON-RPC routes
     #   jsonrpc '/api/v1' do
     #     # Handle batch requests
@@ -23,6 +21,8 @@ module JSONRPC
     #       method 'list', to: 'posts#index'
     #     end
     #   end
+    #
+    # @param path [String] the path to handle JSON-RPC requests on
     #
     # @return [void]
     #

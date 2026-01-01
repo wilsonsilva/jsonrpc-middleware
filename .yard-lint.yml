@@ -80,17 +80,17 @@ Tags/Order:
   Enabled: true
   Severity: convention
   EnforcedOrder:
+    - example
+    - see
+    - note
+    - todo
+    - raise
     - param
     - option
     - yield
     - yieldparam
     - yieldreturn
     - return
-    - raise
-    - see
-    - example
-    - note
-    - todo
 
 Tags/InvalidTypes:
   Description: 'Validates type definitions in @param, @return, @option tags.'

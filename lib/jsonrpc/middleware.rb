@@ -89,9 +89,9 @@ module JSONRPC
     #
     # @api private
     #
-    # @return [Array] Rack response tuple
-    #
     # @raise [StandardError] Catches all errors and converts to Internal Error response
+    #
+    # @return [Array] Rack response tuple
     #
     def handle_jsonrpc_request
       parsed_request = parse_request
@@ -122,11 +122,10 @@ module JSONRPC
     #
     # @api private
     #
-    # @return [Request, Notification, BatchRequest, Array] Parsed request or error response
-    #
     # @raise [ParseError] When JSON parsing fails
-    #
     # @raise [InvalidRequestError] When request structure is invalid
+    #
+    # @return [Request, Notification, BatchRequest, Array] Parsed request or error response
     #
     def parse_request
       body = read_request_body

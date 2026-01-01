@@ -82,9 +82,7 @@ module JSONRPC
     # @param id [String, Integer, nil] the request identifier
     #
     # @raise [ArgumentError] if both result and error are present or both are nil
-    #
     # @raise [ArgumentError] if error is present but not a JSONRPC::Error
-    #
     # @raise [ArgumentError] if id is not a String, Integer, or nil
     #
 
