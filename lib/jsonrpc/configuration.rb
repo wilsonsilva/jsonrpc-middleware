@@ -26,6 +26,7 @@ module JSONRPC
     #
     #   @example
     #     procedure.allow_positional_arguments # => true
+    #
     #   @return [Boolean] whether the procedure accepts positional arguments
     #
     # @!method contract
@@ -34,6 +35,7 @@ module JSONRPC
     #
     #   @example
     #     procedure.contract # => #<Dry::Validation::Contract...>
+    #
     #   @return [Dry::Validation::Contract] the validation contract for procedure parameters
     #
     # @!method parameter_name
@@ -42,6 +44,7 @@ module JSONRPC
     #
     #   @example
     #     procedure.parameter_name # => :numbers
+    #
     #   @return [Symbol, nil] the name of the first parameter in the contract schema
     #
     Procedure = Data.define(:allow_positional_arguments, :contract, :parameter_name)

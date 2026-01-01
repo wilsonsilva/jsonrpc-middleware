@@ -234,7 +234,7 @@ Tags/NonAsciiType:
 
 Tags/TagGroupSeparator:
   Description: 'Enforces blank line separators between different YARD tag groups.'
-  Enabled: false  # Opt-in validator
+  Enabled: true  # Opt-in validator
   Severity: error
   TagGroups:
     param: [param, option]

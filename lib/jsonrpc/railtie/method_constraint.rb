@@ -22,6 +22,7 @@ module JSONRPC
     # Check if the request matches the configured method name
     #
     # @param request [ActionDispatch::Request] The Rails request object
+    #
     # @return [Boolean] true if the JSON-RPC method matches, false otherwise
     #
     def matches?(request)

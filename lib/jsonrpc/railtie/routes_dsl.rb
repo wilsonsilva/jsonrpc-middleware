@@ -134,6 +134,7 @@ module JSONRPC
     # Build the full method name including namespaces
     #
     # @param method_name [String] the base method name
+    #
     # @return [String] the full method name with namespace prefixes
     #
     def build_full_method_name(method_name)

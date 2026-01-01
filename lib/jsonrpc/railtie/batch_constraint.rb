@@ -13,6 +13,7 @@ module JSONRPC
     # Check if the request is a JSON-RPC batch request
     #
     # @param request [ActionDispatch::Request] The Rails request object
+    #
     # @return [Boolean] true if the request is a batch request, false otherwise
     #
     def matches?(request)
