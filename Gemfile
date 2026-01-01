@@ -16,7 +16,7 @@ group :development do
   gem 'guard-rubocop', '~> 1.5'
   gem 'irb', '~> 1.15'
   gem 'overcommit', '~> 0.68'
-  gem 'rack', '~> 3.1'
+  gem 'rack', '~> 3.2'
   gem 'rack-test', '~> 2.2'
   gem 'rackup', '~> 2.2'
   gem 'rake', '~> 13.3'
