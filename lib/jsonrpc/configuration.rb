@@ -182,8 +182,9 @@ module JSONRPC
     #
     # @param method_name [String, Symbol] the name of the procedure
     # @param allow_positional_arguments [Boolean] whether the procedure accepts positional arguments
+    # @param block [Proc, nil] an optional block that defines the validation contract using Dry::Validation DSL
     #
-    # @yield [optional] A block that defines the validation contract using Dry::Validation DSL
+    # @yield A block that defines the validation contract using Dry::Validation DSL
     #
     # @return [Procedure] the registered procedure
     #
