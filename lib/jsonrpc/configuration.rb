@@ -108,6 +108,8 @@ module JSONRPC
     # @example
     #   config.json_adapter = :oj
     #
+    # @param adapter [Symbol, nil] the JSON adapter to use
+    #
     # @return [Symbol, nil] the JSON adapter to use
     #
     def json_adapter=(adapter)
