@@ -35,5 +35,6 @@ group :development do
   gem 'typeprof', '~> 0.30'
   gem 'yard', '~> 0.9'
   gem 'yard-junk', '~> 0.0'
+  gem 'yard-lint', '~> 1.3'
   gem 'yardstick', '~> 0.9'
 end
