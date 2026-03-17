@@ -5,7 +5,7 @@ plugins:
   - rubocop-rspec
 
 AllCops:
-  TargetRubyVersion: 3.4
+  TargetRubyVersion: 4.0
   DisplayCopNames: true
   NewCops: enable
 
@@ -14,7 +14,14 @@ AllCops:
 Gemspec/DevelopmentDependencies:
   Enabled: false
 
+Gemspec/RequiredRubyVersion:
+  Enabled: false
+
 # ----------------------- Style -----------------------
+
+Style/OneClassPerFile:
+  Exclude:
+    - examples/**/config.ru
 
 Style/MixinUsage:
   Exclude:

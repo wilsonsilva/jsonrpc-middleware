@@ -325,7 +325,7 @@ RSpec.describe JSONRPC::BatchRequest do
 
     context 'when filtering with a condition' do
       it 'returns only matching items' do
-        requests_only = batch.select { |item| item.is_a?(JSONRPC::Request) }
+        requests_only = batch.grep(JSONRPC::Request)
 
         expect(requests_only).to eq([add_request, subtract_request])
       end
