@@ -12,7 +12,7 @@ RSpec.describe JSONRPC::Validator do
         end
 
         rule(:addends) do
-          key.failure('must contain at least one addend') if value.empty?
+          key.failure('must contain at least two addends') if value.size < 2
         end
       end
 
@@ -101,7 +101,7 @@ RSpec.describe JSONRPC::Validator do
 
             expect(error).to be_a(JSONRPC::InvalidParamsError)
             expect(error.request_id).to be_nil
-            expect(error.data).to eq(method: 'add', params: { addends: ['must contain at least one addend'] })
+            expect(error.data).to eq(method: 'add', params: { addends: ['must contain at least two addends'] })
             expect(error.message).to eq('Invalid method parameter(s).')
           end
         end

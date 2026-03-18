@@ -97,7 +97,7 @@ JSONRPC.configure do
     end
 
     rule(:addends) do
-      key.failure('must contain at least one addend') if value.empty?
+      key.failure('must contain at least two addends') if value.size < 2
     end
   end
 end

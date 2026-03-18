@@ -12,7 +12,7 @@ RSpec.describe JSONRPC::Validator do
         end
 
         rule(:addends) do
-          key.failure('must contain at least one addend') if value.empty?
+          key.failure('must contain at least two addends') if value.size < 2
         end
       end
 
@@ -100,7 +100,7 @@ RSpec.describe JSONRPC::Validator do
 
           expect(error).to be_a(JSONRPC::InvalidParamsError)
           expect(error.request_id).to eq('add-empty-positional-arguments')
-          expect(error.data).to eq(method: 'add', params: { addends: ['must contain at least one addend'] })
+          expect(error.data).to eq(method: 'add', params: { addends: ['must contain at least two addends'] })
           expect(error.message).to eq('Invalid method parameter(s).')
         end
       end
@@ -127,14 +127,12 @@ RSpec.describe JSONRPC::Validator do
 
       context 'when the positional arguments have the wrong arity' do
         it 'returns an invalid request params error' do
-          pending 'Post-MVP'
-
           request = JSONRPC::Request.new(method: 'add', id: 'add-arity-positional-arguments', params: [1984])
           error = validator.validate(request)
 
           expect(error).to be_a(JSONRPC::InvalidParamsError)
           expect(error.request_id).to eq('add-arity-positional-arguments')
-          expect(error.data).to eq(method: 'add')
+          expect(error.data).to eq(method: 'add', params: { addends: ['must contain at least two addends'] })
           expect(error.message).to eq('Invalid method parameter(s).')
         end
       end
