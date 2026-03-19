@@ -1,6 +1,6 @@
-# CLAUDE.md
+# AGENTS.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to AI agents when working with code in this repository.
 
 ## Development Commands
 
@@ -12,7 +12,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ### Code Quality
 - `bundle exec rake qa` - Complete quality check (tests, linting, security, docs)
 - `bundle exec rubocop` - Run Ruby linter
-- `bundle exec rubocop --autocorrect` - Auto-fix safe Ruby style issues  
+- `bundle exec rubocop --autocorrect` - Auto-fix safe Ruby style issues
 - `bundle exec rubocop --autocorrect-all` - Auto-fix all Ruby style issues
 - `bundle exec steep check` - Run type checking with Steep/RBS
 
@@ -81,7 +81,7 @@ JSONRPC.configure do
     params do
       required(:param).value(:type)
     end
-    
+
     rule(:param) do
       # Custom validation rules
     end
