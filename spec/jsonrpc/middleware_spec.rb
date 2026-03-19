@@ -389,12 +389,20 @@ RSpec.describe JSONRPC::Middleware do
   end
 
   context 'when processing a JSON-RPC request that causes an unexpected exception' do
-    it 'returns HTTP 200 OK with a JSON-RPC internal error' do
-      # TODO: Remove this in the next iteration
-      # rubocop:disable RSpec/AnyInstance
-      allow_any_instance_of(described_class).to receive(:log_internal_error)
-      # rubocop:enable RSpec/AnyInstance
+    let(:logger) { instance_double(Logger) }
 
+    let(:app) do
+      test_logger = logger
+      middleware = described_class
+      Rack::Builder.new do
+        use middleware, path: '/jsonrpc', logger: test_logger
+        run TestApp.new
+      end
+    end
+
+    before { allow(logger).to receive(:error) }
+
+    it 'returns HTTP 200 OK with a JSON-RPC internal error' do
       post_jsonrpc_request(
         jsonrpc: '2.0',
         method: 'explode',
@@ -413,14 +421,14 @@ RSpec.describe JSONRPC::Middleware do
       )
     end
 
-    it 'logs the internal error to stdout' do
-      expect do
-        post_jsonrpc_request(
-          jsonrpc: '2.0',
-          method: 'explode',
-          id: 'req-internal-error'
-        )
-      end.to output(/Internal error: Internal JSON-RPC error\./).to_stdout
+    it 'logs the internal error using the configured logger' do
+      post_jsonrpc_request(
+        jsonrpc: '2.0',
+        method: 'explode',
+        id: 'req-internal-error'
+      )
+
+      expect(logger).to have_received(:error).with(/Internal error: Internal JSON-RPC error\./)
     end
   end
 

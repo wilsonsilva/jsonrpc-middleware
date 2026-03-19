@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'logger'
+
 module JSONRPC
   # Configuration class for JSON-RPC procedure management and validation.
   #
@@ -48,6 +50,20 @@ module JSONRPC
     #   @return [Symbol, nil] the name of the first parameter in the contract schema
     #
     Procedure = Data.define(:allow_positional_arguments, :contract, :parameter_name)
+
+    # Logger instance used to emit log messages
+    #
+    # @api public
+    #
+    # @example Using the default logger
+    #   config.logger # => #<Logger:...>
+    #
+    # @example Setting a custom logger
+    #   config.logger = Logger.new($stderr)
+    #
+    # @return [Logger] the logger instance
+    #
+    attr_accessor :logger
 
     # Whether to log detailed internal error information in the terminal
     #
@@ -129,7 +145,8 @@ module JSONRPC
     # @example With custom options
     #   config = JSONRPC::Configuration.new(
     #     log_request_validation_errors: true,
-    #     render_internal_errors: true
+    #     render_internal_errors: true,
+    #     logger: Logger.new($stderr)
     #   )
     #
     # @param log_internal_errors [Boolean] whether to log detailed internal error information in the terminal
@@ -137,6 +154,7 @@ module JSONRPC
     # @param rescue_internal_errors [Boolean] whether internal errors should be rescued and converted to JSON-RPC errors
     # @param render_internal_errors [Boolean] whether to render detailed internal error information in responses
     # @param validate_procedure_signatures [Boolean] whether procedure signatures are validated
+    # @param logger [Logger] the logger instance used to emit log messages
     #
     # @return [Configuration] a new configuration instance
     #
@@ -145,7 +163,8 @@ module JSONRPC
       log_request_validation_errors: false,
       rescue_internal_errors: true,
       render_internal_errors: false,
-      validate_procedure_signatures: true
+      validate_procedure_signatures: true,
+      logger: Logger.new($stdout)
     )
       @procedures = {}
       @log_internal_errors = log_internal_errors
@@ -153,6 +172,7 @@ module JSONRPC
       @rescue_internal_errors = rescue_internal_errors
       @render_internal_errors = render_internal_errors
       @validate_procedure_signatures = validate_procedure_signatures
+      @logger = logger
     end
 
     # Returns the singleton instance of the Configuration class
