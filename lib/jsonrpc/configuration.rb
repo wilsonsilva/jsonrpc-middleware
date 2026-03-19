@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'logger'
+
 module JSONRPC
   # Configuration class for JSON-RPC procedure management and validation.
   #
@@ -48,6 +50,17 @@ module JSONRPC
     #   @return [Symbol, nil] the name of the first parameter in the contract schema
     #
     Procedure = Data.define(:allow_positional_arguments, :contract, :parameter_name)
+
+    # The logger used to record internal errors and validation failures
+    #
+    # @api public
+    #
+    # @example
+    #   config.logger # => #<Logger:...>
+    #
+    # @return [Logger] the logger instance
+    #
+    attr_accessor :logger
 
     # Whether to log detailed internal error information in the terminal
     #
@@ -134,6 +147,7 @@ module JSONRPC
     #
     # @param log_internal_errors [Boolean] whether to log detailed internal error information in the terminal
     # @param log_request_validation_errors [Boolean] whether to log validation errors during JSON-RPC request processing
+    # @param logger [Logger] the logger to use for recording errors and diagnostics
     # @param rescue_internal_errors [Boolean] whether internal errors should be rescued and converted to JSON-RPC errors
     # @param render_internal_errors [Boolean] whether to render detailed internal error information in responses
     # @param validate_procedure_signatures [Boolean] whether procedure signatures are validated
@@ -143,6 +157,7 @@ module JSONRPC
     def initialize(
       log_internal_errors: true,
       log_request_validation_errors: false,
+      logger: Logger.new($stdout),
       rescue_internal_errors: true,
       render_internal_errors: false,
       validate_procedure_signatures: true
@@ -150,6 +165,7 @@ module JSONRPC
       @procedures = {}
       @log_internal_errors = log_internal_errors
       @log_request_validation_errors = log_request_validation_errors
+      @logger = logger
       @rescue_internal_errors = rescue_internal_errors
       @render_internal_errors = render_internal_errors
       @validate_procedure_signatures = validate_procedure_signatures

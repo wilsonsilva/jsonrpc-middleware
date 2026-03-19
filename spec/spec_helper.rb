@@ -33,6 +33,7 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     FactoryBot.find_definitions
+    JSONRPC.configuration.logger = Logger.new(IO::NULL)
   end
 
   # Enable flags like --only-failures and --next-failure

@@ -3,6 +3,23 @@
 RSpec.describe JSONRPC::Configuration do
   let(:config) { described_class.new }
 
+  describe '#logger' do
+    context 'when no logger is configured' do
+      it 'defaults to a Logger instance writing to $stdout' do
+        expect(config.logger).to be_a(Logger)
+        expect(config.logger.instance_variable_get(:@logdev).dev).to eq($stdout)
+      end
+    end
+
+    context 'when setting a custom logger' do
+      it 'accepts a custom logger' do
+        custom_logger = Logger.new(IO::NULL)
+        config.logger = custom_logger
+        expect(config.logger).to be(custom_logger)
+      end
+    end
+  end
+
   describe '#json_adapter=' do
     let(:original_adapter) { MultiJson.adapter }
 

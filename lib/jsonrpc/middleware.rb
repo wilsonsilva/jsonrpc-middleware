@@ -377,7 +377,7 @@ module JSONRPC
       body_content
     end
 
-    # Logs internal errors to stdout with full backtrace
+    # Logs internal errors using the configured logger
     #
     # @api private
     #
@@ -389,8 +389,8 @@ module JSONRPC
     # @return [void]
     #
     def log_internal_error(error)
-      puts "Internal error: #{error.message}"
-      puts error.backtrace.join("\n")
+      @config.logger.error("Internal error: #{error.message}")
+      @config.logger.error(error.backtrace.join("\n"))
     end
   end
 end

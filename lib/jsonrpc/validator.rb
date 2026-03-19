@@ -100,8 +100,8 @@ module JSONRPC
       nil
     rescue StandardError => e
       if JSONRPC.configuration.log_request_validation_errors
-        puts "Validation error: #{e.message}"
-        puts e.backtrace.join("\n")
+        JSONRPC.configuration.logger.error("Validation error: #{e.message}")
+        JSONRPC.configuration.logger.error(e.backtrace.join("\n"))
       end
 
       InternalError.new(request_id: extract_request_id(request_or_notification))
