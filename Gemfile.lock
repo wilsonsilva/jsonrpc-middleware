@@ -4,7 +4,7 @@ PATH
     jsonrpc-middleware (0.6.0)
       dry-struct (~> 1.8)
       dry-validation (~> 1.11)
-      multi_json (~> 1.17)
+      multi_json (~> 1.19)
       zeitwerk (~> 2.7)
 
 GEM

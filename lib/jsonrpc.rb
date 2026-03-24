@@ -6,6 +6,22 @@ require 'dry-struct'
 require 'dry-validation'
 require 'multi_json'
 
+# TODO: Workaround for https://github.com/sferik/multi_json/issues/59
+# TODO: Remove when https://github.com/sferik/multi_json/commit/821ea32d5cafc223983b24b3260a1d4112aefab9 is released
+module JSON
+  module Ext
+    module Generator
+      class State
+        unless method_defined?(:except)
+          def except(*keys)
+            to_h.except(*keys)
+          end
+        end
+      end
+    end
+  end
+end
+
 Dry::Validation.load_extensions(:predicates_as_macros)
 
 # JSON-RPC 2.0 middleware implementation for Ruby
