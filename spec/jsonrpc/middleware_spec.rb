@@ -199,20 +199,17 @@ RSpec.describe JSONRPC::Middleware do
 
   # Invalid Request Format
   context 'when processing an HTTP request with an empty body' do
-    it 'returns HTTP 200 OK with a JSON-RPC parse error' do
+    it 'returns HTTP 200 OK with a JSON-RPC invalid request error' do
       post_raw_jsonrpc_request(nil)
 
       expect_json(
         jsonrpc: '2.0',
         error: {
-          code: -32_700,
+          code: -32_600,
           data: {
-            adapter: 'MultiJson::Adapters::JsonGem',
-            details: 'JSON::ParserError',
-            input_preview: ''
+            details: 'Request must be an object'
           },
-          message: 'Invalid JSON was received by the server. ' \
-                   'An error occurred on the server while parsing the JSON text.'
+          message: 'The JSON payload was valid JSON, but not a valid JSON-RPC Request object.'
         },
         id: nil
       )
