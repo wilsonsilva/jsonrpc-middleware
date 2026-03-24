@@ -41,13 +41,15 @@ module JSONRPC
     # @option options [String] :path ('/') The path to handle JSON-RPC requests on
     # @option options [Boolean] :rescue_internal_errors (nil) Override config rescue_internal_errors
     # @option options [Boolean] :log_internal_errors (true) Override config log_internal_errors
+    # @option options [Logger] :logger (nil) Override config logger
     #
     def initialize(app, options = {})
       @app = app
-      @parser = Parser.new
-      @validator = Validator.new
       @path = options.fetch(:path, DEFAULT_PATH)
       @config = JSONRPC.configuration
+      @logger = options.fetch(:logger, @config.logger)
+      @parser = Parser.new
+      @validator = Validator.new(logger: @logger)
       @log_internal_errors = options.fetch(:log_internal_errors, @config.log_internal_errors)
       @rescue_internal_errors = options.fetch(:rescue_internal_errors, @config.rescue_internal_errors)
     end
@@ -377,7 +379,7 @@ module JSONRPC
       body_content
     end
 
-    # Logs internal errors to stdout with full backtrace
+    # Logs internal errors with full backtrace using the configured logger
     #
     # @api private
     #
@@ -389,8 +391,8 @@ module JSONRPC
     # @return [void]
     #
     def log_internal_error(error)
-      puts "Internal error: #{error.message}"
-      puts error.backtrace.join("\n")
+      @logger.error("Internal error: #{error.message}")
+      @logger.error(error.backtrace.join("\n"))
     end
   end
 end

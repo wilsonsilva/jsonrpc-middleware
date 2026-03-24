@@ -13,6 +13,16 @@ module JSONRPC
   #   error = validator.validate(request)
   #
   class Validator
+    # Initializes the Validator
+    #
+    # @api public
+    #
+    # @param logger [Logger] the logger instance for diagnostic output
+    #
+    def initialize(logger: JSONRPC.configuration.logger)
+      @logger = logger
+    end
+
     # Validates a single request, notification or a batch
     #
     # @api public
@@ -100,8 +110,8 @@ module JSONRPC
       nil
     rescue StandardError => e
       if JSONRPC.configuration.log_request_validation_errors
-        puts "Validation error: #{e.message}"
-        puts e.backtrace.join("\n")
+        @logger.error("Validation error: #{e.message}")
+        @logger.error(e.backtrace.join("\n"))
       end
 
       InternalError.new(request_id: extract_request_id(request_or_notification))

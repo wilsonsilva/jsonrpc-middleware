@@ -35,6 +35,11 @@ RSpec.configure do |config|
     FactoryBot.find_definitions
   end
 
+  # Silence the logger to prevent log output from polluting test results
+  config.before do
+    JSONRPC.configuration.logger = Logger.new(File::NULL)
+  end
+
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = '.rspec_status'
 

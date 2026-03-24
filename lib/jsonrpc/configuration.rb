@@ -49,6 +49,20 @@ module JSONRPC
     #
     Procedure = Data.define(:allow_positional_arguments, :contract, :parameter_name)
 
+    # The logger instance used for error and diagnostic output
+    #
+    # @api public
+    #
+    # @example Using the default logger
+    #   config.logger # => #<Logger:...>
+    #
+    # @example Setting a custom logger
+    #   config.logger = Logger.new('log/jsonrpc.log')
+    #
+    # @return [Logger] the logger instance
+    #
+    attr_accessor :logger
+
     # Whether to log detailed internal error information in the terminal
     #
     # @api public
@@ -132,6 +146,7 @@ module JSONRPC
     #     render_internal_errors: true
     #   )
     #
+    # @param logger [Logger] the logger instance for error and diagnostic output
     # @param log_internal_errors [Boolean] whether to log detailed internal error information in the terminal
     # @param log_request_validation_errors [Boolean] whether to log validation errors during JSON-RPC request processing
     # @param rescue_internal_errors [Boolean] whether internal errors should be rescued and converted to JSON-RPC errors
@@ -141,6 +156,7 @@ module JSONRPC
     # @return [Configuration] a new configuration instance
     #
     def initialize(
+      logger: Logger.new($stdout, progname: 'JSONRPC'),
       log_internal_errors: true,
       log_request_validation_errors: false,
       rescue_internal_errors: true,
@@ -148,6 +164,7 @@ module JSONRPC
       validate_procedure_signatures: true
     )
       @procedures = {}
+      @logger = logger
       @log_internal_errors = log_internal_errors
       @log_request_validation_errors = log_request_validation_errors
       @rescue_internal_errors = rescue_internal_errors

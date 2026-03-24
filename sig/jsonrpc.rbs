@@ -142,6 +142,33 @@ module JSONRPC
     def validate_responses: (Array[untyped]) -> void
   end
 
+  class Configuration
+    attr_accessor logger: Logger
+    attr_accessor log_internal_errors: bool
+    attr_accessor log_request_validation_errors: bool
+    attr_accessor render_internal_errors: bool
+    attr_accessor rescue_internal_errors: bool
+    attr_reader validate_procedure_signatures: bool
+
+    def initialize: (?logger: Logger, ?log_internal_errors: bool, ?log_request_validation_errors: bool, ?rescue_internal_errors: bool, ?render_internal_errors: bool, ?validate_procedure_signatures: bool) -> void
+    def self.instance: -> Configuration
+    def procedure: (String | Symbol method_name, ?allow_positional_arguments: bool) ?{ () -> void } -> Configuration::Procedure
+    def get_procedure: (String | Symbol method_name) -> Configuration::Procedure?
+    def procedure?: (String | Symbol method_name) -> bool
+    def reset!: -> void
+    def json_adapter=: (Symbol?) -> void
+  end
+
+  class Validator
+    @logger: Logger
+
+    def initialize: (?logger: Logger) -> void
+    def validate: (BatchRequest | Request | Notification) -> (Error | Array[Error?] | nil)
+  end
+
+  def self.configure: () { (Configuration) -> void } -> void
+  def self.configuration: -> Configuration
+
   module Errors
     class Error = JSONRPC::Error
   end

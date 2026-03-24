@@ -1,6 +1,23 @@
 module JSONRPC
-  module Middleware
-    VERSION: String
-    # See the writing guide of rbs: https://github.com/ruby/rbs#guides
+  class Middleware
+    DEFAULT_PATH: String
+
+    @app: untyped
+    @path: String
+    @config: Configuration
+    @logger: Logger
+    @parser: Parser
+    @validator: Validator
+    @log_internal_errors: bool
+    @rescue_internal_errors: bool
+
+    def initialize: (untyped app, ?Hash[Symbol, untyped] options) -> void
+    def call: (Hash[String, untyped] env) -> [Integer, Hash[String, String], Array[String]]
+
+    private
+
+    def jsonrpc_request?: -> bool
+    def handle_jsonrpc_request: -> [Integer, Hash[String, String], Array[String]]
+    def log_internal_error: (Exception error) -> void
   end
 end

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 JSONRPC.configure do |config|
+  # Logger instance (default: Logger.new($stdout, progname: 'JSONRPC'))
+  config.logger = Logger.new($stdout, progname: 'JSONRPC')
   config.log_internal_errors = true           # Log internal error backtraces (default: true)
   config.log_request_validation_errors = true # Log JSON-RPC request validation errors (default: false)
   config.render_internal_errors = true        # Render detailed internal error information in responses (default: true)
