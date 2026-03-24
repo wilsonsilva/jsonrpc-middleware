@@ -48,9 +48,8 @@ A Rack middleware implementing the JSON-RPC 2.0 protocol that integrates easily 
 The gem integrates seamlessly into your Rack-based application:
 
 ```mermaid
-block-beta
+block
   columns 4
-
   App["Your app"]:4
   Rails:1 Sinatra:1 RackApp["Other Rack-compatible framework"]:2
   Middleware["JSON-RPC Middleware"]:4
