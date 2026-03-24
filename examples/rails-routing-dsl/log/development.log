@@ -1,0 +1,299 @@
+Started POST "/" for 127.0.0.1 at 2025-06-29 16:28:32 +0100
+Processing by JsonrpcController#handle as JSONRPC
+Completed 500 Internal Server Error in 0ms (GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-06-29 16:28:34 +0100
+Processing by JsonrpcController#handle as JSONRPC
+Completed 500 Internal Server Error in 0ms (GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-06-29 16:28:35 +0100
+Processing by JsonrpcController#handle as JSONRPC
+Completed 500 Internal Server Error in 0ms (GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-06-29 17:27:25 +0100
+Processing by JsonrpcController#handle as JSONRPC
+Completed 500 Internal Server Error in 0ms (GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-06-29 17:27:26 +0100
+Processing by JsonrpcController#handle as JSONRPC
+Completed 500 Internal Server Error in 0ms (GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-06-29 17:27:47 +0100
+Processing by JsonrpcController#handle as JSONRPC
+Completed 500 Internal Server Error in 0ms (GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-06-29 17:27:48 +0100
+Processing by JsonrpcController#handle as JSONRPC
+Completed 500 Internal Server Error in 0ms (GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-06-29 17:28:14 +0100
+Processing by JsonrpcController#handle as JSONRPC
+Completed 500 Internal Server Error in 183009ms (GC: 15.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-06-29 17:31:17 +0100
+Processing by JsonrpcController#handle as JSONRPC
+Completed 500 Internal Server Error in 1433ms (GC: 8.2ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-06-29 17:31:21 +0100
+Processing by JsonrpcController#handle as JSONRPC
+Completed 500 Internal Server Error in 72024ms (GC: 0.0ms)
+
+
+Started POST "/" for ::1 at 2025-07-11 20:05:49 +0100
+Started POST "/" for ::1 at 2025-07-11 20:05:55 +0100
+Started POST "/" for 127.0.0.1 at 2025-07-11 20:07:33 +0100
+Started POST "/" for 127.0.0.1 at 2025-07-11 20:08:36 +0100
+Started POST "/" for 127.0.0.1 at 2025-07-11 20:11:03 +0100
+Started POST "/" for 127.0.0.1 at 2025-07-11 20:12:58 +0100
+Processing by JsonrpcController#echo as JSONRPC
+Completed 200 OK in 0ms (Views: 0.1ms | GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-07-11 20:12:59 +0100
+Processing by JsonrpcController#echo as JSONRPC
+Completed 200 OK in 0ms (Views: 0.1ms | GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-07-11 20:13:27 +0100
+Processing by JsonrpcController#ping as JSONRPC
+Completed 200 OK in 0ms (Views: 0.1ms | GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-07-11 20:13:43 +0100
+Processing by JsonrpcController#ping as JSONRPC
+Completed 200 OK in 0ms (Views: 0.2ms | GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-07-11 20:13:43 +0100
+Processing by JsonrpcController#ping as JSONRPC
+Completed 200 OK in 0ms (Views: 0.2ms | GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-07-11 20:13:53 +0100
+Processing by JsonrpcController#ping as JSONRPC
+Completed 200 OK in 0ms (Views: 0.1ms | GC: 0.0ms)
+
+
+Started POST "/" for ::1 at 2025-07-17 14:40:31 +0100
+Processing by JsonrpcController#ping as JSONRPC
+Completed 200 OK in 1ms (Views: 0.4ms | GC: 0.0ms)
+
+
+Started POST "/" for ::1 at 2025-07-17 14:40:40 +0100
+Processing by JsonrpcController#echo as JSONRPC
+Completed 200 OK in 0ms (Views: 0.1ms | GC: 0.0ms)
+
+
+Started POST "/" for ::1 at 2025-07-22 12:08:25 +0100
+Processing by ClimateController#on as */*
+Completed 200 OK in 1ms (Views: 0.5ms | GC: 0.0ms)
+
+
+Started POST "/" for ::1 at 2025-07-22 12:08:32 +0100
+  
+ActionController::RoutingError (No route matches [POST] "/"):
+  
+Started POST "/" for ::1 at 2025-07-22 12:29:02 +0100
+  
+ActionController::RoutingError (No route matches [POST] "/"):
+  
+Started POST "/" for ::1 at 2025-07-22 12:29:13 +0100
+  
+ActionController::RoutingError (No route matches [POST] "/"):
+  
+Started POST "/" for ::1 at 2025-07-22 12:29:16 +0100
+Processing by LightsController#on as */*
+Completed 200 OK in 1ms (Views: 0.5ms | GC: 0.0ms)
+
+
+Started POST "/" for ::1 at 2025-07-22 12:30:30 +0100
+Processing by FanController#off as */*
+Completed 200 OK in 0ms (Views: 0.1ms | GC: 0.0ms)
+
+
+Started POST "/" for ::1 at 2025-07-22 12:30:33 +0100
+Processing by FanController#on as */*
+Completed 200 OK in 0ms (Views: 0.2ms | GC: 0.0ms)
+
+
+Started POST "/" for ::1 at 2025-07-22 12:30:35 +0100
+Processing by ClimateController#off as */*
+Completed 200 OK in 0ms (Views: 0.2ms | GC: 0.0ms)
+
+
+Started POST "/" for ::1 at 2025-07-22 12:30:36 +0100
+Processing by ClimateController#on as */*
+Completed 200 OK in 0ms (Views: 0.2ms | GC: 0.0ms)
+
+
+Started POST "/" for ::1 at 2025-07-22 12:34:19 +0100
+  
+ActionController::RoutingError (No route matches [POST] "/"):
+  
+Started POST "/" for ::1 at 2025-07-22 12:38:50 +0100
+  
+ActionController::RoutingError (No route matches [POST] "/"):
+  
+Started POST "/" for 127.0.0.1 at 2025-07-22 12:48:41 +0100
+Processing by LightsController#on as */*
+Completed 200 OK in 1ms (Views: 0.5ms | GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-07-22 12:49:44 +0100
+Processing by ClimateController#on as */*
+Completed 200 OK in 0ms (Views: 0.1ms | GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-07-22 12:50:11 +0100
+Processing by ClimateController#on as */*
+Completed 200 OK in 0ms (Views: 0.3ms | GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-07-22 12:50:40 +0100
+Processing by ClimateController#on as */*
+Completed 200 OK in 0ms (Views: 0.2ms | GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-07-22 12:52:26 +0100
+Processing by FanController#off as */*
+Completed 200 OK in 0ms (Views: 0.1ms | GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-07-22 12:52:31 +0100
+Processing by LightsController#off as */*
+Completed 200 OK in 0ms (Views: 0.1ms | GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-07-22 12:52:39 +0100
+Processing by MainController#on as */*
+Completed 200 OK in 0ms (Views: 0.1ms | GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-07-22 12:52:42 +0100
+Processing by MainController#off as */*
+Completed 200 OK in 0ms (Views: 0.1ms | GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-07-22 12:53:46 +0100
+Processing by LightsController#on as */*
+Completed 200 OK in 0ms (Views: 0.1ms | GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-07-22 12:54:12 +0100
+Processing by LightsController#off as */*
+Completed 200 OK in 0ms (Views: 0.1ms | GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-07-22 12:54:14 +0100
+Processing by ClimateController#on as */*
+Completed 200 OK in 0ms (Views: 0.1ms | GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-07-22 12:54:21 +0100
+Processing by ClimateController#on as */*
+Completed 200 OK in 0ms (Views: 0.1ms | GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-07-22 12:54:24 +0100
+Processing by LightsController#on as */*
+Completed 200 OK in 0ms (Views: 0.1ms | GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-07-22 12:54:25 +0100
+Processing by MainController#off as */*
+Completed 200 OK in 0ms (Views: 0.1ms | GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-07-22 12:54:28 +0100
+Processing by LightsController#off as */*
+Completed 200 OK in 0ms (Views: 0.1ms | GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-07-22 12:54:29 +0100
+Processing by ClimateController#on as */*
+Completed 200 OK in 0ms (Views: 0.1ms | GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-07-22 12:54:42 +0100
+Processing by ClimateController#off as */*
+Completed 200 OK in 0ms (Views: 0.1ms | GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-07-22 12:54:44 +0100
+Processing by FanController#on as */*
+Completed 200 OK in 0ms (Views: 0.1ms | GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-07-22 12:54:45 +0100
+Processing by FanController#off as */*
+Completed 200 OK in 0ms (Views: 0.1ms | GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-07-22 12:54:47 +0100
+  
+ActionController::RoutingError (No route matches [POST] "/"):
+  
+Started POST "/" for ::1 at 2025-07-22 13:36:57 +0100
+Processing by MainController#on as */*
+Completed 200 OK in 0ms (Views: 0.1ms | GC: 0.0ms)
+
+
+Started POST "/" for ::1 at 2025-07-22 13:37:06 +0100
+Processing by BatchController#handle as */*
+Completed 200 OK in 0ms (Views: 0.1ms | GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-07-22 13:39:00 +0100
+Processing by MainController#on as */*
+Completed 200 OK in 0ms (Views: 0.3ms | GC: 0.1ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-07-22 13:39:02 +0100
+Processing by MainController#off as */*
+Completed 200 OK in 0ms (Views: 0.1ms | GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-07-22 13:39:04 +0100
+Processing by LightsController#on as */*
+Completed 200 OK in 0ms (Views: 0.1ms | GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-07-22 13:39:07 +0100
+Processing by LightsController#off as */*
+Completed 200 OK in 0ms (Views: 0.1ms | GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-07-22 13:39:08 +0100
+Processing by ClimateController#on as */*
+Completed 200 OK in 0ms (Views: 0.1ms | GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-07-22 13:39:10 +0100
+Processing by ClimateController#off as */*
+Completed 200 OK in 0ms (Views: 0.1ms | GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-07-22 13:39:11 +0100
+Processing by FanController#on as */*
+Completed 200 OK in 0ms (Views: 0.1ms | GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-07-22 13:39:12 +0100
+Processing by FanController#off as */*
+Completed 200 OK in 0ms (Views: 0.1ms | GC: 0.0ms)
+
+
+Started POST "/" for 127.0.0.1 at 2025-07-22 13:39:15 +0100
+Processing by BatchController#handle as */*
+Completed 200 OK in 0ms (Views: 0.1ms | GC: 0.0ms)
+
+
