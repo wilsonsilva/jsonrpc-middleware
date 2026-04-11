@@ -157,6 +157,8 @@ Tags/ApiTags:
     - public
     - private
     - internal
+  Exclude:
+    - 'lib/jsonrpc/configuration.rb' # TODO: Remove once https://github.com/mensfeld/yard-lint/issues/128 is resolved
 
 Tags/OptionTags:
   Description: 'Requires @option tags for methods with options parameters.'
