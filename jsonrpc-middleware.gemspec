@@ -32,6 +32,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'dry-struct', '~> 1.8'
   spec.add_dependency 'dry-validation', '~> 1.11'
-  spec.add_dependency 'multi_json', '~> 1.19'
+  spec.add_dependency 'multi_json', '~> 1.20'
   spec.add_dependency 'zeitwerk', '~> 2.7'
 end
