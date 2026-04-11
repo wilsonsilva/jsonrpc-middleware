@@ -23,7 +23,7 @@ This file provides guidance to AI agents when working with code in this reposito
 ### Documentation
 - `bundle exec rake yard` - Generate YARD documentation
 - `bundle exec rake yard:format` - Format YARD comments in code
-- `bundle exec rake verify_measurements` - Verify 100% documentation coverage
+- `bundle exec rake yard:lint` - Lint YARD comments for issues
 
 ### Build & Release
 - `bundle exec rake build` - Build gem package

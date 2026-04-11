@@ -6,6 +6,7 @@ require 'bundler/gem_tasks'
 require 'rspec/core/rake_task'
 require 'rubocop/rake_task'
 require 'yaml'
+require 'yard'
 require 'yard/rake/yardoc_task'
 
 Bundler::Audit::Task.new
@@ -16,7 +17,7 @@ YARD::Rake::YardocTask.new
 task default: %i[spec rubocop]
 
 # Remove the report on rake clobber
-CLEAN.include('measurements', 'doc', '.yardoc', 'tmp')
+CLEAN.include('doc', '.yardoc', 'tmp')
 
 # Delete these files and folders when running rake clobber.
 CLOBBER.include('coverage', '.rspec_status')
