@@ -7,7 +7,7 @@ This file provides guidance to AI agents when working with code in this reposito
 ### Testing
 - `bundle exec rspec` - Run all tests
 - `bundle exec rspec spec/path/to/spec.rb` - Run specific test file
-- `rake coverage` - Run tests with coverage report (opens in browser)
+- `bundle exec rake coverage` - Run tests with test coverage and write a LLM-friendly report in `coverage/report.md`
 
 ### Code Quality
 - `bundle exec rake qa` - Complete quality check (tests, linting, security, docs)

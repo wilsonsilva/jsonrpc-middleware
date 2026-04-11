@@ -31,6 +31,7 @@ group :development do
   gem 'simplecov', '~> 0.22'
   gem 'simplecov-console', '~> 0.9'
   gem 'simplecov_json_formatter', '~> 0.1'
+  gem 'simplecov-markdown', '~> 1.1'
   gem 'steep', '~> 1.10'
   gem 'typeprof', '~> 0.31'
   gem 'yard', '~> 0.9'

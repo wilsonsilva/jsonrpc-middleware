@@ -249,6 +249,8 @@ GEM
       simplecov
       terminal-table
     simplecov-html (0.13.2)
+    simplecov-markdown (1.1.0)
+      simplecov
     simplecov_json_formatter (0.1.4)
     steep (1.10.0)
       activesupport (>= 5.1)
@@ -327,6 +329,7 @@ DEPENDENCIES
   rubocop-yard (~> 1.1)
   simplecov (~> 0.22)
   simplecov-console (~> 0.9)
+  simplecov-markdown (~> 1.1)
   simplecov_json_formatter (~> 0.1)
   steep (~> 1.10)
   typeprof (~> 0.31)

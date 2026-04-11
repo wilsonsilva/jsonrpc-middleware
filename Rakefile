@@ -26,7 +26,6 @@ desc 'Run spec with coverage'
 task :coverage do
   ENV['COVERAGE'] = 'true'
   Rake::Task['spec'].execute
-  `open coverage/index.html`
 end
 
 desc 'Test, lint and perform security and documentation audits'

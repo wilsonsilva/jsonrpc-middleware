@@ -1,22 +1,24 @@
 # frozen_string_literal: true
 
-require 'simplecov'
-require 'simplecov_json_formatter'
-require 'simplecov-console'
-
-SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new(
-  [
-    SimpleCov::Formatter::HTMLFormatter,
-    SimpleCov::Formatter::JSONFormatter,
-    SimpleCov::Formatter::Console
-  ]
-)
-
 unless ENV['COVERAGE'] == 'false'
+  require 'simplecov'
+  require 'simplecov_json_formatter'
+  require 'simplecov-console'
+  require 'simplecov-markdown'
+
   SimpleCov.start do
     root 'lib'
     coverage_dir "#{Dir.pwd}/coverage"
   end
+
+  SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new(
+    [
+      SimpleCov::Formatter::Console,
+      SimpleCov::Formatter::HTMLFormatter,
+      SimpleCov::Formatter::JSONFormatter,
+      SimpleCov::Formatter::MarkdownFormatter
+    ]
+  )
 end
 
 require 'awesome_print'
