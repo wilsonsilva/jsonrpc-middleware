@@ -20,8 +20,9 @@ module JSONRPC
     #
     # @api public
     #
-    # @!method allow_positional_arguments
+    # @!attribute [r] allow_positional_arguments
     #   Indicates if the procedure accepts positional arguments
+    #
     #   @api public
     #
     #   @example
@@ -29,8 +30,9 @@ module JSONRPC
     #
     #   @return [Boolean] whether the procedure accepts positional arguments
     #
-    # @!method contract
+    # @!attribute [r] contract
     #   The validation contract for procedure parameters
+    #
     #   @api public
     #
     #   @example
@@ -38,8 +40,9 @@ module JSONRPC
     #
     #   @return [Dry::Validation::Contract] the validation contract for procedure parameters
     #
-    # @!method parameter_name
+    # @!attribute [r] parameter_name
     #   The name of the first parameter in the contract schema
+    #
     #   @api public
     #
     #   @example
