@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/mensfeld/yard-lint.git
+  revision: 22dd2cdcdd4c33cd859a1afdb469ba13c4b7599f
+  specs:
+    yard-lint (1.5.2)
+      yard (~> 0.9)
+      zeitwerk (~> 2.6)
+
 PATH
   remote: .
   specs:
@@ -285,9 +293,6 @@ GEM
     unicode-emoji (4.2.0)
     uri (1.1.1)
     yard (0.9.39)
-    yard-lint (1.5.1)
-      yard (~> 0.9)
-      zeitwerk (~> 2.6)
     zeitwerk (2.7.5)
 
 PLATFORMS
@@ -334,7 +339,7 @@ DEPENDENCIES
   steep (~> 1.10)
   typeprof (~> 0.31)
   yard (~> 0.9)
-  yard-lint (~> 1.5)
+  yard-lint (~> 1.5)!
 
 BUNDLED WITH
   4.0.8

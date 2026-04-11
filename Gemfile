@@ -35,5 +35,5 @@ group :development do
   gem 'steep', '~> 1.10'
   gem 'typeprof', '~> 0.31'
   gem 'yard', '~> 0.9'
-  gem 'yard-lint', '~> 1.5'
+  gem 'yard-lint', '~> 1.5', github: 'mensfeld/yard-lint' # TODO: Remove the GitHub ref once v1.5.2+ is released
 end
