@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module JSONRPC
+  # Integrates JSONRPC middleware, routing DSL, and helpers into Rails applications.
+  #
   # @api private
   class Railtie < ::Rails::Railtie
     # Rails routing constraint for matching JSON-RPC method names

@@ -8,6 +8,6 @@ module JSONRPC
   # @see https://dry-rb.org/gems/dry-types/ Dry::Types documentation
   #
   module Types
-    include Dry.Types()
+    send(:include, Dry.Types()) # Uses send to fix a YARD documentation bug
   end
 end
