@@ -34,5 +34,5 @@ group :development do
   gem 'steep', '~> 1.10'
   gem 'typeprof', '~> 0.31'
   gem 'yard', '~> 0.9'
-  gem 'yard-lint', '~> 1.4'
+  gem 'yard-lint', '~> 1.5'
 end
