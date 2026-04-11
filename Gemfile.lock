@@ -282,7 +282,7 @@ GEM
       unicode-emoji (~> 4.1)
     unicode-emoji (4.2.0)
     uri (1.1.1)
-    yard (0.9.38)
+    yard (0.9.39)
     yard-lint (1.5.1)
       yard (~> 0.9)
       zeitwerk (~> 2.6)
