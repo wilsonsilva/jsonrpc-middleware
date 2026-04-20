@@ -3,7 +3,7 @@
 RSpec.describe JSONRPC::BatchConstraint do
   describe '#matches?' do
     let(:constraint) { described_class.new }
-    let(:request) { Struct.new(:env).new(env) }
+    let(:request) { ActionDispatch::Request.new(env) }
 
     context 'when the Rack env contains a jsonrpc.batch entry' do
       let(:batch) do
