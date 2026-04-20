@@ -2,7 +2,9 @@ plugins:
   - rubocop-factory_bot
   - rubocop-performance
   - rubocop-rake
+  - rubocop-rails
   - rubocop-rspec
+  - rubocop-rspec_rails
 
 AllCops:
   TargetRubyVersion: 4.0
@@ -63,6 +65,12 @@ Metrics/ParameterLists:
   CountKeywordArgs: false
 
 Metrics/PerceivedComplexity:
+  Enabled: false
+
+# ----------------------- Rails -----------------------
+
+# This gem is not a Rails application, so the :environment task is not required.
+Rails/RakeEnvironment:
   Enabled: false
 
 # ----------------------- RSpec -----------------------

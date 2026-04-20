@@ -65,7 +65,7 @@ class App < Rails::Application
 end
 
 # Controller for main system operations
-class MainController < ActionController::Base
+class MainController < ApplicationController
   def on
     render jsonrpc: { device: 'main_system', status: 'on' }
   end
@@ -76,7 +76,7 @@ class MainController < ActionController::Base
 end
 
 # Controller for lights operations
-class LightsController < ActionController::Base
+class LightsController < ApplicationController
   def on
     render jsonrpc: { device: 'lights', status: 'on' }
   end
@@ -87,7 +87,7 @@ class LightsController < ActionController::Base
 end
 
 # Controller for climate operations
-class ClimateController < ActionController::Base
+class ClimateController < ApplicationController
   def on
     render jsonrpc: { device: 'climate_system', status: 'on' }
   end
@@ -98,7 +98,7 @@ class ClimateController < ActionController::Base
 end
 
 # Controller for climate fan operations
-class FanController < ActionController::Base
+class FanController < ApplicationController
   def on
     render jsonrpc: { device: 'fan', status: 'on' }
   end
@@ -109,7 +109,7 @@ class FanController < ActionController::Base
 end
 
 # Controller for batch operations
-class BatchController < ActionController::Base
+class BatchController < ApplicationController
   def handle
     # Process each request in the batch and collect results
     results = jsonrpc_batch.process_each do |request_or_notification|
