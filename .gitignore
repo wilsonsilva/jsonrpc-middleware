@@ -21,3 +21,6 @@ local_secret.txt
 
 # Kiro AI steering
 .kiro
+
+# Git worktrees
+.worktrees/
