@@ -1,12 +1,13 @@
 {
   "permissions": {
     "allow": [
+      "Bash(bin/console:*)",
+      "Bash(bundle exec rake:*)",
       "Bash(bundle exec rspec:*)",
       "Bash(bundle exec rubocop:*)",
-      "Bash(bundle exec rake:*)",
-      "Bash(mkdir:*)",
-      "Bash(bin/console:*)",
       "Bash(bundle exec ruby:*)",
+      "Bash(COVERAGE=false bundle exec *)",
+      "Bash(mkdir:*)",
       "Bash(git:*)",
       "Bash(grep:*)"
     ]
