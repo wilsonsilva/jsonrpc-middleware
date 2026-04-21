@@ -5,12 +5,12 @@ require 'rack/test'
 
 module JsonRpcHelpers
   def post_jsonrpc_request(payload)
-    post '/jsonrpc', payload.to_json, { 'CONTENT_TYPE' => 'application/json' } # rubocop:disable Rails/HttpPositionalArguments
+    post '/jsonrpc', params: payload.to_json, session: { 'CONTENT_TYPE' => 'application/json' }
   end
 
   # Sends a raw string as the request body (for invalid JSON tests)
   def post_raw_request(payload)
-    post('/jsonrpc', payload, 'CONTENT_TYPE' => 'application/json') # rubocop:disable Rails/HttpPositionalArguments
+    post('/jsonrpc', params: payload, session: { 'CONTENT_TYPE' => 'application/json' })
   end
 
   def expect_status(status)
