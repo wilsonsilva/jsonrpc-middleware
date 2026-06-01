@@ -5,11 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.7.0] - 2026-06-01
+
+### Added
+- Configurable `Logger` support for JSON-RPC components
+  - `JSONRPC.configuration.logger` (defaults to `Logger.new($stdout, progname: 'JSONRPC')`)
+  - `JSONRPC::Middleware` accepts a `:logger` option and uses it for internal-error and validation logging
+- Development container support (`.devcontainer`, `Dockerfile`, `.dockerignore`)
 
 ### Changed
-- Updated Ruby to v4.0.2
+- Updated Ruby to v4.0.5
 - Updated Bundler to v4.0.8
+- Updated runtime dependencies
+  - `multi_json` to `~> 1.21` (removed the local `JSON::Ext::Generator::State#except` workaround now that the upstream fix has shipped)
+  - `zeitwerk` to `~> 2.8`
+- Replaced the README architecture diagram (Mermaid) with an inline SVG
+- Replaced yardstick/yard-junk with yard-lint for documentation linting
+- Achieved 100% test coverage
 
 ## [0.6.0] - 2025-09-17
 
@@ -164,6 +176,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Helper methods for request and response processing
 - Examples for basic and advanced usage scenarios
 
+[0.7.0]: https://github.com/wilsonsilva/jsonrpc-middleware/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/wilsonsilva/jsonrpc-middleware/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/wilsonsilva/jsonrpc-middleware/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/wilsonsilva/jsonrpc-middleware/compare/v0.3.0...v0.4.0
