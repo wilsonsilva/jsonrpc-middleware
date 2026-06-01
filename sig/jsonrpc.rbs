@@ -37,7 +37,7 @@ module JSONRPC
     attr_reader data: data_type
     attr_accessor request_id: Integer | String | nil
 
-    def initialize: (code: Integer, message: String, ?data: data_type, ?request_id: id_type) -> void
+    def initialize: (String message, code: Integer, ?data: data_type, ?request_id: id_type) -> void
     def to_h: -> symbol_hash
     def to_json: (*untyped) -> String
 
@@ -45,26 +45,6 @@ module JSONRPC
 
     def validate_code: (Integer) -> void
     def validate_message: (String) -> void
-  end
-
-  class ParseError < Error
-    def initialize: (?data: data_type, ?request_id: id_type) -> void
-  end
-
-  class InvalidRequestError < Error
-    def initialize: (?data: data_type, ?request_id: id_type) -> void
-  end
-
-  class MethodNotFoundError < Error
-    def initialize: (?data: data_type, ?request_id: id_type) -> void
-  end
-
-  class InvalidParamsError < Error
-    def initialize: (?data: data_type, ?request_id: id_type) -> void
-  end
-
-  class InternalError < Error
-    def initialize: (?data: data_type, ?request_id: id_type) -> void
   end
 
   class Request

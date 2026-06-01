@@ -1,0 +1,5 @@
+module JSONRPC
+  class MethodNotFoundError < Error
+    def initialize: (?String message, ?data: data_type, ?request_id: id_type) -> void
+  end
+end
