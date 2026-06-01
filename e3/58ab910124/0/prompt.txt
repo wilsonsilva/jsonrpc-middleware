@@ -1,0 +1,9 @@
+Improfe the RBS signatures of @lib/jsonrpc/parser.rb / @sig/jsonrpc/parser.rbs
+
+---
+
+Yes
+
+---
+
+Do not modify the source code! Just the signature code.
