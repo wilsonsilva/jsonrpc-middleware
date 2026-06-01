@@ -40,7 +40,7 @@ class App < Rails::Application
 end
 
 # Define the JSONRPC controller
-class JsonrpcController < ActionController::Base
+class JsonrpcController < ApplicationController
   def handle
     if jsonrpc_request?
       result = handle_single(jsonrpc_request)
