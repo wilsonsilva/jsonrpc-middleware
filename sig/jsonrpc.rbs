@@ -25,6 +25,12 @@ module JSONRPC
   # Hash with Symbol keys
   type symbol_hash = Hash[Symbol, untyped] & _ToJson
 
+  # Hash with String keys
+  type string_hash = Hash[String, untyped] & _ToJson
+
+  # Hash with String or Symbol keys
+  type string_or_symbol_hash = Hash[String|Symbol, untyped] & _ToJson
+
   class Error < StandardError
     attr_reader code: Integer
     attr_reader message: String
@@ -111,15 +117,15 @@ module JSONRPC
   end
 
   class BatchRequest
-    include Enumerable[Request | Notification]
+    include Enumerable[Request | Notification | Error]
 
-    attr_reader requests: Array[Request | Notification]
+    attr_reader requests: Array[Request | Notification | Error]
 
-    def initialize: (Array[Request | Notification]) -> void
+    def initialize: (Array[Request | Notification | Error]) -> void
     def to_h: -> Array[symbol_hash]
     def to_json: (*untyped) -> String
-    def each: () { (Request | Notification) -> void } -> self
-      | () -> Enumerator[Request | Notification, self]
+    def each: () { (Request | Notification | Error) -> void } -> self
+      | () -> Enumerator[Request | Notification | Error, self]
 
     private
 
@@ -185,7 +191,16 @@ module Zeitwerk
   end
 end
 
-module JSON
-  def self.parse: (String, ?untyped) -> untyped
-  def self.generate: (untyped, ?untyped) -> String
+module MultiJson
+  class ParseError < StandardError
+  end
+
+  interface _Adapter
+    def name: () -> String
+  end
+
+  def self.load: (String, ?untyped) -> untyped
+  def self.dump: (untyped, *untyped) -> String
+  def self.use: (untyped) -> untyped
+  def self.adapter: () -> _Adapter
 end
