@@ -24,7 +24,7 @@ group :development do
   gem 'rbs', '~> 4.0'
   gem 'rspec', '~> 3.13'
   gem 'rspec-rails', '~> 8.0'
-  gem 'rubocop', '~> 1.86'
+  gem 'rubocop', '~> 1.87'
   gem 'rubocop-factory_bot', '~> 2.28'
   gem 'rubocop-performance', '~> 1.26'
   gem 'rubocop-rails', '~> 2.34'
