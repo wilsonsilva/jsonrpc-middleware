@@ -1,0 +1,1 @@
+Read all commits since tag 0.6.0. Then update the @CHANGELOG.md accordingly.

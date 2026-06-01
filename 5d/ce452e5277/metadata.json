@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.6.3",
+  "checkpoint_id": "5dce452e5277",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 0,
+  "files_touched": [
+    ".github/copilot-instructions.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/5d/ce452e5277/0/metadata.json",
+      "transcript": "/5d/ce452e5277/0/full.jsonl",
+      "content_hash": "/5d/ce452e5277/0/content_hash.txt",
+      "prompt": "/5d/ce452e5277/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 26685,
+    "cache_creation_tokens": 37551,
+    "cache_read_tokens": 189344,
+    "output_tokens": 4590,
+    "api_call_count": 6
+  }
+}
