@@ -73,10 +73,12 @@ loader.enable_reloading
 loader.collapse("#{__dir__}/jsonrpc/errors")
 loader.collapse("#{__dir__}/jsonrpc/railtie")
 
+# :nocov:
 unless defined?(Rails)
   loader.ignore("#{__dir__}/jsonrpc/railtie.rb")
   loader.ignore("#{__dir__}/jsonrpc/railtie/method_constraint.rb")
 end
+# :nocov:
 
 loader.inflector.inflect('jsonrpc' => 'JSONRPC')
 loader.setup

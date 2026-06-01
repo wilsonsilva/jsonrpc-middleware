@@ -148,5 +148,7 @@ module JSONRPC
     def to_json(*)
       MultiJson.dump(to_h, *)
     end
+
+    alias to_response to_h
   end
 end

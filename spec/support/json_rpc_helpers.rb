@@ -9,7 +9,7 @@ module JsonRpcHelpers
   end
 
   # Sends a raw string as the request body (for invalid JSON tests)
-  def post_raw_jsonrpc_request(payload)
+  def post_raw_request(payload)
     post('/jsonrpc', payload, 'CONTENT_TYPE' => 'application/json')
   end
 

@@ -1,6 +1,34 @@
 # frozen_string_literal: true
 
 RSpec.describe JSONRPC::Middleware do
+  context 'when the request is not a JSON-RPC request' do
+    # Overrides the helper's `app` in spec_helper
+    let(:app) do
+      # Responds with 200 and {} regardless of the request method or path
+      middleware = described_class
+      underlying_app = ->(_env) { [200, { 'content-type' => 'application/json' }, ['{}']] }
+
+      Rack::Builder.new do
+        use middleware, path: '/jsonrpc'
+        run underlying_app
+      end
+    end
+
+    it 'passes a GET request through to the underlying app' do
+      get '/jsonrpc'
+
+      expect_status(200)
+      expect_json({})
+    end
+
+    it 'passes a POST to a different path through to the underlying app' do
+      post '/other', '{}', { 'CONTENT_TYPE' => 'application/json' }
+
+      expect_status(200)
+      expect_json({})
+    end
+  end
+
   # Valid Single Requests
   context 'when processing a valid JSON-RPC request with positional parameters' do
     it 'returns HTTP 200 OK with the correct JSON-RPC response' do
@@ -200,7 +228,7 @@ RSpec.describe JSONRPC::Middleware do
   # Invalid Request Format
   context 'when processing an HTTP request with an empty body' do
     it 'returns HTTP 200 OK with a JSON-RPC invalid request error' do
-      post_raw_jsonrpc_request(nil)
+      post_raw_request(nil)
 
       expect_json(
         jsonrpc: '2.0',
@@ -219,7 +247,7 @@ RSpec.describe JSONRPC::Middleware do
 
   context 'when processing an HTTP request with invalid JSON' do
     it 'returns HTTP 200 OK with a JSON-RPC parse error' do
-      post_raw_jsonrpc_request('Taxation is theft.')
+      post_raw_request('Taxation is theft.')
 
       expect_status(200)
       expect_json(

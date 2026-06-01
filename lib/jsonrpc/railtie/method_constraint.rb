@@ -32,5 +32,13 @@ module JSONRPC
 
       jsonrpc_request.method == @jsonrpc_method_name
     end
+
+    # Returns a string representation of the constraint
+    #
+    # @return [String] A string showing the configured JSON-RPC method name
+    #
+    def to_s
+      "#<JSONRPC::MethodConstraint method=\"#{@jsonrpc_method_name}\">"
+    end
   end
 end

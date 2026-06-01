@@ -102,7 +102,7 @@ module JSONRPC
           request_id: extract_request_id(request_or_notification),
           data: {
             method: request_or_notification.method,
-            params: validation_result.errors.to_h
+            params: validation_result.errors.to_h # rubocop:disable Rails/DeprecatedActiveModelErrorsMethods
           }
         )
       end

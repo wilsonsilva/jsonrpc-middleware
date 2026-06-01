@@ -22,6 +22,12 @@ unless ENV['COVERAGE'] == 'false'
 end
 
 require 'awesome_print'
+
+ENV['RAILS_ENV'] ||= 'test'
+require 'rails'
+require 'action_controller/railtie'
+require 'action_controller/api'
+
 require 'jsonrpc'
 require 'factory_bot'
 require 'rack/test'

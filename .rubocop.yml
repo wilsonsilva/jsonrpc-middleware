@@ -2,7 +2,9 @@ plugins:
   - rubocop-factory_bot
   - rubocop-performance
   - rubocop-rake
+  - rubocop-rails
   - rubocop-rspec
+  - rubocop-rspec_rails
 
 AllCops:
   TargetRubyVersion: 4.0
@@ -63,6 +65,22 @@ Metrics/ParameterLists:
   CountKeywordArgs: false
 
 Metrics/PerceivedComplexity:
+  Enabled: false
+
+# ----------------------- Rails -----------------------
+
+Rails/Delegate:
+  Exclude:
+    - lib/jsonrpc/batch_request.rb # Not using Rails
+
+# This gem is not a Rails application, so the :environment task is not required.
+Rails/RakeEnvironment:
+  Enabled: false
+
+# All specs use Rack::Test::Methods, not ActionDispatch integration helpers.
+# The cop only applies to the ActionDispatch positional API and gives false
+# positives for rack-test's post(uri, params, env) signature.
+Rails/HttpPositionalArguments:
   Enabled: false
 
 # ----------------------- RSpec -----------------------
