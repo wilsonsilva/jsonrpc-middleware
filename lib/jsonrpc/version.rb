@@ -11,5 +11,5 @@ module JSONRPC
   #
   # @return [String] The current version number
   #
-  VERSION = '0.6.0'
+  VERSION = '0.7.0'
 end
