@@ -182,7 +182,7 @@ namespace :examples do
       puts "Running bundle update in #{File.basename(folder)}..."
 
       Dir.chdir(folder) do
-        system('bundle update')
+        system('bundle update --all')
 
         if $CHILD_STATUS.success?
           puts "  ✓ Successfully updated gems in #{File.basename(folder)}"
