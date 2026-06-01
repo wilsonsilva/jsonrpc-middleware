@@ -110,9 +110,7 @@ module JSONRPC
     #
     # @return [Integer] the number of requests in the batch
     #
-    def size
-      requests.size
-    end
+    def size = requests.size
 
     # Alias for size method providing Array-like interface
     #
