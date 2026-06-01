@@ -1,0 +1,2 @@
+{"time":"2026-06-01T23:44:22.606618+01:00","level":"INFO","msg":"session-end","session_id":"ebfde613-4624-4336-9c32-28b5f7fcf29a","component":"lifecycle","agent":"claude-code","event":"SessionEnd","session_id":"ebfde613-4624-4336-9c32-28b5f7fcf29a"}
+{"time":"2026-06-01T23:44:22.622053+01:00","level":"INFO","msg":"phase transition","session_id":"ebfde613-4624-4336-9c32-28b5f7fcf29a","component":"session","agent":"claude-code","session_id":"ebfde613-4624-4336-9c32-28b5f7fcf29a","event":"SessionStop","from":"idle","to":"ended"}
