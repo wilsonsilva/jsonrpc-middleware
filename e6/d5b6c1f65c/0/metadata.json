@@ -1,0 +1,71 @@
+{
+  "cli_version": "0.6.3",
+  "checkpoint_id": "e6d5b6c1f65c",
+  "session_id": "38a908ee-7d52-401d-9dca-65760db99c33",
+  "strategy": "manual-commit",
+  "created_at": "2026-06-01T23:55:49.427197Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "sig/jsonrpc.rbs",
+    "sig/jsonrpc/errors/internal_error.rbs",
+    "sig/jsonrpc/errors/invalid_params_error.rbs",
+    "sig/jsonrpc/errors/invalid_request_error.rbs",
+    "sig/jsonrpc/errors/method_not_found_error.rbs",
+    "sig/jsonrpc/errors/parse_error.rbs"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-8",
+  "turn_id": "a0e958d3fc08",
+  "token_usage": {
+    "input_tokens": 29607,
+    "cache_creation_tokens": 53553,
+    "cache_read_tokens": 441702,
+    "output_tokens": 9951,
+    "api_call_count": 11
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-06-01T23:55:49.419042Z",
+    "agent_lines": 25,
+    "agent_removed": 20,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 4,
+    "total_committed": 25,
+    "total_lines_changed": 49,
+    "agent_percentage": 91.83673469387756,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 819,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".claude/agents/rbs-specialist.md": 74,
+        ".idea/.gitignore": 8,
+        ".idea/copilot.data.migration.agent.xml": 6,
+        ".idea/copilot.data.migration.ask.xml": 6,
+        ".idea/copilot.data.migration.ask2agent.xml": 6,
+        ".idea/copilot.data.migration.edit.xml": 6,
+        ".idea/dictionaries/project.xml": 8,
+        ".idea/icon.svg": 5,
+        ".idea/jsonrpc-middleware.iml": 170,
+        ".idea/misc.xml": 4,
+        ".idea/modules.xml": 9,
+        ".idea/modules/.iml": 129,
+        ".idea/modules/rack-echo.iml": 38,
+        ".idea/modules/rack.iml": 38,
+        ".idea/modules/rails.iml": 213,
+        ".idea/modules/sinatra-classic.iml": 46,
+        ".idea/modules/sinatra-modular.iml": 46,
+        ".idea/vcs.xml": 7
+      }
+    }
+  ]
+}
