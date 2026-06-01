@@ -474,7 +474,7 @@ DEPENDENCIES
   simplecov-markdown (~> 1.1)
   simplecov_json_formatter (~> 0.1)
   steep (~> 2.0)
-  typeprof (~> 0.31)
+  typeprof (~> 0.32)
   yard (~> 0.9)
   yard-lint (~> 1.5)!
 

@@ -37,7 +37,7 @@ group :development do
   gem 'simplecov_json_formatter', '~> 0.1'
   gem 'simplecov-markdown', '~> 1.1'
   gem 'steep', '~> 2.0'
-  gem 'typeprof', '~> 0.31'
+  gem 'typeprof', '~> 0.32'
   gem 'yard', '~> 0.9'
   gem 'yard-lint', '~> 1.5', github: 'mensfeld/yard-lint' # TODO: Remove the GitHub ref once v1.5.2+ is released
 end
