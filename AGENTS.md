@@ -30,6 +30,19 @@ This file provides guidance to AI agents when working with code in this reposito
 - `bundle exec rake install` - Install gem locally
 - `bin/console` - Interactive console with gem loaded
 
+### Containerized development (cloud agents)
+
+A ready-to-develop container is defined by `Dockerfile` and `.devcontainer/devcontainer.json`
+(Ruby 4.0.5 + the full dev toolchain). Cloud agent platforms / Codespaces consume the
+devcontainer directly. Locally:
+
+- `docker build -t jsonrpc-middleware-dev .`
+- `docker run --rm -it -v "$PWD":/app jsonrpc-middleware-dev bash`
+- Inside the container: `bundle exec rake qa`, `bundle exec rspec`, `bundle exec steep check`.
+
+To run an example app on Linux, first add Linux platforms to that example's lockfile:
+`cd examples/<name> && bundle lock --add-platform x86_64-linux aarch64-linux && bundle install`.
+
 ## Architecture Overview
 
 ### Core Components

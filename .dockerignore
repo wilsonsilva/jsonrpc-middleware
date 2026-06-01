@@ -1,0 +1,16 @@
+.git
+.github
+.worktrees
+coverage
+doc
+.yardoc
+tmp
+pkg
+*.gem
+.DS_Store
+.rspec_status
+**/log/*.log
+examples/**/.bundle
+examples/**/vendor
+examples/rails/tmp
+examples/rails/log
