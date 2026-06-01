@@ -74,10 +74,7 @@ module JSONRPC
       full_method_name = build_full_method_name(jsonrpc_method)
       constraint = JSONRPC::MethodConstraint.new(full_method_name)
 
-      @mapper.post @path_prefix, {
-        to: to,
-        constraints: constraint
-      }
+      @mapper.post(@path_prefix, to: to, constraints: constraint)
     end
 
     # Define a route for handling JSON-RPC batch requests
@@ -91,10 +88,7 @@ module JSONRPC
     def batch(to:)
       constraint = JSONRPC::BatchConstraint.new
 
-      @mapper.post @path_prefix, {
-        to: to,
-        constraints: constraint
-      }
+      @mapper.post(@path_prefix, to: to, constraints: constraint)
     end
 
     # Create a namespace for grouping related JSON-RPC methods
