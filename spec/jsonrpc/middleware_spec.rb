@@ -255,7 +255,7 @@ RSpec.describe JSONRPC::Middleware do
         error: {
           code: -32_700,
           data: {
-            adapter: 'MultiJson::Adapters::JsonGem',
+            adapter: 'MultiJSON::Adapters::JsonGem',
             details: "unexpected character: 'Taxation' at line 1 column 1",
             input_preview: 'Taxation is theft.'
           },

@@ -21,7 +21,7 @@ group :development do
   gem 'rackup', '~> 2.3'
   gem 'rails', '~> 8.1'
   gem 'rake', '~> 13.3'
-  gem 'rbs', '~> 3.10'
+  gem 'rbs', '~> 4.0'
   gem 'rspec', '~> 3.13'
   gem 'rspec-rails', '~> 8.0'
   gem 'rubocop', '~> 1.86'
@@ -36,7 +36,7 @@ group :development do
   gem 'simplecov-console', '~> 0.9'
   gem 'simplecov_json_formatter', '~> 0.1'
   gem 'simplecov-markdown', '~> 1.1'
-  gem 'steep', '~> 1.10'
+  gem 'steep', '~> 2.0'
   gem 'typeprof', '~> 0.31'
   gem 'yard', '~> 0.9'
   gem 'yard-lint', '~> 1.5', github: 'mensfeld/yard-lint' # TODO: Remove the GitHub ref once v1.5.2+ is released
