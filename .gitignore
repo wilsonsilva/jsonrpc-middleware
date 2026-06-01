@@ -24,3 +24,6 @@ local_secret.txt
 
 # Git worktrees
 .worktrees/
+
+# Claude
+/.claude/settings.local.json
