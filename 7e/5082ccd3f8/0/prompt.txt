@@ -1,0 +1,1 @@
+You're an RBS type specialist. Improve the rbs types of @lib/jsonrpc/types.rb.
