@@ -109,6 +109,21 @@ The project uses RBS (Ruby Type Signatures) with Steep for type checking:
 - Run `bundle exec steep check` for type validation
 - Generate types with `bundle exec typeprof FILENAME`
 
+### Third-party RBS signatures (RBS collection)
+
+Signatures for third-party gems are managed with the RBS collection:
+- `rbs_collection.yaml` declares the requested gems (activesupport, dry-struct,
+  dry-validation, multi_json, zeitwerk) and the `ruby/gem_rbs_collection` source.
+- `rbs_collection.lock.yaml` pins the resolved versions and revisions (committed).
+- `bundle exec rbs collection install` downloads them into `.gem_rbs_collection/`
+  (gitignored). Run this after cloning, before `bundle exec steep check`.
+- `bundle exec rbs collection update` re-resolves and refreshes the lock file when
+  adding a gem to `rbs_collection.yaml` or bumping sources.
+
+Steep loads the collection automatically via the lock file. A few gems still have
+hand-written stubs in `sig/` (e.g. `sig/zeitwerk.rbs`, `sig/multi_json.rbs`) where the
+collection's coverage is incomplete for this project's usage.
+
 ## Examples
 
 Comprehensive examples in `examples/` directory showing integration with:
