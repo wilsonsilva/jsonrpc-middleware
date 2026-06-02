@@ -1,0 +1,23 @@
+# Signatures for the dry-types top-level namespace (dry/types.rb).
+#
+# The dry-rb gems do not ship RBS signatures and are not available in the gem
+# RBS collection, so we hand-declare the surface of `dry/types.rb`. Only this
+# one source file is modeled: the `Dry.Types()` builder JSONRPC::Types mixes in,
+# plus the `Dry::Types` module methods it defines. The internal type system
+# (Container, Nominal, Constrained, Builder, ...) is left as `untyped` rather
+# than reproduced here.
+
+module Dry
+  # Export registered types as a module with constants.
+  #
+  # This is what `include Dry.Types()` mixes into JSONRPC::Types.
+  def self.Types: (*Symbol namespaces, ?default: Symbol, **Symbol aliases) -> Dry::Types::Module
+
+  # Main library namespace.
+  module Types
+    # The module returned by `Dry.Types()`; a subclass of `::Module` carrying
+    # the exported type constants.
+    class Module < ::Module
+    end
+  end
+end

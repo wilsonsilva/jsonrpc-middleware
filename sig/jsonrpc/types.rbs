@@ -1,0 +1,34 @@
+# Minimal signatures for the dry-types builder used by JSONRPC::Types.
+
+module JSONRPC
+  # Container for dry-types.
+  module Types
+    # A dry-types type object. Only the chainable methods exercised across the
+    # library are declared; every builder below returns one of these so the
+    # calls compose (e.g. `(Types::Hash | Types::Array).optional`).
+    interface _Type
+      # Wraps the type with a default value applied to missing input.
+      def default: (untyped) -> _Type
+
+      # Applies constraints (e.g. `constrained(format: /.../)`).
+      def constrained: (**untyped) -> _Type
+
+      # Allows `nil` in addition to the wrapped type.
+      def optional: () -> _Type
+
+      # Builds a sum type from two type objects.
+      def |: (_Type) -> _Type
+    end
+
+    # Constants installed by `include Dry.Types()`.
+    String: _Type
+    Integer: _Type
+    Nil: _Type
+    Any: _Type
+    Hash: _Type
+    Array: _Type
+
+    # Builds a type that matches instances of the given class.
+    def self.Instance: (Class) -> _Type
+  end
+end
