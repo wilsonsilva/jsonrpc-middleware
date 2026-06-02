@@ -31,3 +31,6 @@ local_secret.txt
 # MemPalace per-project files (issue #185)
 mempalace.yaml
 entities.json
+
+# RBS
+/.gem_rbs_collection/
