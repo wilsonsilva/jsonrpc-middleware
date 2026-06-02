@@ -1,0 +1,8 @@
+module JSONRPC
+  class Validator
+    @logger: Logger
+
+    def initialize: (?logger: Logger) -> void
+    def validate: (BatchRequest | Request | Notification) -> (Error | Array[Error?] | nil)
+  end
+end

@@ -1,0 +1,17 @@
+module JSONRPC
+  class BatchResponse
+    include Enumerable[Response]
+
+    attr_reader responses: Array[Response]
+
+    def initialize: (Array[Response]) -> void
+    def to_h: -> Array[symbol_hash]
+    def to_json: (*untyped) -> String
+    def each: () { (Response) -> void } -> self
+      | () -> Enumerator[Response, self]
+
+    private
+
+    def validate_responses: (Array[untyped]) -> void
+  end
+end

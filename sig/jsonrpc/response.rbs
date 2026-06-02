@@ -1,0 +1,19 @@
+module JSONRPC
+  class Response
+    attr_reader jsonrpc: String
+    attr_reader result: untyped
+    attr_reader error: Error?
+    attr_reader id: id_type
+
+    def initialize: (?result: untyped, ?error: Error?, id: id_type) -> void
+    def success?: -> bool
+    def error?: -> bool
+    def to_h: -> symbol_hash
+    def to_json: (*untyped) -> String
+
+    private
+
+    def validate_result_and_error: (untyped, Error?) -> void
+    def validate_id: (id_type) -> void
+  end
+end

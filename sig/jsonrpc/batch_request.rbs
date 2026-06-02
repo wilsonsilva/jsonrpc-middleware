@@ -1,0 +1,17 @@
+module JSONRPC
+  class BatchRequest
+    include Enumerable[Request | Notification | Error]
+
+    attr_reader requests: Array[Request | Notification | Error]
+
+    def initialize: (Array[Request | Notification | Error]) -> void
+    def to_h: -> Array[symbol_hash]
+    def to_json: (*untyped) -> String
+    def each: () { (Request | Notification | Error) -> void } -> self
+      | () -> Enumerator[Request | Notification | Error, self]
+
+    private
+
+    def validate_requests: (Array[untyped]) -> void
+  end
+end

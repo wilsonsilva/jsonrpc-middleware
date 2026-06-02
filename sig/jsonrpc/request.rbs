@@ -1,0 +1,18 @@
+module JSONRPC
+  class Request
+    attr_reader jsonrpc: String
+    attr_reader method: String
+    attr_reader params: params_type
+    attr_reader id: id_type
+
+    def initialize: (method: String, ?params: params_type, id: id_type) -> void
+    def to_h: -> symbol_hash
+    def to_json: (*untyped) -> String
+
+    private
+
+    def validate_method: (String) -> void
+    def validate_params: (params_type) -> void
+    def validate_id: (id_type) -> void
+  end
+end

@@ -1,0 +1,17 @@
+module JSONRPC
+  class Error < StandardError
+    attr_reader code: Integer
+    attr_reader message: String
+    attr_reader data: data_type
+    attr_accessor request_id: Integer | String | nil
+
+    def initialize: (String message, code: Integer, ?data: data_type, ?request_id: id_type) -> void
+    def to_h: -> symbol_hash
+    def to_json: (*untyped) -> String
+
+    private
+
+    def validate_code: (Integer) -> void
+    def validate_message: (String) -> void
+  end
+end
