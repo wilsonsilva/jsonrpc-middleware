@@ -1,0 +1,1 @@
+Extract each class in @sig/jsonrpc.rbs into its own file.
