@@ -1,0 +1,17 @@
+module MultiJson
+  class ParseError < StandardError
+  end
+
+  interface _Adapter
+    def name: () -> String
+  end
+
+  interface _Readable
+    def read: () -> String
+  end
+
+  def self.load: (String | _Readable string, Hash[interned, untyped]) -> Object?
+  def self.dump: (Object object, *Hash[interned, untyped] options) -> String
+  def self.use: (Symbol, String, Module, nil) -> untyped
+  def self.adapter: () -> _Adapter
+end

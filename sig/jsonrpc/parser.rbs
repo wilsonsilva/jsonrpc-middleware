@@ -4,10 +4,10 @@ module JSONRPC
 
     private
 
-    def parse_single: (string_or_symbol_hash data) -> (Request | Notification | Error)
-    def parse_batch: (Array[string_or_symbol_hash] data) -> BatchRequest
-    def parse_single_for_batch: (string_or_symbol_hash data) -> (Request | Notification)
-    def validate_jsonrpc_version: (string_or_symbol_hash data) -> void
-    def validate_request_structure: (string_or_symbol_hash data) -> void
+    def parse_single: (interned_hash data) -> (Request | Notification | Error)
+    def parse_batch: (Array[interned_hash] data) -> BatchRequest
+    def parse_single_for_batch: (interned_hash data) -> (Request | Notification)
+    def validate_jsonrpc_version: (interned_hash data) -> void
+    def validate_request_structure: (interned_hash data) -> void
   end
 end

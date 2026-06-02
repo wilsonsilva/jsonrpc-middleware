@@ -1,0 +1,11 @@
+# Representing JSON-compatible types
+type json_scalar = String | Integer | Float | bool | nil
+type json_object = Hash[String, json_value]
+type json_array = Array[json_value]
+type json_value = json_scalar | json_object | json_array
+
+# Hash with Symbol keys
+type symbol_hash = Hash[Symbol, untyped] & _ToJson
+
+# Hash with String or Symbol keys
+type interned_hash = Hash[interned, untyped] & _ToJson

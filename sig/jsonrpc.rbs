@@ -1,65 +1,11 @@
 module JSONRPC
-  VERSION: String
-
-  # Method definitions that should be available
-  interface _ToJson
-    def to_json: (*untyped) -> String
-  end
-
-  interface _HashLike
-    def []: (Symbol) -> untyped
-    def []=: (Symbol, untyped) -> untyped
-  end
-
-  # Representing JSON-compatible types
-  type json_scalar = String | Integer | Float | bool | nil
-  type json_object = Hash[String, json_value]
-  type json_array = Array[json_value]
-  type json_value = json_scalar | json_object | json_array
-
   # Common types used across the library
   type params_type = Hash[untyped, untyped] | Array[untyped] | nil
   type id_type = String | Integer | nil
   type data_type = Hash[untyped, untyped] | Array[untyped] | String | Numeric | bool | nil
 
-  # Hash with Symbol keys
-  type symbol_hash = Hash[Symbol, untyped] & _ToJson
-
-  # Hash with String keys
-  type string_hash = Hash[String, untyped] & _ToJson
-
-  # Hash with String or Symbol keys
-  type string_or_symbol_hash = Hash[String|Symbol, untyped] & _ToJson
+  VERSION: String
 
   def self.configure: () { (Configuration) -> void } -> void
   def self.configuration: -> Configuration
-
-  module Errors
-    class Error = JSONRPC::Error
-  end
-end
-
-# External library signatures
-module Zeitwerk
-  class Loader
-    def self.for_gem: () -> Loader
-    def enable_reloading: () -> void
-    def collapse: (String) -> void
-    def setup: () -> void
-    def eager_load: () -> void
-  end
-end
-
-module MultiJson
-  class ParseError < StandardError
-  end
-
-  interface _Adapter
-    def name: () -> String
-  end
-
-  def self.load: (String, ?untyped) -> untyped
-  def self.dump: (untyped, *untyped) -> String
-  def self.use: (untyped) -> untyped
-  def self.adapter: () -> _Adapter
 end

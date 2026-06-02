@@ -9,9 +9,9 @@ module JSONRPC
 
     def initialize: (?logger: Logger, ?log_internal_errors: bool, ?log_request_validation_errors: bool, ?rescue_internal_errors: bool, ?render_internal_errors: bool, ?validate_procedure_signatures: bool) -> void
     def self.instance: -> Configuration
-    def procedure: (String | Symbol method_name, ?allow_positional_arguments: bool) ?{ () -> void } -> Configuration::Procedure
-    def get_procedure: (String | Symbol method_name) -> Configuration::Procedure?
-    def procedure?: (String | Symbol method_name) -> bool
+    def procedure: (interned method_name, ?allow_positional_arguments: bool) ?{ () -> void } -> Configuration::Procedure
+    def get_procedure: (interned method_name) -> Configuration::Procedure?
+    def procedure?: (interned method_name) -> bool
     def reset!: -> void
     def json_adapter=: (Symbol?) -> void
   end

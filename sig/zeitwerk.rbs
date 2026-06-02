@@ -1,0 +1,10 @@
+# External library signatures
+module Zeitwerk
+  class Loader
+    def self.for_gem: () -> Loader
+    def enable_reloading: () -> void
+    def collapse: (*(String | Pathname | Array[String | Pathname])) -> void
+    def setup: () -> void
+    def eager_load: (?force: boolish) -> void
+  end
+end
