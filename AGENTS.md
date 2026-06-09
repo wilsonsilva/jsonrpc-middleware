@@ -9,6 +9,12 @@ This file provides guidance to AI agents when working with code in this reposito
 - `bundle exec rspec spec/path/to/spec.rb` - Run specific test file
 - `bundle exec rake coverage` - Run tests with test coverage and write a LLM-friendly report in `coverage/report.md`
 
+### Mutation testing
+- `bundle exec mutant run` - Run mutation testing across all `JSONRPC*` subjects (config in `mutant.yml`)
+- `bundle exec mutant run 'JSONRPC::Response'` - Mutate a single class/module
+- `bundle exec mutant run 'JSONRPC::Response#to_h'` - Mutate a single method
+- `bundle exec mutant environment show` - Show the resolved mutant config (subjects, tests, mutations)
+
 ### Code Quality
 - `bundle exec rake qa` - Complete quality check (tests, linting, security, docs)
 - `bundle exec rubocop` - Run Ruby linter

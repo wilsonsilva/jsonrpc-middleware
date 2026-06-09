@@ -1,0 +1,16 @@
+---
+usage: opensource
+integration:
+  name: rspec
+environment_variables:
+  COVERAGE: 'false'
+includes:
+  - lib
+requires:
+  - rails
+  - action_controller/railtie
+  - action_controller/api
+  - jsonrpc
+matcher:
+  subjects:
+    - JSONRPC*

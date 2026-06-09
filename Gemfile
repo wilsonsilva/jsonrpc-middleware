@@ -15,6 +15,7 @@ group :development do
   gem 'guard-rspec', '~> 4.7'
   gem 'guard-rubocop', '~> 1.5'
   gem 'irb', '~> 1.17'
+  gem 'mutant-rspec', '~> 0.16.3'
   gem 'overcommit', '~> 0.69'
   gem 'rack', '~> 3.2'
   gem 'rack-test', '~> 2.2'

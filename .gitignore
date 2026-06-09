@@ -34,3 +34,6 @@ entities.json
 
 # RBS
 /.gem_rbs_collection/
+
+# Mutatnt test results
+/.mutant/
