@@ -1,0 +1,5 @@
+Run `bundle exec mutant run 'JSONRPC::Response'` and see the fix suggestion. Identify whether applying that suggestion would cause a bug.
+
+---
+
+success_response
