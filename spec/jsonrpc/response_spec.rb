@@ -84,12 +84,17 @@ RSpec.describe JSONRPC::Response do
       end
     end
 
-    context 'when called with arguments' do
+    context 'when called with arguments such as `pretty`' do
       it 'passes arguments to the underlying JSON serializer' do
-        result = success_response.to_json(indent: '  ')
+        result = success_response.to_json(pretty: true)
 
-        expect(result).to be_a(String)
-        expect(JSON.parse(result)['result']).to eq(19)
+        expect(result).to eq(<<~JSON.chomp)
+          {
+            "jsonrpc": "2.0",
+            "id": 1,
+            "result": 19
+          }
+        JSON
       end
     end
   end
