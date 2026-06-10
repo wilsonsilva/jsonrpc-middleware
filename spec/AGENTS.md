@@ -12,3 +12,4 @@ Use `JsonRpcHelpers`. This provides a more consistent and readable way to assert
 ## Antipatterns
 
 - Do not use `allow_any_instance_of`
+- Do not instantiate objects inside examples — use `let` blocks instead

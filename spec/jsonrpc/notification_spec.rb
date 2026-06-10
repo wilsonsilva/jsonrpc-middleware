@@ -14,9 +14,10 @@ RSpec.describe JSONRPC::Notification do
     end
 
     context 'when given a method and hash params' do
+      let(:notification) { described_class.new(method: method_name, params: hash_params) }
+
       it 'stores hash params' do
-        notif = described_class.new(method: method_name, params: hash_params)
-        expect(notif.params).to eq(hash_params)
+        expect(notification.params).to eq(hash_params)
       end
     end
 
