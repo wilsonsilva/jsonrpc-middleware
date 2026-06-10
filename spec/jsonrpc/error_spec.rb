@@ -85,6 +85,19 @@ RSpec.describe JSONRPC::Error do
         expect(error.to_json).to eq('{"code":-32602,"message":"Invalid params","data":{"field":"missing"}}')
       end
     end
+
+    context 'when called with arguments' do
+      let(:error) { described_class.new('Invalid Request', code: -32_600) }
+
+      it 'passes arguments to the underlying serializer' do
+        expect(error.to_json(pretty: true)).to eq(<<~JSON.chomp)
+          {
+            "code": -32600,
+            "message": "Invalid Request"
+          }
+        JSON
+      end
+    end
   end
 
   describe '#to_response' do

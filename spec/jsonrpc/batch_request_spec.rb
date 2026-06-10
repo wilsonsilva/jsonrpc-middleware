@@ -374,22 +374,28 @@ RSpec.describe JSONRPC::BatchRequest do
 
   describe '#to_json' do
     context 'when batch contains requests' do
-      it 'converts batch to JSON string' do
+      it 'returns a JSON string with all fields' do
         batch = described_class.new([add_request])
-        result = batch.to_json
-
-        expect(result).to be_a(String)
-        expect(JSON.parse(result)).to eq([add_request.to_h.transform_keys(&:to_s)])
+        expect(batch.to_json).to eq('[{"jsonrpc":"2.0","method":"add","id":"req1","params":[1,2]}]')
       end
     end
 
     context 'when called with arguments' do
-      it 'passes arguments to underlying to_json call' do
+      it 'passes arguments to the underlying serializer' do
         batch = described_class.new([add_request])
-        result = batch.to_json(indent: '  ')
-
-        expect(result).to be_a(String)
-        expect(JSON.parse(result)).to eq([add_request.to_h.transform_keys(&:to_s)])
+        expect(batch.to_json(pretty: true)).to eq(<<~JSON.chomp)
+          [
+            {
+              "jsonrpc": "2.0",
+              "method": "add",
+              "id": "req1",
+              "params": [
+                1,
+                2
+              ]
+            }
+          ]
+        JSON
       end
     end
   end
