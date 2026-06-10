@@ -1,0 +1,1 @@
+Refactor the test such that there is no top-level notification. The instance of notification should be instanciated as close as possible to the SUT.
