@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.7.5",
+  "checkpoint_id": "db7cd9f1deea",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "mutant.yml",
+    "spec/jsonrpc/request_spec.rb"
+  ],
+  "sessions": [
+    {
+      "metadata": "/db/7cd9f1deea/0/metadata.json",
+      "transcript": "/db/7cd9f1deea/0/full.jsonl",
+      "content_hash": "/db/7cd9f1deea/0/content_hash.txt",
+      "prompt": "/db/7cd9f1deea/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 26,
+    "cache_creation_tokens": 47660,
+    "cache_read_tokens": 991825,
+    "output_tokens": 19728,
+    "api_call_count": 24
+  }
+}
