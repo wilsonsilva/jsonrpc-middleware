@@ -80,6 +80,20 @@ RSpec.describe JSONRPC::Helpers do
     end
   end
 
+  describe '#jsonrpc_request' do
+    context 'when the request is set in env' do
+      it 'returns the request object' do
+        expect(host.jsonrpc_request).to eq(jsonrpc_request_obj)
+      end
+    end
+
+    context 'when the request is not set in env' do
+      it 'returns nil' do
+        expect(test_host_class.new({}).jsonrpc_request).to be_nil
+      end
+    end
+  end
+
   describe '#jsonrpc_params' do
     let(:jsonrpc_request_obj) { JSONRPC::Request.new(method: 'add', params: [1, 2], id: 1) }
 
