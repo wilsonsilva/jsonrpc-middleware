@@ -92,7 +92,7 @@ module JSONRPC
       params_to_validate = prepare_params_for_validation(request_or_notification, procedure)
 
       # If params preparation failed, return error
-      return params_to_validate if params_to_validate.is_a?(InvalidParamsError)
+      return params_to_validate if params_to_validate.instance_of?(InvalidParamsError)
 
       # Validate the parameters
       validation_result = procedure.contract.call(params_to_validate)

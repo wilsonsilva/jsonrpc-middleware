@@ -128,11 +128,11 @@ module JSONRPC
     # @return [void]
     #
     def validate_responses(responses)
-      raise ArgumentError, 'Responses must be an Array' unless responses.is_a?(Array)
+      raise ArgumentError, 'Responses must be an Array' unless responses.instance_of?(Array)
       raise ArgumentError, 'Batch response cannot be empty' if responses.empty?
 
       responses.each_with_index do |response, index|
-        raise ArgumentError, "Response at index #{index} is not a valid Response" unless response.is_a?(Response)
+        raise ArgumentError, "Response at index #{index} is not a valid Response" unless response.instance_of?(Response)
       end
     end
   end

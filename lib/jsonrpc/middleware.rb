@@ -97,11 +97,11 @@ module JSONRPC
     #
     def handle_jsonrpc_request
       parsed_request = parse_request
-      return parsed_request if parsed_request.is_a?(Array) # Early return for parse errors
+      return parsed_request if parsed_request.instance_of?(Array) # Early return for parse errors
 
       if @config.validate_procedure_signatures
         validation_result = validate_request(parsed_request)
-        return validation_result if validation_result.is_a?(Array) # Early return for validation errors
+        return validation_result if validation_result.instance_of?(Array) # Early return for validation errors
       end
 
       # Set parsed request in environment and call app
@@ -112,7 +112,7 @@ module JSONRPC
 
       data = {}
       data = { class: e.class.name, message: e.message, backtrace: e.backtrace } if @config.render_internal_errors
-      error = InternalError.new(request_id: parsed_request.is_a?(Request) ? parsed_request.id : nil, data:)
+      error = InternalError.new(request_id: parsed_request.instance_of?(Request) ? parsed_request.id : nil, data:)
       @req.env['jsonrpc.error'] = error
 
       raise e unless @rescue_internal_errors
@@ -134,7 +134,7 @@ module JSONRPC
       parsed = @parser.parse(body)
 
       # Handle batch requests with parse errors separately
-      return handle_mixed_batch_errors(parsed) if parsed.is_a?(BatchRequest) && parse_errors?(parsed)
+      return handle_mixed_batch_errors(parsed) if parsed.instance_of?(BatchRequest) && parse_errors?(parsed)
 
       parsed
     rescue ParseError, InvalidRequestError => e
@@ -360,7 +360,7 @@ module JSONRPC
     # @return [Array] Rack response tuple [status, headers, body]
     #
     def json_response(status, body)
-      json_body = body.is_a?(String) ? body : MultiJson.dump(body)
+      json_body = body.instance_of?(String) ? body : MultiJson.dump(body)
       [status, { 'content-type' => 'application/json' }, [json_body]]
     end
 

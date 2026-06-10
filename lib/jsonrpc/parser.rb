@@ -38,7 +38,7 @@ module JSONRPC
     def parse(json)
       data = MultiJson.load(json)
 
-      if data.is_a?(Array)
+      if data.instance_of?(Array)
         parse_batch(data)
       else
         parse_single(data)
@@ -76,7 +76,7 @@ module JSONRPC
         Notification.new(method: method, params: params)
       end
     rescue ArgumentError => e
-      request_id = data.is_a?(Hash) ? data['id'] : nil
+      request_id = data.instance_of?(Hash) ? data['id'] : nil
       raise InvalidRequestError.new(data: { details: e.message }, request_id: request_id)
     end
 
@@ -134,7 +134,7 @@ module JSONRPC
         Notification.new(method: method, params: params)
       end
     rescue ArgumentError => e
-      request_id = data.is_a?(Hash) ? data['id'] : nil
+      request_id = data.instance_of?(Hash) ? data['id'] : nil
       raise InvalidRequestError.new(data: { details: e.message }, request_id: request_id)
     end
 
@@ -149,7 +149,7 @@ module JSONRPC
     # @return [void]
     #
     def validate_jsonrpc_version(data)
-      raise InvalidRequestError.new(data: { details: 'Request must be an object' }) unless data.is_a?(Hash)
+      raise InvalidRequestError.new(data: { details: 'Request must be an object' }) unless data.instance_of?(Hash)
 
       jsonrpc = data['jsonrpc']
 
@@ -185,25 +185,25 @@ module JSONRPC
 
       raise InvalidRequestError.new(data: { details: "Missing 'method' property" }, request_id: id) if method.nil?
 
-      unless method.is_a?(String)
+      unless method.instance_of?(String)
         raise InvalidRequestError.new(data: { details: 'Method must be a string' }, request_id: id)
       end
 
       params = data['params']
 
-      unless params.nil? || params.is_a?(Array) || params.is_a?(Hash)
+      unless params.nil? || params.instance_of?(Array) || params.instance_of?(Hash)
         raise InvalidRequestError.new(data: { details: 'Params must be an object, array, or omitted' }, request_id: id)
       end
 
       id = data['id']
-      unless id.nil? || id.is_a?(String) || id.is_a?(Integer) || id.nil?
+      unless id.nil? || id.instance_of?(String) || id.instance_of?(Integer) || id.nil?
         raise InvalidRequestError.new(
           data: { details: 'ID must be a string, number, null, or omitted' },
           request_id: id
         )
       end
 
-      nil unless id.is_a?(Integer)
+      nil unless id.instance_of?(Integer)
     end
   end
 end

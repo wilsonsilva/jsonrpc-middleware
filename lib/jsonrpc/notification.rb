@@ -170,7 +170,7 @@ module JSONRPC
     def validate_params(params)
       return if params.nil?
 
-      return if params.is_a?(Hash) || params.is_a?(Array)
+      return if params.instance_of?(Hash) || params.instance_of?(Array)
 
       raise ArgumentError, 'Params must be an Object, Array, or omitted'
     end

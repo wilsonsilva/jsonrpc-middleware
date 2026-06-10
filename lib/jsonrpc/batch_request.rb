@@ -176,7 +176,7 @@ module JSONRPC
       flat_map do |request_or_notification|
         result = yield(request_or_notification)
 
-        if request_or_notification.is_a?(JSONRPC::Request)
+        if request_or_notification.instance_of?(JSONRPC::Request)
           JSONRPC::Response.new(id: request_or_notification.id, result:)
         end
       end.compact
@@ -197,11 +197,11 @@ module JSONRPC
     # @return [void]
     #
     def validate_requests(requests)
-      raise ArgumentError, 'Requests must be an Array' unless requests.is_a?(Array)
+      raise ArgumentError, 'Requests must be an Array' unless requests.instance_of?(Array)
       raise ArgumentError, 'Batch request cannot be empty' if requests.empty?
 
       requests.each_with_index do |request, index|
-        unless request.is_a?(Request) || request.is_a?(Notification) || request.is_a?(Error)
+        unless request.instance_of?(Request) || request.instance_of?(Notification) || request.is_a?(Error)
           raise ArgumentError, "Request at index #{index} is not a valid Request, Notification, or Error"
         end
       end

@@ -183,7 +183,7 @@ module JSONRPC
     # @return [void]
     #
     def validate_code(code)
-      raise ArgumentError, 'Error code must be an Integer' unless code.is_a?(Integer)
+      raise ArgumentError, 'Error code must be an Integer' unless code.instance_of?(Integer)
     end
 
     # Validates that the message is a String
@@ -197,7 +197,7 @@ module JSONRPC
     # @return [void]
     #
     def validate_message(message)
-      raise ArgumentError, 'Error message must be a String' unless message.is_a?(String)
+      raise ArgumentError, 'Error message must be a String' unless message.instance_of?(String)
     end
   end
 end
