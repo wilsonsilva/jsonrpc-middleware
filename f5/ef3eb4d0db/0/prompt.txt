@@ -1,0 +1,1 @@
+Do the same for the other error classes (InternalError, InvalidParamsError, InvalidRequestError, MethodNotFoundError). Note that their only difference is the default error message and code. So perhaps copying the tests and tweaking the values should be the first step.

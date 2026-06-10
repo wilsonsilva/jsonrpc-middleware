@@ -1,0 +1,28 @@
+{
+  "cli_version": "0.7.5",
+  "checkpoint_id": "f5ef3eb4d0db",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "spec/jsonrpc/errors/internal_error_spec.rb",
+    "spec/jsonrpc/errors/invalid_params_error_spec.rb",
+    "spec/jsonrpc/errors/invalid_request_error_spec.rb",
+    "spec/jsonrpc/errors/method_not_found_error_spec.rb"
+  ],
+  "sessions": [
+    {
+      "metadata": "/f5/ef3eb4d0db/0/metadata.json",
+      "transcript": "/f5/ef3eb4d0db/0/full.jsonl",
+      "content_hash": "/f5/ef3eb4d0db/0/content_hash.txt",
+      "prompt": "/f5/ef3eb4d0db/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 12,
+    "cache_creation_tokens": 15742,
+    "cache_read_tokens": 635038,
+    "output_tokens": 12434,
+    "api_call_count": 10
+  }
+}
