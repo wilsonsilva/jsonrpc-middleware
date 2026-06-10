@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 RSpec.describe JSONRPC::Notification do
-  let(:notification) { described_class.new(method: 'files/changed', params: %w[app.rb lib/foo.rb]) }
-
   describe '#initialize' do
     context 'when given a method and array params' do
+      let(:notification) { described_class.new(method: 'files/changed', params: %w[app.rb lib/foo.rb]) }
+
       it 'stores all attributes' do
         expect(notification.to_h).to eq(jsonrpc: '2.0', method: 'files/changed', params: %w[app.rb lib/foo.rb])
       end
@@ -59,6 +59,8 @@ RSpec.describe JSONRPC::Notification do
 
   describe '#to_h' do
     context 'when notification has array params' do
+      let(:notification) { described_class.new(method: 'files/changed', params: %w[app.rb lib/foo.rb]) }
+
       it 'returns a hash with all fields' do
         expect(notification.to_h).to eq(jsonrpc: '2.0', method: 'files/changed', params: %w[app.rb lib/foo.rb])
       end
@@ -75,6 +77,8 @@ RSpec.describe JSONRPC::Notification do
 
   describe '#to_json' do
     context 'when notification has params' do
+      let(:notification) { described_class.new(method: 'files/changed', params: %w[app.rb lib/foo.rb]) }
+
       it 'returns a JSON string with all fields' do
         expect(notification.to_json).to eq(
           '{"jsonrpc":"2.0","method":"files/changed","params":["app.rb","lib/foo.rb"]}'
@@ -83,6 +87,8 @@ RSpec.describe JSONRPC::Notification do
     end
 
     context 'when called with arguments' do
+      let(:notification) { described_class.new(method: 'files/changed', params: %w[app.rb lib/foo.rb]) }
+
       it 'passes arguments to the underlying JSON serializer' do
         expect(notification.to_json(pretty: true)).to eq(<<~JSON.chomp)
           {
