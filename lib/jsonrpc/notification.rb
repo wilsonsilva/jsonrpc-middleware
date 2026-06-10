@@ -150,7 +150,7 @@ module JSONRPC
     # @return [void]
     #
     def validate_method(method)
-      raise ArgumentError, 'Method must be a String' unless method.is_a?(String)
+      raise ArgumentError, 'Method must be a String' unless method.instance_of?(String)
 
       return unless method.start_with?('rpc.')
 
