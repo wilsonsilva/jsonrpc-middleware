@@ -13,3 +13,4 @@ Use `JsonRpcHelpers`. This provides a more consistent and readable way to assert
 
 - Do not use `allow_any_instance_of`
 - Do not instantiate objects inside examples — use `let` blocks instead
+- Do not create `let` blocks for plain data values. Localize test data as close as possible to the test that uses it — inline the literals directly. Only share data when it absolutely makes sense to reduce duplication. Reserve `let` for the SUT (and collaborator objects), overriding it at the `context` level when a scenario needs a different construction
