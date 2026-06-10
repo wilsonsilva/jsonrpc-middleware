@@ -1,0 +1,15 @@
+Read the commit e5f195ebfc7f6b0241b0f8273463b325b737e300 and apply the structure changes to @spec/jsonrpc/notification_spec.rb
+
+---
+
+I prefer to break down big lines like this:
+
+expect { described_class.new(method: 'rpc.discover') }.to raise_error(
+  ArgumentError, "Method names starting with 'rpc.' are reserved"
+)
+
+Capture that in AGENTS.md in a ## Style section
+
+---
+
+Not just for RSpec.
