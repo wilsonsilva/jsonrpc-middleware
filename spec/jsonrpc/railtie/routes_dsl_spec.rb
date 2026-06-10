@@ -192,6 +192,24 @@ RSpec.describe JSONRPC::RoutesDsl do
       end
     end
 
+    context 'when a method follows an inner namespace in the same block' do
+      let(:dsl) { described_class.new(mapper) }
+
+      it 'prefixes with the outer namespace, not the inner one' do
+        dsl.namespace 'climate' do
+          namespace 'fan' do
+            method :on, to: 'fan#on'
+          end
+
+          method :status, to: 'climate#status'
+        end
+
+        status_route = mapper.routes.find { |r| r[:to] == 'climate#status' }
+        expect(status_route[:constraints].matches?(request_for('climate.status'))).to be(true)
+        expect(status_route[:constraints].matches?(request_for('fan.status'))).to be(false)
+      end
+    end
+
     context 'when the namespace stack is unwound after the block' do
       let(:dsl) { described_class.new(mapper) }
 
