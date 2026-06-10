@@ -1,0 +1,1 @@
+Fix the rubocop violations in spec/jsonrpc/errors/parse_error_spec.rb
