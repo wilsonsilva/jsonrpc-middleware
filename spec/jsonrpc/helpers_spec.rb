@@ -34,6 +34,19 @@ RSpec.describe JSONRPC::Helpers do
         expect(JSONRPC::Configuration.instance).to have_received(:procedure).with('ping')
         expect(result).to eq(procedure)
       end
+
+      context 'when called with a block' do
+        it 'forwards the block to Configuration.instance.procedure' do
+          received_block = nil
+          allow(JSONRPC::Configuration.instance).to receive(:procedure) do |_name, &blk|
+            received_block = blk
+          end
+
+          test_host_class.jsonrpc_method('ping') { :block_sentinel }
+
+          expect(received_block&.call).to eq(:block_sentinel)
+        end
+      end
     end
   end
 
