@@ -1,0 +1,38 @@
+{
+  "cli_version": "0.7.5",
+  "checkpoint_id": "b187720f71b9",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 3,
+  "files_touched": [
+    ".rubocop.yml",
+    "lib/jsonrpc/batch_request.rb",
+    "lib/jsonrpc/error.rb",
+    "lib/jsonrpc/notification.rb",
+    "lib/jsonrpc/request.rb",
+    "sig/jsonrpc/batch_request.rbs",
+    "sig/jsonrpc/error.rbs",
+    "sig/jsonrpc/notification.rbs",
+    "sig/jsonrpc/request.rbs",
+    "spec/jsonrpc/batch_request_spec.rb",
+    "spec/jsonrpc/error_spec.rb",
+    "spec/jsonrpc/notification_spec.rb",
+    "spec/jsonrpc/parser_spec.rb",
+    "spec/jsonrpc/request_spec.rb"
+  ],
+  "sessions": [
+    {
+      "metadata": "/b1/87720f71b9/0/metadata.json",
+      "transcript": "/b1/87720f71b9/0/full.jsonl",
+      "content_hash": "/b1/87720f71b9/0/content_hash.txt",
+      "prompt": "/b1/87720f71b9/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 4063,
+    "cache_creation_tokens": 187338,
+    "cache_read_tokens": 9915112,
+    "output_tokens": 106874,
+    "api_call_count": 87
+  }
+}

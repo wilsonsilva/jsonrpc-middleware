@@ -1,0 +1,197 @@
+{
+  "cli_version": "0.7.5",
+  "checkpoint_id": "b187720f71b9",
+  "session_id": "860e6667-2900-4784-800e-9e46bbea3ec6",
+  "strategy": "manual-commit",
+  "created_at": "2026-06-10T14:14:51.683297Z",
+  "branch": "main",
+  "checkpoints_count": 3,
+  "files_touched": [
+    ".rubocop.yml",
+    "lib/jsonrpc/batch_request.rb",
+    "lib/jsonrpc/error.rb",
+    "lib/jsonrpc/notification.rb",
+    "lib/jsonrpc/request.rb",
+    "sig/jsonrpc/batch_request.rbs",
+    "sig/jsonrpc/error.rbs",
+    "sig/jsonrpc/notification.rbs",
+    "sig/jsonrpc/request.rbs",
+    "spec/jsonrpc/batch_request_spec.rb",
+    "spec/jsonrpc/error_spec.rb",
+    "spec/jsonrpc/notification_spec.rb",
+    "spec/jsonrpc/parser_spec.rb",
+    "spec/jsonrpc/request_spec.rb"
+  ],
+  "agent": "Claude Code",
+  "model": "",
+  "turn_id": "6c3c4604d544",
+  "checkpoint_transcript_start": 162,
+  "transcript_lines_at_start": 162,
+  "token_usage": {
+    "input_tokens": 4063,
+    "cache_creation_tokens": 187338,
+    "cache_read_tokens": 9915112,
+    "output_tokens": 106874,
+    "api_call_count": 87
+  },
+  "skill_events_version": 1,
+  "skill_events": [
+    {
+      "id": "claude-skill-toolu_01DYzNGTgpCPz6L4W23V9C8C",
+      "event_type": "tool_invocation",
+      "skill": {
+        "name": "strict-engineering:rspec-testing"
+      },
+      "source": {
+        "agent": "claude-code",
+        "signal": "skill_tool_use",
+        "confidence": "explicit"
+      },
+      "turn_id": "6c3c4604d544",
+      "transcript_anchor": {
+        "unit": "line",
+        "start": 22,
+        "end": 23,
+        "entry_ids": [
+          "ce8532e1-7b6b-41a1-ae9d-ca01738c713d"
+        ],
+        "tool_use_id": "toolu_01DYzNGTgpCPz6L4W23V9C8C"
+      },
+      "native": {
+        "tool_name": "Skill",
+        "tool_use_id": "toolu_01DYzNGTgpCPz6L4W23V9C8C"
+      },
+      "collapse": {
+        "target": "tool_pair",
+        "label": "Skill: strict-engineering:rspec-testing",
+        "default_collapsed": true
+      }
+    },
+    {
+      "id": "claude-skill-toolu_019DigH2AoYYWXnXLMZERQyN",
+      "event_type": "tool_invocation",
+      "skill": {
+        "name": "mutant"
+      },
+      "source": {
+        "agent": "claude-code",
+        "signal": "skill_tool_use",
+        "confidence": "explicit"
+      },
+      "turn_id": "6c3c4604d544",
+      "transcript_anchor": {
+        "unit": "line",
+        "start": 427,
+        "end": 428,
+        "entry_ids": [
+          "14f07689-4004-45fc-a7d1-ed5c79ddb84c"
+        ],
+        "tool_use_id": "toolu_019DigH2AoYYWXnXLMZERQyN"
+      },
+      "native": {
+        "tool_name": "Skill",
+        "tool_use_id": "toolu_019DigH2AoYYWXnXLMZERQyN"
+      },
+      "collapse": {
+        "target": "tool_pair",
+        "label": "Skill: mutant",
+        "default_collapsed": true
+      }
+    }
+  ],
+  "session_metrics": {
+    "turn_count": 6
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-06-10T14:14:51.65451Z",
+    "agent_lines": 515,
+    "agent_removed": 46,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 515,
+    "total_lines_changed": 561,
+    "agent_percentage": 100,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 750,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".idea/.gitignore": 8,
+        ".idea/copilot.data.migration.agent.xml": 6,
+        ".idea/copilot.data.migration.ask.xml": 6,
+        ".idea/copilot.data.migration.ask2agent.xml": 6,
+        ".idea/copilot.data.migration.edit.xml": 6,
+        ".idea/dictionaries/project.xml": 9,
+        ".idea/icon.svg": 5,
+        ".idea/jsonrpc-middleware.iml": 174,
+        ".idea/misc.xml": 4,
+        ".idea/modules.xml": 9,
+        ".idea/modules/.iml": 129,
+        ".idea/modules/rack-echo.iml": 38,
+        ".idea/modules/rack.iml": 38,
+        ".idea/modules/rails.iml": 213,
+        ".idea/modules/sinatra-classic.iml": 46,
+        ".idea/modules/sinatra-modular.iml": 46,
+        ".idea/vcs.xml": 7
+      }
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 750,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".idea/.gitignore": 8,
+        ".idea/copilot.data.migration.agent.xml": 6,
+        ".idea/copilot.data.migration.ask.xml": 6,
+        ".idea/copilot.data.migration.ask2agent.xml": 6,
+        ".idea/copilot.data.migration.edit.xml": 6,
+        ".idea/dictionaries/project.xml": 9,
+        ".idea/icon.svg": 5,
+        ".idea/jsonrpc-middleware.iml": 174,
+        ".idea/misc.xml": 4,
+        ".idea/modules.xml": 9,
+        ".idea/modules/.iml": 129,
+        ".idea/modules/rack-echo.iml": 38,
+        ".idea/modules/rack.iml": 38,
+        ".idea/modules/rails.iml": 213,
+        ".idea/modules/sinatra-classic.iml": 46,
+        ".idea/modules/sinatra-modular.iml": 46,
+        ".idea/vcs.xml": 7
+      }
+    },
+    {
+      "checkpoint_number": 3,
+      "user_lines_added": 750,
+      "user_lines_removed": 0,
+      "agent_lines_added": 154,
+      "agent_lines_removed": 46,
+      "user_added_per_file": {
+        ".idea/.gitignore": 8,
+        ".idea/copilot.data.migration.agent.xml": 6,
+        ".idea/copilot.data.migration.ask.xml": 6,
+        ".idea/copilot.data.migration.ask2agent.xml": 6,
+        ".idea/copilot.data.migration.edit.xml": 6,
+        ".idea/dictionaries/project.xml": 9,
+        ".idea/icon.svg": 5,
+        ".idea/jsonrpc-middleware.iml": 174,
+        ".idea/misc.xml": 4,
+        ".idea/modules.xml": 9,
+        ".idea/modules/.iml": 129,
+        ".idea/modules/rack-echo.iml": 38,
+        ".idea/modules/rack.iml": 38,
+        ".idea/modules/rails.iml": 213,
+        ".idea/modules/sinatra-classic.iml": 46,
+        ".idea/modules/sinatra-modular.iml": 46,
+        ".idea/vcs.xml": 7
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+Use have_attributes. Ensure that the batch testing is resilient too.
+
+---
+
+Instead of multiple expectations to check teh attributes and the class, use eq() and an instance of the class with the atttributes and a single expectation with a proper it description. If the class does not support value equality, make it support value equality.
+
+---
+
+Add tests for the equality methods you've added. Ensure that you don't introduce mutations in those tests, guaranteeying 100% test coverage.
