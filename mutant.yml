@@ -22,3 +22,8 @@ matcher:
     # Dry::Struct#[] delegates to attributes.fetch. No test can distinguish
     # these forms because constructing a Request without :method is impossible.
     - JSONRPC::Request#method
+    # `responses.map(&:to_response)` and `self.map(&:to_response)` are
+    # equivalent because BatchResponse#each delegates to responses.each.
+    # Enumerable#map iterates via each, so both forms call to_response on
+    # the same objects in the same order. No test can distinguish them.
+    - JSONRPC::BatchResponse#to_response
