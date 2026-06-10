@@ -1,0 +1,27 @@
+{
+  "cli_version": "0.7.5",
+  "checkpoint_id": "efb102246753",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "spec/jsonrpc/batch_request_spec.rb",
+    "spec/jsonrpc/batch_response_spec.rb",
+    "spec/jsonrpc/error_spec.rb"
+  ],
+  "sessions": [
+    {
+      "metadata": "/ef/b102246753/0/metadata.json",
+      "transcript": "/ef/b102246753/0/full.jsonl",
+      "content_hash": "/ef/b102246753/0/content_hash.txt",
+      "prompt": "/ef/b102246753/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 24,
+    "cache_creation_tokens": 38904,
+    "cache_read_tokens": 835712,
+    "output_tokens": 9285,
+    "api_call_count": 21
+  }
+}
