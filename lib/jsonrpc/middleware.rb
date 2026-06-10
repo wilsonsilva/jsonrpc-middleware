@@ -193,7 +193,7 @@ module JSONRPC
     # @return [Boolean] true if any request is an Error object
     #
     def parse_errors?(batch_request)
-      batch_request.requests.any?(Error)
+      batch_request.any?(Error)
     end
 
     # Handles batch requests that contain a mix of parse errors and valid requests
