@@ -3,131 +3,108 @@
 RSpec.describe JSONRPC::Error do
   describe '#initialize' do
     context 'with valid arguments' do
-      it 'sets the message' do
-        error = described_class.new('Invalid Request', code: -32_600)
+      let(:error) { described_class.new('Invalid Request', code: -32_600) }
 
+      it 'sets the message' do
         expect(error.message).to eq('Invalid Request')
       end
 
       it 'sets the code' do
-        error = described_class.new('Invalid Request', code: -32_600)
-
         expect(error.code).to eq(-32_600)
       end
 
-      it 'sets data to nil by default' do
-        error = described_class.new('Invalid Request', code: -32_600)
+      specify { expect(error.data).to be_nil }
 
-        expect(error.data).to be_nil
-      end
-
-      it 'sets request_id to nil by default' do
-        error = described_class.new('Invalid Request', code: -32_600)
-
-        expect(error.request_id).to be_nil
-      end
+      specify { expect(error.request_id).to be_nil }
     end
 
     context 'with optional data' do
-      it 'sets data' do
-        error = described_class.new('Invalid params', code: -32_602, data: { 'field' => 'missing' })
+      let(:error) { described_class.new('Invalid params', code: -32_602, data: { 'field' => 'missing' }) }
 
-        expect(error.data).to eq({ 'field' => 'missing' })
+      it 'sets data' do
+        expect(error.data).to eq('field' => 'missing')
       end
     end
 
     context 'with optional request_id' do
-      it 'sets request_id' do
-        error = described_class.new('Invalid Request', code: -32_600, request_id: '42')
+      let(:error) { described_class.new('Invalid Request', code: -32_600, request_id: '42') }
 
+      it 'sets request_id' do
         expect(error.request_id).to eq('42')
       end
     end
 
     context 'when code is not an Integer' do
+      let(:error) { described_class.new('Invalid Request', code: '-32600') }
+
       it 'raises ArgumentError' do
-        expect do
-          described_class.new('Invalid Request', code: '-32600')
-        end.to raise_error(ArgumentError, 'Error code must be an Integer')
+        expect { error }.to raise_error(ArgumentError, 'Error code must be an Integer')
       end
     end
 
     context 'when message is not a String' do
+      let(:error) { described_class.new(123, code: -32_600) }
+
       it 'raises ArgumentError' do
-        expect do
-          described_class.new(123, code: -32_600)
-        end.to raise_error(ArgumentError, 'Error message must be a String')
+        expect { error }.to raise_error(ArgumentError, 'Error message must be a String')
       end
     end
   end
 
   describe '#to_h' do
     context 'without data' do
-      it 'returns hash with code and message' do
-        error = described_class.new('Invalid Request', code: -32_600)
+      let(:error) { described_class.new('Invalid Request', code: -32_600) }
 
-        expect(error.to_h).to eq({ code: -32_600, message: 'Invalid Request' })
+      it 'returns a hash with code and message' do
+        expect(error.to_h).to eq(code: -32_600, message: 'Invalid Request')
       end
     end
 
     context 'with data' do
-      it 'includes data in the hash' do
-        error = described_class.new('Invalid params', code: -32_602, data: { 'field' => 'missing' })
+      let(:error) { described_class.new('Invalid params', code: -32_602, data: { 'field' => 'missing' }) }
 
-        expect(error.to_h).to eq({ code: -32_602, message: 'Invalid params', data: { 'field' => 'missing' } })
+      it 'includes data in the hash' do
+        expect(error.to_h).to eq(code: -32_602, message: 'Invalid params', data: { 'field' => 'missing' })
       end
     end
   end
 
   describe '#to_json' do
     context 'without data' do
+      let(:error) { described_class.new('Invalid Request', code: -32_600) }
+
       it 'returns a JSON string with code and message' do
-        error = described_class.new('Invalid Request', code: -32_600)
-
-        result = error.to_json
-
-        expect(result).to be_a(String)
-        expect(JSON.parse(result)).to eq({ 'code' => -32_600, 'message' => 'Invalid Request' })
+        expect(error.to_json).to eq('{"code":-32600,"message":"Invalid Request"}')
       end
     end
 
     context 'with data' do
+      let(:error) { described_class.new('Invalid params', code: -32_602, data: { 'field' => 'missing' }) }
+
       it 'includes data in the JSON output' do
-        error = described_class.new('Invalid params', code: -32_602, data: { 'field' => 'missing' })
-
-        result = error.to_json
-
-        expect(JSON.parse(result)).to eq({
-                                           'code' => -32_602,
-                                           'message' => 'Invalid params',
-                                           'data' => { 'field' => 'missing' }
-                                         })
+        expect(error.to_json).to eq('{"code":-32602,"message":"Invalid params","data":{"field":"missing"}}')
       end
     end
   end
 
   describe '#to_response' do
     context 'without request_id' do
-      it 'returns a JSON-RPC response hash with nil id' do
-        error = described_class.new('Invalid Request', code: -32_600)
+      let(:error) { described_class.new('Invalid Request', code: -32_600) }
 
-        result = error.to_response
-
-        expect(result).to eq({
-                               jsonrpc: '2.0',
-                               error: { code: -32_600, message: 'Invalid Request' },
-                               id: nil
-                             })
+      it 'returns a response hash with nil id' do
+        expect(error.to_response).to eq(
+          jsonrpc: '2.0',
+          error: { code: -32_600, message: 'Invalid Request' },
+          id: nil
+        )
       end
     end
 
     context 'with request_id' do
+      let(:error) { described_class.new('Invalid Request', code: -32_600, request_id: '1') }
+
       it 'includes request_id as the response id' do
-        error = described_class.new('Invalid Request', code: -32_600, request_id: '1')
-
-        result = error.to_response
-
-        expect(result[:id]).to eq('1')
+        expect(error.to_response[:id]).to eq('1')
       end
     end
   end
