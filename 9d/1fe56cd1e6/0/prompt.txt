@@ -1,0 +1,1 @@
+Create specs for @spec/jsonrpc/errors/parse_error_spec.rb based on @spec/jsonrpc/error_spec.rb. Ensure that the mutation tests pass.
