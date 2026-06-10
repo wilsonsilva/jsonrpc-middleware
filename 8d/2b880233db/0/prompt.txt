@@ -1,0 +1,5 @@
+Read @lib/jsonrpc/notification.rb and @spec/jsonrpc/notification_spec.rb. Refactor it so that there are no top level let statements like method_name, array_params, hash_params. Allow a let for notification, because it is the SUT. Capture that principle in @spec/AGENTS.md and in the project's memory.
+
+---
+
+In "Do not create `let` blocks for plain data values (e.g. `method_name`, `array_params`, `hash_params`)" I gave you examples but those should not be written in the principle. The goal is to localize the test data as close as possible to the test and only use shared data when it absolutely makes sense to reduce the duplication.
