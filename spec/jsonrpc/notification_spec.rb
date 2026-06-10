@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 RSpec.describe JSONRPC::Notification do
-  let(:notification) { described_class.new(method: 'update', params: [1, 2, 3, 4, 5]) }
+  let(:notification) { described_class.new(method: 'files/changed', params: %w[app.rb lib/foo.rb]) }
 
   describe '#initialize' do
     context 'when given a method and array params' do
       it 'stores all attributes' do
-        expect(notification.to_h).to eq(jsonrpc: '2.0', method: 'update', params: [1, 2, 3, 4, 5])
+        expect(notification.to_h).to eq(jsonrpc: '2.0', method: 'files/changed', params: %w[app.rb lib/foo.rb])
       end
     end
 
@@ -60,7 +60,7 @@ RSpec.describe JSONRPC::Notification do
   describe '#to_h' do
     context 'when notification has array params' do
       it 'returns a hash with all fields' do
-        expect(notification.to_h).to eq(jsonrpc: '2.0', method: 'update', params: [1, 2, 3, 4, 5])
+        expect(notification.to_h).to eq(jsonrpc: '2.0', method: 'files/changed', params: %w[app.rb lib/foo.rb])
       end
     end
 
@@ -76,7 +76,9 @@ RSpec.describe JSONRPC::Notification do
   describe '#to_json' do
     context 'when notification has params' do
       it 'returns a JSON string with all fields' do
-        expect(notification.to_json).to eq('{"jsonrpc":"2.0","method":"update","params":[1,2,3,4,5]}')
+        expect(notification.to_json).to eq(
+          '{"jsonrpc":"2.0","method":"files/changed","params":["app.rb","lib/foo.rb"]}'
+        )
       end
     end
 
@@ -85,13 +87,10 @@ RSpec.describe JSONRPC::Notification do
         expect(notification.to_json(pretty: true)).to eq(<<~JSON.chomp)
           {
             "jsonrpc": "2.0",
-            "method": "update",
+            "method": "files/changed",
             "params": [
-              1,
-              2,
-              3,
-              4,
-              5
+              "app.rb",
+              "lib/foo.rb"
             ]
           }
         JSON
