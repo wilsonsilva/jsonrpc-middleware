@@ -33,26 +33,28 @@ RSpec.describe JSONRPC::RoutesDsl do
     context 'with the default path' do
       let(:dsl) { described_class.new(mapper) }
 
-      before do
-        dsl.instance_eval do
-          method :ping, to: 'system#ping'
-        end
-      end
-
       it 'maps a JSON-RPC method to the root path' do
+        dsl.method(:ping, to: 'system#ping')
+
         expect(mapper.routes.size).to eq(1)
         expect(mapper.routes.first[:path]).to eq('/')
       end
 
       it 'routes to the correct controller action' do
+        dsl.method(:ping, to: 'system#ping')
+
         expect(mapper.routes.first[:to]).to eq('system#ping')
       end
 
       it 'applies a MethodConstraint' do
+        dsl.method(:ping, to: 'system#ping')
+
         expect(mapper.routes.first[:constraints]).to be_a(JSONRPC::MethodConstraint)
       end
 
       it 'uses the bare method name when not namespaced' do
+        dsl.method(:ping, to: 'system#ping')
+
         constraint = mapper.routes.first[:constraints]
         expect(constraint.matches?(request_for('ping'))).to be(true)
       end
@@ -61,13 +63,9 @@ RSpec.describe JSONRPC::RoutesDsl do
     context 'with a custom path prefix' do
       let(:dsl) { described_class.new(mapper, '/api/v1') }
 
-      before do
-        dsl.instance_eval do
-          method :status, to: 'system#status'
-        end
-      end
-
       it 'maps the method to the custom path' do
+        dsl.method(:status, to: 'system#status')
+
         expect(mapper.routes.first[:path]).to eq('/api/v1')
         expect(mapper.routes.first[:to]).to eq('system#status')
       end
@@ -77,11 +75,7 @@ RSpec.describe JSONRPC::RoutesDsl do
       let(:dsl) { described_class.new(mapper) }
 
       it 'raises an ArgumentError' do
-        expect do
-          dsl.instance_eval do
-            method :ping
-          end
-        end.to raise_error(ArgumentError)
+        expect { dsl.method(:ping) }.to raise_error(ArgumentError)
       end
     end
   end
@@ -90,22 +84,22 @@ RSpec.describe JSONRPC::RoutesDsl do
     context 'with the default path' do
       let(:dsl) { described_class.new(mapper) }
 
-      before do
-        dsl.instance_eval do
-          batch to: 'batch#handle'
-        end
-      end
-
       it 'maps the batch route to the root path' do
+        dsl.batch(to: 'batch#handle')
+
         expect(mapper.routes.size).to eq(1)
         expect(mapper.routes.first[:path]).to eq('/')
       end
 
       it 'routes to the correct batch controller action' do
+        dsl.batch(to: 'batch#handle')
+
         expect(mapper.routes.first[:to]).to eq('batch#handle')
       end
 
       it 'applies a BatchConstraint' do
+        dsl.batch(to: 'batch#handle')
+
         expect(mapper.routes.first[:constraints]).to be_a(JSONRPC::BatchConstraint)
       end
     end
@@ -113,13 +107,9 @@ RSpec.describe JSONRPC::RoutesDsl do
     context 'with a custom path prefix' do
       let(:dsl) { described_class.new(mapper, '/api/v1') }
 
-      before do
-        dsl.instance_eval do
-          batch to: 'batch#handle'
-        end
-      end
-
       it 'maps the batch route to the custom path' do
+        dsl.batch(to: 'batch#handle')
+
         expect(mapper.routes.first[:path]).to eq('/api/v1')
       end
     end
@@ -128,11 +118,7 @@ RSpec.describe JSONRPC::RoutesDsl do
       let(:dsl) { described_class.new(mapper) }
 
       it 'raises an ArgumentError' do
-        expect do
-          dsl.instance_eval do
-            batch
-          end
-        end.to raise_error(ArgumentError)
+        expect { dsl.batch }.to raise_error(ArgumentError)
       end
     end
   end
@@ -141,20 +127,21 @@ RSpec.describe JSONRPC::RoutesDsl do
     context 'with a single-level namespace' do
       let(:dsl) { described_class.new(mapper) }
 
-      before do
-        dsl.instance_eval do
-          namespace 'users' do
-            method :create, to: 'users#create'
-            method :list, to: 'users#index'
-          end
-        end
-      end
-
       it 'maps all methods in the namespace' do
+        dsl.namespace 'users' do
+          method :create, to: 'users#create'
+          method :list, to: 'users#index'
+        end
+
         expect(mapper.routes.size).to eq(2)
       end
 
       it 'prefixes the method names with the namespace' do
+        dsl.namespace 'users' do
+          method :create, to: 'users#create'
+          method :list, to: 'users#index'
+        end
+
         create_route = mapper.routes.find { |r| r[:to] == 'users#create' }
         list_route = mapper.routes.find { |r| r[:to] == 'users#index' }
 
@@ -167,19 +154,15 @@ RSpec.describe JSONRPC::RoutesDsl do
     context 'with nested namespaces' do
       let(:dsl) { described_class.new(mapper, '/api') }
 
-      before do
-        dsl.instance_eval do
-          namespace 'climate' do
-            method :status, to: 'climate#status'
+      it 'creates dot-separated method names for deep nesting' do
+        dsl.namespace 'climate' do
+          method :status, to: 'climate#status'
 
-            namespace 'fan' do
-              method :on, to: 'fan#on'
-            end
+          namespace 'fan' do
+            method :on, to: 'fan#on'
           end
         end
-      end
 
-      it 'creates dot-separated method names for deep nesting' do
         status_route = mapper.routes.find { |r| r[:to] == 'climate#status' }
         expect(status_route[:constraints].matches?(request_for('climate.status'))).to be(true)
 
@@ -188,6 +171,14 @@ RSpec.describe JSONRPC::RoutesDsl do
       end
 
       it 'uses the correct base path for all nested routes' do
+        dsl.namespace 'climate' do
+          method :status, to: 'climate#status'
+
+          namespace 'fan' do
+            method :on, to: 'fan#on'
+          end
+        end
+
         expect(mapper.routes).to all(include(path: '/api'))
       end
     end
@@ -213,17 +204,13 @@ RSpec.describe JSONRPC::RoutesDsl do
     context 'when the namespace stack is unwound after the block' do
       let(:dsl) { described_class.new(mapper) }
 
-      before do
-        dsl.instance_eval do
-          namespace 'users' do
-            method :create, to: 'users#create'
-          end
-
-          method :ping, to: 'system#ping'
-        end
-      end
-
       it 'does not prefix methods defined after the namespace block' do
+        dsl.namespace 'users' do
+          method :create, to: 'users#create'
+        end
+
+        dsl.method(:ping, to: 'system#ping')
+
         ping_route = mapper.routes.find { |r| r[:to] == 'system#ping' }
         expect(ping_route[:constraints].matches?(request_for('ping'))).to be(true)
         expect(ping_route[:constraints].matches?(request_for('users.ping'))).to be(false)
