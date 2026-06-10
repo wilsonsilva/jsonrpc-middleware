@@ -51,14 +51,26 @@ RSpec.describe JSONRPC::Request do
 
   describe '#to_h' do
     context 'when request has array params' do
+      let(:request) { described_class.new(method: method_name, params: array_params, id: 1) }
+
       it 'returns a hash with all fields' do
         expect(request.to_h).to eq(jsonrpc: '2.0', method: method_name, params: array_params, id: 1)
       end
     end
 
     context 'when request has no params' do
+      let(:request) { described_class.new(method: method_name, id: 1) }
+
       it 'omits the params key' do
-        expect(described_class.new(method: method_name, id: 1).to_h).to eq(jsonrpc: '2.0', method: method_name, id: 1)
+        expect(request.to_h).to eq(jsonrpc: '2.0', method: method_name, id: 1)
+      end
+    end
+
+    context 'when request has nil params' do
+      let(:request) { described_class.new(method: method_name, params: nil, id: 1) }
+
+      it 'omits the params key' do
+        expect(request.to_h).to eq(jsonrpc: '2.0', method: method_name, id: 1)
       end
     end
   end

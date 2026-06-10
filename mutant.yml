@@ -14,3 +14,11 @@ requires:
 matcher:
   subjects:
     - JSONRPC*
+  ignore:
+    # `def method = attributes[:method]` overrides Kernel#method to expose the
+    # Dry::Struct attribute. Since :method is a required (non-optional) attribute,
+    # it is always present in `attributes`, making Hash#[] and Hash#fetch
+    # identical in practice. self[:method] is also equivalent because
+    # Dry::Struct#[] delegates to attributes.fetch. No test can distinguish
+    # these forms because constructing a Request without :method is impossible.
+    - JSONRPC::Request#method
