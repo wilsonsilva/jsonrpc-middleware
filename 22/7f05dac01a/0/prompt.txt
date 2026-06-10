@@ -1,0 +1,5 @@
+Run `be mutant session subject 'JSONRPC::Notification#validate_method'` and fix the mutation
+
+---
+
+Use instance_of? Instead
