@@ -1,0 +1,9 @@
+Run `be mutant session subject 'JSONRPC::Notification#validate_method'` and fix the mutation
+
+---
+
+Use instance_of? Instead
+
+---
+
+Replace all the other instances of is_a? So that all mutations are killed.
