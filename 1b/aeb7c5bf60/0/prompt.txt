@@ -1,0 +1,13 @@
+Read @spec/jsonrpc/notification_spec.rb and restructure @spec/jsonrpc/error_spec.rb to follow the same pattern.
+
+---
+
+Now think about which principles you used and update @/Users/wilson/projects/ai/harness/plugins/strict-engineering/skills/rspec-testing so that I can reuse @/Users/wilson/projects/ai/harness/plugins/strict-engineering/skills/rspec-testing/agents/
+
+---
+
+Now think about which principles you used and update @/Users/wilson/projects/ai/harness/plugins/strict-engineering/skills/rspec-testing so that I can reuse them.
+
+---
+
+Write also how to break long lines using the principle in @spec/AGENTS.md
