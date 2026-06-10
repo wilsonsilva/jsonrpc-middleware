@@ -1,0 +1,1 @@
+Do not instanciate objects (like "notif = described_class.new(method: method_name, params: hash_params)"). Use let blocks instead. Capture that in the project memory along with @spec/AGENTS.md.
