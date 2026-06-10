@@ -1,0 +1,96 @@
+{
+  "cli_version": "0.7.5",
+  "checkpoint_id": "0ddf08d12866",
+  "session_id": "d99b6004-7173-4158-a7b7-4df6426d782c",
+  "strategy": "manual-commit",
+  "created_at": "2026-06-10T17:37:33.889298Z",
+  "branch": "main",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "spec/jsonrpc/helpers_spec.rb"
+  ],
+  "agent": "Claude Code",
+  "model": "",
+  "turn_id": "11ae0bd73534",
+  "token_usage": {
+    "input_tokens": 18,
+    "cache_creation_tokens": 40925,
+    "cache_read_tokens": 563207,
+    "output_tokens": 6881,
+    "api_call_count": 15
+  },
+  "skill_events_version": 1,
+  "skill_events": [
+    {
+      "id": "claude-skill-toolu_01QFomsQuGtMDeCMWeEYky32",
+      "event_type": "tool_invocation",
+      "skill": {
+        "name": "mutant"
+      },
+      "source": {
+        "agent": "claude-code",
+        "signal": "skill_tool_use",
+        "confidence": "explicit"
+      },
+      "turn_id": "11ae0bd73534",
+      "transcript_anchor": {
+        "unit": "line",
+        "start": 19,
+        "end": 20,
+        "entry_ids": [
+          "d3fd058f-8491-4ee4-a74b-9de9f9e17df8"
+        ],
+        "tool_use_id": "toolu_01QFomsQuGtMDeCMWeEYky32"
+      },
+      "native": {
+        "tool_name": "Skill",
+        "tool_use_id": "toolu_01QFomsQuGtMDeCMWeEYky32"
+      },
+      "collapse": {
+        "target": "tool_pair",
+        "label": "Skill: mutant",
+        "default_collapsed": true
+      }
+    }
+  ],
+  "initial_attribution": {
+    "calculated_at": "2026-06-10T17:37:33.881792Z",
+    "agent_lines": 12,
+    "agent_removed": 0,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 12,
+    "total_lines_changed": 12,
+    "agent_percentage": 100,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 750,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".idea/.gitignore": 8,
+        ".idea/copilot.data.migration.agent.xml": 6,
+        ".idea/copilot.data.migration.ask.xml": 6,
+        ".idea/copilot.data.migration.ask2agent.xml": 6,
+        ".idea/copilot.data.migration.edit.xml": 6,
+        ".idea/dictionaries/project.xml": 9,
+        ".idea/icon.svg": 5,
+        ".idea/jsonrpc-middleware.iml": 174,
+        ".idea/misc.xml": 4,
+        ".idea/modules.xml": 9,
+        ".idea/modules/.iml": 129,
+        ".idea/modules/rack-echo.iml": 38,
+        ".idea/modules/rack.iml": 38,
+        ".idea/modules/rails.iml": 213,
+        ".idea/modules/sinatra-classic.iml": 46,
+        ".idea/modules/sinatra-modular.iml": 46,
+        ".idea/vcs.xml": 7
+      }
+    }
+  ]
+}
