@@ -43,7 +43,8 @@ RSpec.describe JSONRPC::ParseError do
       it 'returns a hash with code and message' do
         expect(error.to_h).to eq(
           code: -32_700,
-          message: 'Invalid JSON was received by the server. An error occurred on the server while parsing the JSON text.'
+          message: 'Invalid JSON was received by the server. ' \
+                   'An error occurred on the server while parsing the JSON text.'
         )
       end
     end
@@ -54,7 +55,8 @@ RSpec.describe JSONRPC::ParseError do
       it 'includes data in the hash' do
         expect(error.to_h).to eq(
           code: -32_700,
-          message: 'Invalid JSON was received by the server. An error occurred on the server while parsing the JSON text.',
+          message: 'Invalid JSON was received by the server. ' \
+                   'An error occurred on the server while parsing the JSON text.',
           data: { 'pos' => 42 }
         )
       end
@@ -67,7 +69,8 @@ RSpec.describe JSONRPC::ParseError do
 
       it 'returns a JSON string with code and message' do
         expect(error.to_json).to eq(
-          '{"code":-32700,"message":"Invalid JSON was received by the server. An error occurred on the server while parsing the JSON text."}'
+          '{"code":-32700,"message":"Invalid JSON was received by the server. ' \
+          'An error occurred on the server while parsing the JSON text."}'
         )
       end
     end
@@ -81,7 +84,8 @@ RSpec.describe JSONRPC::ParseError do
         jsonrpc: '2.0',
         error: {
           code: -32_700,
-          message: 'Invalid JSON was received by the server. An error occurred on the server while parsing the JSON text.'
+          message: 'Invalid JSON was received by the server. ' \
+                   'An error occurred on the server while parsing the JSON text.'
         },
         id: nil
       )
@@ -99,7 +103,8 @@ RSpec.describe JSONRPC::ParseError do
 
     context 'when the other object is a base Error with the same code and message' do
       it 'returns false' do
-        message = 'Invalid JSON was received by the server. An error occurred on the server while parsing the JSON text.'
+        message = 'Invalid JSON was received by the server. ' \
+                  'An error occurred on the server while parsing the JSON text.'
 
         expect(error).not_to eq(JSONRPC::Error.new(message, code: -32_700))
       end
@@ -151,7 +156,8 @@ RSpec.describe JSONRPC::ParseError do
 
     context 'when an error and its parent class share to_h' do
       it 'returns different hash codes' do
-        message = 'Invalid JSON was received by the server. An error occurred on the server while parsing the JSON text.'
+        message = 'Invalid JSON was received by the server. ' \
+                  'An error occurred on the server while parsing the JSON text.'
 
         expect(error.hash).not_to eq(JSONRPC::Error.new(message, code: -32_700).hash)
       end
