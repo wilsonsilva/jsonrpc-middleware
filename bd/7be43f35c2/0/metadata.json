@@ -1,0 +1,118 @@
+{
+  "cli_version": "0.7.5",
+  "checkpoint_id": "bd7be43f35c2",
+  "session_id": "e95a524c-70e8-4747-816a-8c0a3b448f68",
+  "strategy": "manual-commit",
+  "created_at": "2026-06-10T21:08:03.13324Z",
+  "branch": "main",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "lib/jsonrpc/middleware.rb"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "982bd75d47bc",
+  "token_usage": {
+    "input_tokens": 19,
+    "cache_creation_tokens": 38147,
+    "cache_read_tokens": 633286,
+    "output_tokens": 7013,
+    "api_call_count": 16
+  },
+  "skill_events_version": 1,
+  "skill_events": [
+    {
+      "id": "prompt-skill-claude-code-w:sentinel-2026-06-10T21:02:58.269039Z",
+      "event_type": "prompt_invocation",
+      "skill": {
+        "name": "w:sentinel"
+      },
+      "source": {
+        "agent": "claude-code",
+        "signal": "prompt_slash_command",
+        "confidence": "explicit"
+      },
+      "turn_id": "982bd75d47bc",
+      "timestamp": "2026-06-10T21:02:58.269039Z",
+      "native": {
+        "command": "/w:sentinel"
+      },
+      "collapse": {
+        "target": "user_message",
+        "label": "/w:sentinel",
+        "default_collapsed": true
+      }
+    },
+    {
+      "id": "claude-skill-toolu_01F6UHAYFhiDyozLfdDBF1Wn",
+      "event_type": "tool_invocation",
+      "skill": {
+        "name": "mutant"
+      },
+      "source": {
+        "agent": "claude-code",
+        "signal": "skill_tool_use",
+        "confidence": "explicit"
+      },
+      "turn_id": "982bd75d47bc",
+      "transcript_anchor": {
+        "unit": "line",
+        "start": 56,
+        "end": 57,
+        "entry_ids": [
+          "e2fe85d1-dd8f-4cfe-afe2-399bcc97bfe3"
+        ],
+        "tool_use_id": "toolu_01F6UHAYFhiDyozLfdDBF1Wn"
+      },
+      "native": {
+        "tool_name": "Skill",
+        "tool_use_id": "toolu_01F6UHAYFhiDyozLfdDBF1Wn"
+      },
+      "collapse": {
+        "target": "tool_pair",
+        "label": "Skill: mutant",
+        "default_collapsed": true
+      }
+    }
+  ],
+  "initial_attribution": {
+    "calculated_at": "2026-06-10T21:08:03.123965Z",
+    "agent_lines": 1,
+    "agent_removed": 1,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 1,
+    "total_lines_changed": 2,
+    "agent_percentage": 100,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 750,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".idea/.gitignore": 8,
+        ".idea/copilot.data.migration.agent.xml": 6,
+        ".idea/copilot.data.migration.ask.xml": 6,
+        ".idea/copilot.data.migration.ask2agent.xml": 6,
+        ".idea/copilot.data.migration.edit.xml": 6,
+        ".idea/dictionaries/project.xml": 9,
+        ".idea/icon.svg": 5,
+        ".idea/jsonrpc-middleware.iml": 174,
+        ".idea/misc.xml": 4,
+        ".idea/modules.xml": 9,
+        ".idea/modules/.iml": 129,
+        ".idea/modules/rack-echo.iml": 38,
+        ".idea/modules/rack.iml": 38,
+        ".idea/modules/rails.iml": 213,
+        ".idea/modules/sinatra-classic.iml": 46,
+        ".idea/modules/sinatra-modular.iml": 46,
+        ".idea/vcs.xml": 7
+      }
+    }
+  ]
+}
