@@ -260,7 +260,7 @@ module JSONRPC
     # @return [Array<Request, Notification>] Array of valid requests
     #
     def collect_valid_requests(batch_request)
-      batch_request.requests.grep_v(Error)
+      batch_request.grep_v(Error)
     end
 
     # Builds ordered array of responses maintaining request order for batch processing
