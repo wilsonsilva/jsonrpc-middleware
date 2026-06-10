@@ -7,6 +7,9 @@ module JSONRPC
     def initialize: (method: String, ?params: params_type) -> void
     def to_h: -> symbol_hash
     def to_json: (*untyped) -> String
+    def ==: (untyped) -> bool
+    alias eql? ==
+    def hash: -> Integer
 
     private
     def validate_method: (String) -> void

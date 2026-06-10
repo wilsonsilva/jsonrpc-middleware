@@ -9,6 +9,9 @@ module JSONRPC
     def to_json: (*untyped) -> String
     def each: () { (Request | Notification | Error) -> void } -> self
       | () -> Enumerator[Request | Notification | Error, self]
+    def ==: (untyped) -> bool
+    alias eql? ==
+    def hash: -> Integer
 
     private
 

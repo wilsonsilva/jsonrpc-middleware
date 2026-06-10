@@ -143,6 +143,33 @@ module JSONRPC
       Response.new(id: request_id, error: self).to_h
     end
 
+    # Compares this error to another object for value equality
+    #
+    # @api public
+    #
+    # @example
+    #   error == JSONRPC::Error.new("Invalid Request", code: -32600)
+    #
+    # @param other [Object] the object to compare against
+    #
+    # @return [Boolean] true if the other object is an error with equivalent attributes
+    #
+    def ==(other)
+      other.instance_of?(self.class) && to_h == other.to_h && request_id == other.request_id
+    end
+
+    alias eql? ==
+
+    # Returns a hash code based on the error's attributes
+    #
+    # @api public
+    #
+    # @return [Integer] the hash code
+    #
+    def hash
+      [self.class, to_h, request_id].hash
+    end
+
     private
 
     # Validates that the code is a valid Integer

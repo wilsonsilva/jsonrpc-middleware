@@ -79,6 +79,33 @@ module JSONRPC
       MultiJson.dump(to_h, *)
     end
 
+    # Compares this batch request to another object for value equality
+    #
+    # @api public
+    #
+    # @example
+    #   batch == JSONRPC::BatchRequest.new([request1, request2])
+    #
+    # @param other [Object] the object to compare against
+    #
+    # @return [Boolean] true if the other object is a batch with equivalent requests
+    #
+    def ==(other)
+      other.instance_of?(BatchRequest) && requests == other.requests
+    end
+
+    alias eql? ==
+
+    # Returns a hash code based on the batch's requests
+    #
+    # @api public
+    #
+    # @return [Integer] the hash code
+    #
+    def hash
+      requests.hash
+    end
+
     # Implements the Enumerable contract by yielding each request in the batch
     #
     # @api public

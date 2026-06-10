@@ -128,4 +128,108 @@ RSpec.describe JSONRPC::Request do
       end
     end
   end
+
+  describe '#==' do
+    let(:request) { described_class.new(method: 'subtract', params: [42, 23], id: 1) }
+
+    context 'when the other request has the same attributes' do
+      it 'returns true' do
+        expect(request).to eq(described_class.new(method: 'subtract', params: [42, 23], id: 1))
+      end
+    end
+
+    context 'when one side omits params and the other passes nil' do
+      it 'returns true' do
+        expect(described_class.new(method: 'subtract', id: 1)).to eq(
+          described_class.new(method: 'subtract', params: nil, id: 1)
+        )
+      end
+    end
+
+    context 'when the method differs' do
+      it 'returns false' do
+        expect(request).not_to eq(described_class.new(method: 'add', params: [42, 23], id: 1))
+      end
+    end
+
+    context 'when the params differ' do
+      it 'returns false' do
+        expect(request).not_to eq(described_class.new(method: 'subtract', params: [1, 2], id: 1))
+      end
+    end
+
+    context 'when the id differs' do
+      it 'returns false' do
+        expect(request).not_to eq(described_class.new(method: 'subtract', params: [42, 23], id: 2))
+      end
+    end
+
+    context 'when the other object is a notification with the same method and params' do
+      it 'returns false' do
+        expect(request).not_to eq(JSONRPC::Notification.new(method: 'subtract', params: [42, 23]))
+      end
+    end
+
+    context 'when the other object is not a request' do
+      it 'returns false' do
+        expect(request).not_to eq('not a request')
+      end
+    end
+  end
+
+  describe '#eql?' do
+    let(:request) { described_class.new(method: 'subtract', params: [42, 23], id: 1) }
+
+    context 'when the other request has the same attributes' do
+      it 'returns true' do
+        expect(request.eql?(described_class.new(method: 'subtract', params: [42, 23], id: 1))).to be(true)
+      end
+    end
+
+    context 'when the other request differs' do
+      it 'returns false' do
+        expect(request.eql?(described_class.new(method: 'add', params: [42, 23], id: 1))).to be(false)
+      end
+    end
+  end
+
+  describe '#hash' do
+    let(:request) { described_class.new(method: 'subtract', params: [42, 23], id: 1) }
+
+    context 'when two requests are equal' do
+      it 'returns the same hash code' do
+        expect(request.hash).to eq(described_class.new(method: 'subtract', params: [42, 23], id: 1).hash)
+      end
+    end
+
+    context 'when one side omits params and the other passes nil' do
+      it 'returns the same hash code' do
+        expect(described_class.new(method: 'subtract', id: 1).hash).to eq(
+          described_class.new(method: 'subtract', params: nil, id: 1).hash
+        )
+      end
+    end
+
+    context 'when two requests differ only by method' do
+      it 'returns different hash codes' do
+        expect(request.hash).not_to eq(described_class.new(method: 'add', params: [42, 23], id: 1).hash)
+      end
+    end
+
+    context 'when two requests differ only by params' do
+      it 'returns different hash codes' do
+        expect(request.hash).not_to eq(described_class.new(method: 'subtract', params: [1, 2], id: 1).hash)
+      end
+    end
+
+    context 'when two requests differ only by id' do
+      it 'returns different hash codes' do
+        expect(request.hash).not_to eq(described_class.new(method: 'subtract', params: [42, 23], id: 2).hash)
+      end
+    end
+
+    it 'returns an Integer' do
+      expect(request.hash).to be_an(Integer)
+    end
+  end
 end

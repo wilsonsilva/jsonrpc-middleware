@@ -111,4 +111,74 @@ RSpec.describe JSONRPC::Notification do
       end
     end
   end
+
+  describe '#==' do
+    let(:notification) { described_class.new(method: 'update', params: [1, 2]) }
+
+    context 'when the other notification has the same attributes' do
+      it 'returns true' do
+        expect(notification).to eq(described_class.new(method: 'update', params: [1, 2]))
+      end
+    end
+
+    context 'when the method differs' do
+      it 'returns false' do
+        expect(notification).not_to eq(described_class.new(method: 'remove', params: [1, 2]))
+      end
+    end
+
+    context 'when the params differ' do
+      it 'returns false' do
+        expect(notification).not_to eq(described_class.new(method: 'update', params: [3, 4]))
+      end
+    end
+
+    context 'when the other object is a request with the same method and params' do
+      it 'returns false' do
+        expect(notification).not_to eq(JSONRPC::Request.new(method: 'update', params: [1, 2], id: 1))
+      end
+    end
+
+    context 'when the other object is not a notification' do
+      it 'returns false' do
+        expect(notification).not_to eq('not a notification')
+      end
+    end
+  end
+
+  describe '#eql?' do
+    let(:notification) { described_class.new(method: 'update', params: [1, 2]) }
+
+    context 'when the other notification has the same attributes' do
+      it 'returns true' do
+        expect(notification.eql?(described_class.new(method: 'update', params: [1, 2]))).to be(true)
+      end
+    end
+
+    context 'when the other notification differs' do
+      it 'returns false' do
+        expect(notification.eql?(described_class.new(method: 'remove', params: [1, 2]))).to be(false)
+      end
+    end
+  end
+
+  describe '#hash' do
+    let(:notification) { described_class.new(method: 'update', params: [1, 2]) }
+
+    context 'when two notifications are equal' do
+      it 'returns the same hash code' do
+        expect(notification.hash).to eq(described_class.new(method: 'update', params: [1, 2]).hash)
+      end
+    end
+
+    context 'when two notifications differ' do
+      it 'returns different hash codes' do
+        expect(notification.hash).not_to eq(described_class.new(method: 'remove', params: [1, 2]).hash)
+      end
+    end
+
+    it 'returns an Integer' do
+      expect(notification.hash).to be_an(Integer)
+    end
+  end
 end

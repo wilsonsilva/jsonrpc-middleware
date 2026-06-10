@@ -8,6 +8,9 @@ module JSONRPC
     def initialize: (String message, code: Integer, ?data: data_type, ?request_id: id_type) -> void
     def to_h: -> symbol_hash
     def to_json: (*untyped) -> String
+    def ==: (untyped) -> bool
+    alias eql? ==
+    def hash: -> Integer
 
     private
 

@@ -5,30 +5,18 @@ RSpec.describe JSONRPC::Parser do
 
   describe '#parse' do
     context 'when given valid JSON for a single request' do
-      let(:result) { parser.parse('{"jsonrpc":"2.0","method":"add","id":1}') }
-
-      it 'returns a Request' do
-        expect(result).to be_a(JSONRPC::Request)
-      end
-
-      it 'sets the method' do
-        expect(result.method).to eq('add')
-      end
-
-      it 'sets the id' do
-        expect(result.id).to eq(1)
+      it 'returns the parsed request' do
+        expect(parser.parse('{"jsonrpc":"2.0","method":"add","id":1}')).to eq(
+          JSONRPC::Request.new(method: 'add', id: 1)
+        )
       end
     end
 
     context 'when given valid JSON for a notification' do
-      let(:result) { parser.parse('{"jsonrpc":"2.0","method":"update","params":[1,2]}') }
-
-      it 'returns a Notification' do
-        expect(result).to be_a(JSONRPC::Notification)
-      end
-
-      it 'sets the method' do
-        expect(result.method).to eq('update')
+      it 'returns the parsed notification' do
+        expect(parser.parse('{"jsonrpc":"2.0","method":"update","params":[1,2]}')).to eq(
+          JSONRPC::Notification.new(method: 'update', params: [1, 2])
+        )
       end
     end
 
@@ -75,24 +63,17 @@ RSpec.describe JSONRPC::Parser do
     end
 
     context 'when given a batch request' do
-      let(:result) do
-        parser.parse('[{"jsonrpc":"2.0","method":"add","id":1},{"jsonrpc":"2.0","method":"notify"}]')
-      end
+      it 'returns the parsed batch request' do
+        json = '[{"jsonrpc":"2.0","method":"add","id":1},{"jsonrpc":"2.0","method":"notify"}]'
 
-      it 'returns a BatchRequest' do
-        expect(result).to be_a(JSONRPC::BatchRequest)
-      end
-
-      it 'parses every item' do
-        expect(result.requests.length).to eq(2)
-      end
-
-      it 'parses an item with an id as a Request' do
-        expect(result.requests[0]).to be_a(JSONRPC::Request)
-      end
-
-      it 'parses an item without an id as a Notification' do
-        expect(result.requests[1]).to be_a(JSONRPC::Notification)
+        expect(parser.parse(json)).to eq(
+          JSONRPC::BatchRequest.new(
+            [
+              JSONRPC::Request.new(method: 'add', id: 1),
+              JSONRPC::Notification.new(method: 'notify')
+            ]
+          )
+        )
       end
     end
 
@@ -103,16 +84,19 @@ RSpec.describe JSONRPC::Parser do
     end
 
     context 'when a batch item uses a reserved rpc. method' do
-      let(:result) do
-        parser.parse('[{"jsonrpc":"2.0","method":"rpc.x"},{"jsonrpc":"2.0","method":"add","id":2}]')
-      end
+      it 'returns a batch with the invalid item captured as an error' do
+        json = '[{"jsonrpc":"2.0","method":"rpc.x"},{"jsonrpc":"2.0","method":"add","id":2}]'
 
-      it 'captures the invalid item as an InvalidRequestError' do
-        expect(result.requests[0]).to be_a(JSONRPC::InvalidRequestError)
-      end
-
-      it 'parses the valid item as a Request' do
-        expect(result.requests[1]).to be_a(JSONRPC::Request)
+        expect(parser.parse(json)).to eq(
+          JSONRPC::BatchRequest.new(
+            [
+              JSONRPC::InvalidRequestError.new(
+                data: { index: 0, details: "Method names starting with 'rpc.' are reserved" }
+              ),
+              JSONRPC::Request.new(method: 'add', id: 2)
+            ]
+          )
+        )
       end
     end
   end

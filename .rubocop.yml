@@ -72,6 +72,7 @@ Metrics/PerceivedComplexity:
 Rails/Delegate:
   Exclude:
     - lib/jsonrpc/batch_request.rb # Not using Rails
+    - lib/jsonrpc/notification.rb # Not using Rails
 
 # This gem is not a Rails application, so the :environment task is not required.
 Rails/RakeEnvironment:

@@ -393,4 +393,72 @@ RSpec.describe JSONRPC::BatchRequest do
       end
     end
   end
+
+  describe '#==' do
+    context 'when the other batch has equal requests' do
+      it 'returns true' do
+        batch = described_class.new([add_request, notify_notification])
+
+        expect(batch).to eq(described_class.new([add_request, notify_notification]))
+      end
+    end
+
+    context 'when the requests differ' do
+      it 'returns false' do
+        expect(described_class.new([add_request, notify_notification])).not_to eq(
+          described_class.new([subtract_request, notify_notification])
+        )
+      end
+    end
+
+    context 'when the requests are in a different order' do
+      it 'returns false' do
+        expect(described_class.new([add_request, subtract_request])).not_to eq(
+          described_class.new([subtract_request, add_request])
+        )
+      end
+    end
+
+    context 'when the other object is not a batch request' do
+      it 'returns false' do
+        expect(described_class.new([add_request])).not_to eq([add_request])
+      end
+    end
+  end
+
+  describe '#eql?' do
+    context 'when the other batch has equal requests' do
+      it 'returns true' do
+        expect(described_class.new([add_request]).eql?(described_class.new([add_request]))).to be(true)
+      end
+    end
+
+    context 'when the requests differ' do
+      it 'returns false' do
+        expect(described_class.new([add_request]).eql?(described_class.new([subtract_request]))).to be(false)
+      end
+    end
+  end
+
+  describe '#hash' do
+    context 'when two batches are equal' do
+      it 'returns the same hash code' do
+        batch = described_class.new([add_request, notify_notification])
+
+        expect(batch.hash).to eq(described_class.new([add_request, notify_notification]).hash)
+      end
+    end
+
+    context 'when two batches differ' do
+      it 'returns different hash codes' do
+        expect(described_class.new([add_request]).hash).not_to eq(
+          described_class.new([subtract_request]).hash
+        )
+      end
+    end
+
+    it 'returns an Integer' do
+      expect(described_class.new([add_request]).hash).to be_an(Integer)
+    end
+  end
 end

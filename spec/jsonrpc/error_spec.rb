@@ -108,4 +108,123 @@ RSpec.describe JSONRPC::Error do
       end
     end
   end
+
+  describe '#==' do
+    let(:error) { described_class.new('Invalid params', code: -32_602, data: { 'field' => 'x' }, request_id: '1') }
+
+    context 'when the other error has the same attributes' do
+      it 'returns true' do
+        expect(error).to eq(
+          described_class.new('Invalid params', code: -32_602, data: { 'field' => 'x' }, request_id: '1')
+        )
+      end
+    end
+
+    context 'when the code differs' do
+      it 'returns false' do
+        expect(error).not_to eq(
+          described_class.new('Invalid params', code: -32_600, data: { 'field' => 'x' }, request_id: '1')
+        )
+      end
+    end
+
+    context 'when the message differs' do
+      it 'returns false' do
+        expect(error).not_to eq(
+          described_class.new('Other message', code: -32_602, data: { 'field' => 'x' }, request_id: '1')
+        )
+      end
+    end
+
+    context 'when the data differs' do
+      it 'returns false' do
+        expect(error).not_to eq(
+          described_class.new('Invalid params', code: -32_602, data: { 'field' => 'y' }, request_id: '1')
+        )
+      end
+    end
+
+    context 'when the request_id differs' do
+      it 'returns false' do
+        expect(error).not_to eq(
+          described_class.new('Invalid params', code: -32_602, data: { 'field' => 'x' }, request_id: '2')
+        )
+      end
+    end
+
+    context 'when the request_ids are equal strings with different identities' do
+      it 'returns true' do
+        first = described_class.new('Invalid params', code: -32_602, request_id: +'abc')
+        second = described_class.new('Invalid params', code: -32_602, request_id: +'abc')
+
+        expect(first).to eq(second)
+      end
+    end
+
+    context 'when the other object is a subclass with the same attributes' do
+      it 'returns false' do
+        message = 'The JSON payload was valid JSON, but not a valid JSON-RPC Request object.'
+
+        expect(described_class.new(message, code: -32_600)).not_to eq(JSONRPC::InvalidRequestError.new)
+      end
+    end
+
+    context 'when the other object is not an error' do
+      it 'returns false' do
+        expect(error).not_to eq('not an error')
+      end
+    end
+  end
+
+  describe '#eql?' do
+    let(:error) { described_class.new('Invalid Request', code: -32_600) }
+
+    context 'when the other error has the same attributes' do
+      it 'returns true' do
+        expect(error.eql?(described_class.new('Invalid Request', code: -32_600))).to be(true)
+      end
+    end
+
+    context 'when the other error differs' do
+      it 'returns false' do
+        expect(error.eql?(described_class.new('Invalid Request', code: -32_601))).to be(false)
+      end
+    end
+  end
+
+  describe '#hash' do
+    let(:error) { described_class.new('Invalid Request', code: -32_600) }
+
+    context 'when two errors are equal' do
+      it 'returns the same hash code' do
+        expect(error.hash).to eq(described_class.new('Invalid Request', code: -32_600).hash)
+      end
+    end
+
+    context 'when two errors differ by an attribute in to_h' do
+      it 'returns different hash codes' do
+        expect(error.hash).not_to eq(described_class.new('Invalid Request', code: -32_601).hash)
+      end
+    end
+
+    context 'when two errors differ only by request_id' do
+      it 'returns different hash codes' do
+        expect(described_class.new('Invalid Request', code: -32_600, request_id: '1').hash).not_to eq(
+          described_class.new('Invalid Request', code: -32_600, request_id: '2').hash
+        )
+      end
+    end
+
+    context 'when an error and a subclass share to_h and request_id' do
+      it 'returns different hash codes' do
+        message = 'The JSON payload was valid JSON, but not a valid JSON-RPC Request object.'
+
+        expect(described_class.new(message, code: -32_600).hash).not_to eq(JSONRPC::InvalidRequestError.new.hash)
+      end
+    end
+
+    it 'returns an Integer' do
+      expect(error.hash).to be_an(Integer)
+    end
+  end
 end

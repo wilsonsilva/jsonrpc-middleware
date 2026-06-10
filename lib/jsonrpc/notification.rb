@@ -110,6 +110,33 @@ module JSONRPC
       MultiJson.dump(to_h, *)
     end
 
+    # Compares this notification to another object for value equality
+    #
+    # @api public
+    #
+    # @example
+    #   notification == JSONRPC::Notification.new(method: "update", params: [1, 2])
+    #
+    # @param other [Object] the object to compare against
+    #
+    # @return [Boolean] true if the other object is an equivalent notification
+    #
+    def ==(other)
+      other.instance_of?(Notification) && to_h == other.to_h
+    end
+
+    alias eql? ==
+
+    # Returns a hash code based on the notification's attributes
+    #
+    # @api public
+    #
+    # @return [Integer] the hash code
+    #
+    def hash
+      to_h.hash
+    end
+
     private
 
     # Validates that the method name meets JSON-RPC 2.0 requirements

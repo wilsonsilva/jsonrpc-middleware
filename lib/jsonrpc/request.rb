@@ -93,6 +93,36 @@ module JSONRPC
       MultiJson.dump(to_h, *)
     end
 
+    # Compares this request to another object for value equality
+    #
+    # @api public
+    #
+    # @example
+    #   request == JSONRPC::Request.new(method: "subtract", params: [42, 23], id: 1)
+    #
+    # @param other [Object] the object to compare against
+    #
+    # @return [Boolean] true if the other object is an equivalent request
+    #
+    def ==(other)
+      other.instance_of?(Request) &&
+        method == other.method &&
+        params == other.params &&
+        id == other.id
+    end
+
+    alias eql? ==
+
+    # Returns a hash code based on the request's attributes
+    #
+    # @api public
+    #
+    # @return [Integer] the hash code
+    #
+    def hash
+      [method, params, id].hash
+    end
+
     # The method name to invoke
     #
     # @api public
