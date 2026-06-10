@@ -8,31 +8,20 @@ RSpec.describe JSONRPC::Notification do
 
   describe '#initialize' do
     context 'when given a method and array params' do
-      it 'creates a notification with the correct attributes' do
-        result = described_class.new(method: method_name, params: array_params)
-
-        expect(result.jsonrpc).to eq('2.0')
-        expect(result.method).to eq(method_name)
-        expect(result.params).to eq(array_params)
+      it 'stores all attributes' do
+        expect(notification.to_h).to eq(jsonrpc: '2.0', method: method_name, params: array_params)
       end
     end
 
     context 'when given a method and hash params' do
-      it 'creates a notification with hash params' do
-        result = described_class.new(method: method_name, params: hash_params)
-
-        expect(result.params).to eq(hash_params)
+      it 'stores hash params' do
+        notif = described_class.new(method: method_name, params: hash_params)
+        expect(notif.params).to eq(hash_params)
       end
     end
 
     context 'when given a method without params' do
-      it 'creates a notification with nil params' do
-        result = described_class.new(method: method_name)
-
-        expect(result.jsonrpc).to eq('2.0')
-        expect(result.method).to eq(method_name)
-        expect(result.params).to be_nil
-      end
+      specify { expect(described_class.new(method: method_name).params).to be_nil }
     end
 
     context 'when method is not a String' do
@@ -43,23 +32,23 @@ RSpec.describe JSONRPC::Notification do
 
     context 'when method starts with rpc.' do
       it 'raises ArgumentError' do
-        expect do
-          described_class.new(method: 'rpc.discover')
-        end.to raise_error(ArgumentError, "Method names starting with 'rpc.' are reserved")
+        expect { described_class.new(method: 'rpc.discover') }.to raise_error(
+          ArgumentError, "Method names starting with 'rpc.' are reserved"
+        )
       end
     end
 
     context 'when params is an invalid type' do
       it 'raises ArgumentError for an integer' do
-        expect do
-          described_class.new(method: method_name, params: 42)
-        end.to raise_error(ArgumentError, 'Params must be an Object, Array, or omitted')
+        expect { described_class.new(method: method_name, params: 42) }.to raise_error(
+          ArgumentError, 'Params must be an Object, Array, or omitted'
+        )
       end
 
       it 'raises ArgumentError for a string' do
-        expect do
-          described_class.new(method: method_name, params: 'invalid')
-        end.to raise_error(ArgumentError, 'Params must be an Object, Array, or omitted')
+        expect { described_class.new(method: method_name, params: 'invalid') }.to raise_error(
+          ArgumentError, 'Params must be an Object, Array, or omitted'
+        )
       end
     end
   end
@@ -67,49 +56,45 @@ RSpec.describe JSONRPC::Notification do
   describe '#to_h' do
     context 'when notification has array params' do
       it 'returns a hash with all fields' do
-        result = notification.to_h
-
-        expect(result).to eq({ jsonrpc: '2.0', method: method_name, params: array_params })
+        expect(notification.to_h).to eq(jsonrpc: '2.0', method: method_name, params: array_params)
       end
     end
 
     context 'when notification has no params' do
-      it 'returns a hash without the params key' do
-        result = described_class.new(method: method_name).to_h
-
-        expect(result).to eq({ jsonrpc: '2.0', method: method_name })
-        expect(result).not_to have_key(:params)
+      it 'omits the params key' do
+        expect(described_class.new(method: method_name).to_h).to eq(jsonrpc: '2.0', method: method_name)
       end
     end
   end
 
   describe '#to_json' do
     context 'when notification has params' do
-      it 'returns a JSON string' do
-        result = notification.to_json
-
-        expect(result).to be_a(String)
-        expect(JSON.parse(result)).to eq({ 'jsonrpc' => '2.0', 'method' => method_name, 'params' => array_params })
+      it 'returns a JSON string with all fields' do
+        expect(notification.to_json).to eq('{"jsonrpc":"2.0","method":"update","params":[1,2,3,4,5]}')
       end
     end
 
     context 'when called with arguments' do
       it 'passes arguments to the underlying JSON serializer' do
-        result = notification.to_json(indent: '  ')
-
-        expect(result).to be_a(String)
-        expect(JSON.parse(result)).to eq({ 'jsonrpc' => '2.0', 'method' => method_name, 'params' => array_params })
+        expect(notification.to_json(pretty: true)).to eq(<<~JSON.chomp)
+          {
+            "jsonrpc": "2.0",
+            "method": "update",
+            "params": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          }
+        JSON
       end
     end
 
     context 'when notification has no params' do
-      it 'returns a JSON string without params key' do
-        result = described_class.new(method: method_name).to_json
-
-        expect(result).to be_a(String)
-        parsed = JSON.parse(result)
-        expect(parsed).to eq({ 'jsonrpc' => '2.0', 'method' => method_name })
-        expect(parsed).not_to have_key('params')
+      it 'omits the params key' do
+        expect(described_class.new(method: method_name).to_json).to eq('{"jsonrpc":"2.0","method":"update"}')
       end
     end
   end

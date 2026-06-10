@@ -139,6 +139,24 @@ Comprehensive examples in `examples/` directory showing integration with:
 
 Each example implements calculator operations (add, subtract, multiply, divide) demonstrating different usage patterns.
 
+## Style
+
+### Breaking long lines
+
+When a method call with arguments would exceed the line length limit, break after the
+opening parenthesis — not before the `.method` call:
+
+```ruby
+# good
+expect { described_class.new(method: 'rpc.discover') }.to raise_error(
+  ArgumentError, "Method names starting with 'rpc.' are reserved"
+)
+
+# avoid
+expect { described_class.new(method: 'rpc.discover') }
+  .to raise_error(ArgumentError, "Method names starting with 'rpc.' are reserved")
+```
+
 ## Testing Strategy
 
 - RSpec with comprehensive test coverage
