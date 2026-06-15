@@ -37,3 +37,4 @@ entities.json
 
 # Mutatnt test results
 /.mutant/
+.trask/trask.db
