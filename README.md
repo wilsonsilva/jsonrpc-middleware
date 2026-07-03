@@ -26,6 +26,7 @@ A Rack middleware implementing the JSON-RPC 2.0 protocol that integrates easily 
 - [Quickstart](#-quickstart)
 - [Examples](#-examples)
 - [Documentation](#-documentation)
+- [OpenWiki](#-openwiki)
 - [Development](#-development)
   * [Type checking](#-type-checking)
 - [Contributing](#-contributing)
@@ -142,6 +143,16 @@ For more advanced setups, or other frameworks such as Rails or Sinatra, check th
 ## 📚 Documentation
 
 - [YARD documentation](https://rubydoc.info/gems/jsonrpc-middleware)
+
+## 🤖 OpenWiki
+
+This repository now includes agent-focused documentation under [`openwiki/`](./openwiki/quickstart.md).
+
+- Start with [`openwiki/quickstart.md`](./openwiki/quickstart.md)
+- Follow the linked architecture and testing notes for implementation guidance
+- Use `.github/workflows/openwiki-update.yml` to refresh the wiki on demand or on the weekly schedule
+
+The OpenWiki workflow requires an `OPENROUTER_API_KEY` repository secret. If you want tracing, also add `LANGSMITH_API_KEY`.
 
 ## 📜 Examples
 
